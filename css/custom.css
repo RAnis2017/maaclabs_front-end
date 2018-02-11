@@ -1,0 +1,106 @@
+.hero {
+    height: 100vh;
+}
+
+.menSection {
+    background: url('../images/malesection.jpg');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.womenSection {
+    background: url('../images/femalesection.jpg');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.heroSection .overlay {
+    height: 100vh;
+}
+
+.heroSection a:hover .overlay {
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.heroSection .overlay {
+    position: relative;
+}
+
+.heroSection h1 {
+    color: rgb(197, 201, 206);
+    position: absolute;
+    top: 45%;
+}
+
+.trainerImg {
+    height: 60vh;
+    background: url('../images/trainersection.jpg');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.coach img {
+    width: 300px !important;
+    margin-left: 15%;
+}
+
+.coach p {
+    margin-bottom: 25px;
+}
+
+.theme-btn {
+    background-color: rgb(143, 205, 241);
+    padding: 10px 10px;
+    margin-right: 10px;
+    margin-top: 30px;
+}
+
+.testimonialsSection {
+    margin-top: 100px;
+    height: 100%;
+}
+
+.testimonial {
+    position: relative;
+    padding: 15px 20px;
+    background: rgba(252, 251, 251, 0.542);
+    box-shadow: 2px 17px 20px #00000062;
+}
+
+.testimonial img {
+    display: inline-block !important;
+    width: 100px !important;
+    border-radius: 50%;
+}
+
+.testimonial .client {
+    position: absolute;
+    left: 100px;
+    top: 92px;
+}
+
+.testimonial .coach {
+    position: absolute;
+    left: 290px;
+    top: 110px;
+}
+
+.testimonial .coach+p {
+    margin-top: 50px;
+}
+
+.quickLinksSection .quicklinks {
+    background-color: #1d1c1c;
+    padding: 40px 20px;
+}
+
+.quicklinks h4 {
+    color: aliceblue;
+}
+
+a.quicklink:hover {
+    color: aliceblue;
+}
