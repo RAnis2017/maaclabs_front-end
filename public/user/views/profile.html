@@ -1,0 +1,709 @@
+<!-- <div class="m-grid__item m-grid__item--fluid m-grid m-grid--ver-desktop m-grid--desktop m-body"> -->
+
+<!-- BEGIN: Left Aside -->
+<button class="m-aside-left-close  m-aside-left-close--skin-dark " id="m_aside_left_close_btn"><i class="la la-close"></i></button>
+
+<div ng-include="'aside-menu.html'" id="m_aside_left" class="m-grid__item	m-aside-left  m-aside-left--skin-dark ">
+
+</div>
+<!-- END: Left Aside -->
+<div class="row" ng-controller="profile">
+    <div class="col-lg-12" style="margin: 20px 0px 0px 25px;">
+        <h3>Profile</h3>
+        <h6>Add/Delete/Update your personal data</h6>
+    </div>
+    <div class="col-lg-12 col-md-12 col-sm-12" style="margin: 0px 0px 40px 25px;">
+        <div class="m-portlet">
+            <div class="m-portlet__head">
+                <div class="m-portlet__head-caption">
+                    <div class="m-portlet__head-title">
+                        <span class="m-portlet__head-icon">
+                                    <i class="la la-book"></i>
+                                </span>
+                        <h3 class="m-portlet__head-text">
+                            Personal Details <small>your personal info</small>
+                        </h3>
+                    </div>
+                </div>
+            </div>
+            <div class="m-portlet__body">
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="m-form__group form-group">
+                            <label for="">Gender</label>
+                            <div class="m-radio-inline">
+                                <label class="m-radio">
+                                        <input type="radio" name="gender" value="male"> Male
+                                        <span></span>
+                                        </label>
+                                <label class="m-radio">
+                                        <input type="radio" name="gender" value="female"> Female
+                                        <span></span>
+                                        </label>
+                            </div>
+                            <span class="m-form__help">Specify your gender</span>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="form-group m-form__group">
+                            <label for="age">Age</label>
+                            <input type="number" min="16" max="90" class="form-control m-input" id="age" aria-describedby="ageHelp" placeholder="Enter Age">
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="form-group m-form__group">
+                            <label for="address">Address</label>
+                            <input type="text" class="form-control m-input" id="address" aria-describedby="addressHelp" placeholder="Enter Address">
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="form-group m-form__group">
+                            <label for="contact">Contact No</label>
+                            <input type="text" class="form-control m-input" id="contact" aria-describedby="contactHelp" placeholder="Enter Contact No">
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="form-group m-form__group">
+                            <label for="height">Height</label>
+                            <input type="text" class="form-control m-input" id="height" aria-describedby="heightHelp" placeholder="Enter Height">
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="form-group m-form__group">
+                            <label for="weight">Weight</label>
+                            <input type="number" class="form-control m-input" id="weight" aria-describedby="weightHelp" placeholder="Enter Weight">
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="m-portlet__foot">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <button type="submit" class="btn btn-primary">Save</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-12 col-md-12 col-sm-12" style="margin: 0px 0px 40px 25px;">
+        <div class="m-portlet">
+            <div class="m-portlet__head">
+                <div class="m-portlet__head-caption">
+                    <div class="m-portlet__head-title">
+                        <span class="m-portlet__head-icon">
+                                        <i class="la la-star"></i>
+                                    </span>
+                        <h3 class="m-portlet__head-text">
+                            Athletic Details <small>gym related details</small>
+                        </h3>
+                    </div>
+                </div>
+            </div>
+            <div class="m-portlet__body">
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="form-group m-form__group">
+                            <label for="goal">Goal</label>
+                            <select class="form-control m-input m-input--square" id="goal">
+                                        <option>Tone your body</option>
+                                        <option>Lose weight</option>
+                                        <option>Increase your stamina</option>
+                                        <option>Build Muscle</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="form-group m-form__group">
+                            <label for="iweight">Initial Weight</label>
+                            <input type="number" class="form-control m-input" id="iweight" aria-describedby="weightHelp" placeholder="Enter Weight">
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="form-group m-form__group">
+                            <label for="gweight">Target Weight</label>
+                            <input type="number" class="form-control m-input" id="gweight" aria-describedby="weightHelp" placeholder="Enter Weight">
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="form-group m-form__group">
+                            <label for="iheight">Initial Height</label>
+                            <input type="text" class="form-control m-input" id="iheight" aria-describedby="heightHelp" placeholder="Enter Height">
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="form-group m-form__group">
+                            <label for="gheight">Target Height</label>
+                            <input type="text" class="form-control m-input" id="gheight" aria-describedby="heightHelp" placeholder="Enter Height">
+                        </div>
+                    </div>
+
+                    <div class="col-lg-6">
+                        <div class="form-group m-form__group">
+                            <label for="sdate">Start Date</label>
+                            <input type="date" class="form-control m-input" id="sdate" aria-describedby="dateHelp" placeholder="Enter Date">
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="form-group m-form__group">
+                            <label for="tdate">Target Date</label>
+                            <input type="date" class="form-control m-input" id="tdate" aria-describedby="dateHelp" placeholder="Enter Date">
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="form-group m-form__group">
+                            <label for="waist">Waist</label>
+                            <input type="number" class="form-control m-input" id="waist" aria-describedby="waistHelp" placeholder="Enter Waist Size (cm)">
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="form-group m-form__group">
+                            <label for="hip">Hip</label>
+                            <input type="number" class="form-control m-input" id="hip" aria-describedby="hipHelp" placeholder="Enter Hip Size (cm)">
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="form-group m-form__group">
+                            <label for="chest">Bust/Chest</label>
+                            <input type="number" class="form-control m-input" id="chest" aria-describedby="chestHelp" placeholder="Enter Bust/Chest Size (cm)">
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="form-group m-form__group">
+                            <label for="biceps">Biceps</label>
+                            <input type="number" class="form-control m-input" id="biceps" aria-describedby="bicepsHelp" placeholder="Enter Biceps Size (cm)">
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="form-group m-form__group">
+                            <label for="physical">Physical Activity</label>
+                            <select class="form-control m-input m-input--square" id="physical">
+                                            <option>No Physical Activity</option>
+                                            <option>Walk Often</option>
+                                            <option>Exercise 1-2 times in a week</option>
+                                            <option>Exercise 3-5 times in a week</option>
+                                            <option>Exercise 5-7 times in a week</option>
+                                </select>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="form-group m-form__group">
+                            <label for="physical">Wake time</label>
+                            <wy-time-picker data-dropdown-toggle-state="settings.dropdownToggleState" data-time-settings="settings.time" data-theme="settings.theme" data-no-range="settings.noRange" data-format="settings.format" data-no-validation="settings.noValidation" data-apply-callback="onApplyTimePicker()"
+                                data-clear-callback="onClearTimePicker()">
+                            </wy-time-picker>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="form-group m-form__group">
+                            <label for="physical">Bed time</label>
+                            <wy-time-picker data-dropdown-toggle-state="settings1.dropdownToggleState" data-time-settings="settings1.time" data-theme="settings1.theme" data-no-range="settings1.noRange" data-format="settings1.format" data-no-validation="settings1.noValidation" data-apply-callback="onApplyTimePicker1()"
+                                data-clear-callback="onClearTimePicker1()">
+                            </wy-time-picker>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="form-group m-form__group">
+                            <label for="meals">How many Meals intake?</label>
+                            <select class="form-control m-input m-input--square" id="meals">
+                                        <option>1</option>
+                                        <option>2</option>
+                                        <option>3</option>
+                                        <option>4</option>
+                                        <option>5</option>
+                                        <option>6</option>
+                                        <option>7</option>
+                                        <option>8</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-lg-3">
+                        <div class="form-group m-form__group">
+                            <label for="smoke">Smoke?</label>
+                            <select class="form-control m-input m-input--square" id="smoke">
+                                    <option>Yes</option>
+                                    <option>No</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-lg-3">
+                        <div class="form-group m-form__group">
+                            <label for="alco">Alcohol?</label>
+                            <select class="form-control m-input m-input--square" id="alco">
+                                        <option>Yes</option>
+                                        <option>No</option>
+                                </select>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="form-group m-form__group">
+                            <label for="tea">How many Coffee/Tea intake in a day?</label>
+                            <select class="form-control m-input m-input--square" id="tea">
+                                        <option>1</option>
+                                        <option>2</option>
+                                        <option>3</option>
+                                        <option>4</option>
+                                        <option>5</option>
+                                        <option>6</option>
+                                        <option>7</option>
+                                        <option>8</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="m-form__group form-group">
+                            <label for="">Blood Test in last 3 months</label>
+                            <div class="m-radio-inline">
+                                <label class="m-radio">
+                                            <input type="radio" name="blood" value="yes"> Yes
+                                            <span></span>
+                                            </label>
+                                <label class="m-radio">
+                                            <input type="radio" name="blood" value="no"> No
+                                            <span></span>
+                                            </label>
+                            </div>
+                            <span class="m-form__help">Did you get a blood test in last 3 months?</span>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-3">
+                        <div class="form-group m-form__group">
+                            <label for="cholesterol">Cholesterol Level</label>
+                            <input type="number" class="form-control m-input" id="cholesterol" aria-describedby="cholesHelp" placeholder="Enter Cholesterol Level (mg/dl—mmol/l)">
+                        </div>
+                    </div>
+                    <div class="col-lg-3">
+                        <div class="form-group m-form__group">
+                            <label for="ldl">LDL</label>
+                            <input type="number" class="form-control m-input" id="ldl" aria-describedby="ldlHelp" placeholder="Enter LDL">
+                        </div>
+                    </div>
+                    <div class="col-lg-3">
+                        <div class="form-group m-form__group">
+                            <label for="hdl">HDL</label>
+                            <input type="number" class="form-control m-input" id="hdl" aria-describedby="hdlHelp" placeholder="Enter HDL">
+                        </div>
+                    </div>
+                    <div class="col-lg-3">
+                        <div class="form-group m-form__group">
+                            <label for="glevel">Glucose Level</label>
+                            <input type="number" class="form-control m-input" id="glevel" aria-describedby="glevelHelp" placeholder="Enter Glucose Level">
+                        </div>
+                    </div>
+                    <div class="col-lg-3">
+                        <div class="form-group m-form__group">
+                            <label for="bp">Blood Pressure</label>
+                            <input type="number" class="form-control m-input" id="bp" aria-describedby="bpHelp" placeholder="Enter Blood Pressure (diastolic----systolic)">
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="m-form__group form-group">
+                            <label for="">Diagnosed Condition</label>
+                            <div class="m-radio-inline">
+                                <label class="m-radio">
+                                    <input type="radio" name="condition" value="yes"> Yes
+                                    <span></span>
+                                </label>
+                                <label class="m-radio">
+                                    <input type="radio" name="condition" value="no"> No
+                                    <span></span>
+                                </label>
+                            </div>
+                            <span class="m-form__help">Have you been diagonsed with any diseases?</span>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="form-group m-form__group">
+                            <label for="disease">Your Disease</label>
+                            <input type="text" class="form-control m-input" id="disease" aria-describedby="diseaseHelp" placeholder="Enter Your Disease">
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="m-form__group form-group">
+                            <label for="">Thyroid</label>
+                            <div class="m-radio-inline">
+                                <label class="m-radio">
+                                                <input type="radio" name="thyroid" value="yes"> Yes
+                                                <span></span>
+                                                </label>
+                                <label class="m-radio">
+                                                <input type="radio" name="thyroid" value="no"> No
+                                                <span></span>
+                                                </label>
+                            </div>
+                            <span class="m-form__help">Do you have thyroid problem?</span>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="m-portlet__foot">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <button type="submit" class="btn btn-primary">Save</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-12 col-md-12 col-sm-12" style="margin: 0px 0px 40px 25px;">
+        <div class="m-portlet">
+            <div class="m-portlet__head">
+                <div class="m-portlet__head-caption">
+                    <div class="m-portlet__head-title">
+                        <span class="m-portlet__head-icon">
+                                            <i class="la la-star"></i>
+                                        </span>
+                        <h3 class="m-portlet__head-text">
+                            Food Preferences <small>to help us maintain your diet</small>
+                        </h3>
+                    </div>
+                </div>
+            </div>
+            <div class="m-portlet__body">
+                <div class="row">
+
+                    <div class="col-lg-6">
+                        <div class="m-form__group form-group">
+                            <label for="">Meat Choices</label>
+                            <div class="m-radio-inline">
+                                <label class="m-radio">
+                                    <input type="radio" name="meat" value="yes"> Yes
+                                    <span></span>
+                                </label>
+                                <label class="m-radio">
+                                    <input type="radio" name="meat" value="no"> No
+                                    <span></span>
+                                </label>
+                            </div>
+                            <span class="m-form__help">Do you prefer meat to be included in diet</span>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-3">
+                        <div class="m-form__group form-group">
+                            <label for="">Beef</label>
+                            <div class="m-radio-inline">
+                                <label class="m-radio">
+                                    <input type="radio" name="beef" value="yes"> Yes
+                                    <span></span>
+                                </label>
+                                <label class="m-radio">
+                                    <input type="radio" name="beef" value="no"> No
+                                    <span></span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3">
+                        <div class="m-form__group form-group">
+                            <label for="">Fish</label>
+                            <div class="m-radio-inline">
+                                <label class="m-radio">
+                                        <input type="radio" name="fish" value="yes"> Yes
+                                        <span></span>
+                                    </label>
+                                <label class="m-radio">
+                                        <input type="radio" name="fish" value="no"> No
+                                        <span></span>
+                                    </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3">
+                        <div class="m-form__group form-group">
+                            <label for="">Chicken</label>
+                            <div class="m-radio-inline">
+                                <label class="m-radio">
+                                            <input type="radio" name="chicken" value="yes"> Yes
+                                            <span></span>
+                                        </label>
+                                <label class="m-radio">
+                                            <input type="radio" name="chicken" value="no"> No
+                                            <span></span>
+                                        </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3">
+                        <div class="m-form__group form-group">
+                            <label for="">Pork</label>
+                            <div class="m-radio-inline">
+                                <label class="m-radio">
+                                                <input type="radio" name="pork" value="yes"> Yes
+                                                <span></span>
+                                            </label>
+                                <label class="m-radio">
+                                                <input type="radio" name="pork" value="no"> No
+                                                <span></span>
+                                            </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3">
+                        <div class="m-form__group form-group">
+                            <label for="">Prawns</label>
+                            <div class="m-radio-inline">
+                                <label class="m-radio">
+                                                    <input type="radio" name="prawns" value="yes"> Yes
+                                                    <span></span>
+                                                </label>
+                                <label class="m-radio">
+                                                    <input type="radio" name="prawns" value="no"> No
+                                                    <span></span>
+                                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3">
+                        <div class="m-form__group form-group">
+                            <label for="">Eggs</label>
+                            <div class="m-radio-inline">
+                                <label class="m-radio">
+                                                        <input type="radio" name="eggs" value="yes"> Yes
+                                                        <span></span>
+                                                    </label>
+                                <label class="m-radio">
+                                                        <input type="radio" name="eggs" value="no"> No
+                                                        <span></span>
+                                                    </label>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="col-lg-6">
+                        <div class="m-form__group form-group">
+                            <label for="">Food Choices</label>
+                            <div class="m-radio-inline">
+                                <label class="m-radio">
+                                        <input type="radio" name="food" value="yes"> Yes
+                                        <span></span>
+                                    </label>
+                                <label class="m-radio">
+                                        <input type="radio" name="food" value="no"> No
+                                        <span></span>
+                                    </label>
+                            </div>
+                            <span class="m-form__help">What food do you prefer to be included in diet</span>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-3">
+                        <div class="m-form__group form-group">
+                            <label for="">Potato</label>
+                            <div class="m-radio-inline">
+                                <label class="m-radio">
+                                        <input type="radio" name="potato" value="yes"> Yes
+                                        <span></span>
+                                    </label>
+                                <label class="m-radio">
+                                        <input type="radio" name="potato" value="no"> No
+                                        <span></span>
+                                    </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3">
+                        <div class="m-form__group form-group">
+                            <label for="">Sweet Potato</label>
+                            <div class="m-radio-inline">
+                                <label class="m-radio">
+                                            <input type="radio" name="spotato" value="yes"> Yes
+                                            <span></span>
+                                        </label>
+                                <label class="m-radio">
+                                            <input type="radio" name="spotato" value="no"> No
+                                            <span></span>
+                                        </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3">
+                        <div class="m-form__group form-group">
+                            <label for="">Mushrooms</label>
+                            <div class="m-radio-inline">
+                                <label class="m-radio">
+                                                <input type="radio" name="mushrooms" value="yes"> Yes
+                                                <span></span>
+                                            </label>
+                                <label class="m-radio">
+                                                <input type="radio" name="mushrooms" value="no"> No
+                                                <span></span>
+                                            </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3">
+                        <div class="m-form__group form-group">
+                            <label for="">Rice</label>
+                            <div class="m-radio-inline">
+                                <label class="m-radio">
+                                                    <input type="radio" name="rice" value="yes"> Yes
+                                                    <span></span>
+                                                </label>
+                                <label class="m-radio">
+                                                    <input type="radio" name="rice" value="no"> No
+                                                    <span></span>
+                                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3">
+                        <div class="m-form__group form-group">
+                            <label for="">Roti</label>
+                            <div class="m-radio-inline">
+                                <label class="m-radio">
+                                                        <input type="radio" name="roti" value="yes"> Yes
+                                                        <span></span>
+                                                    </label>
+                                <label class="m-radio">
+                                                        <input type="radio" name="roti" value="no"> No
+                                                        <span></span>
+                                                    </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3">
+                        <div class="m-form__group form-group">
+                            <label for="">Bread</label>
+                            <div class="m-radio-inline">
+                                <label class="m-radio">
+                                                            <input type="radio" name="Bread" value="yes"> Yes
+                                                            <span></span>
+                                                        </label>
+                                <label class="m-radio">
+                                                            <input type="radio" name="Bread" value="no"> No
+                                                            <span></span>
+                                                        </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-3">
+                        <div class="m-form__group form-group">
+                            <label for="">Oats</label>
+                            <div class="m-radio-inline">
+                                <label class="m-radio">
+                                                                <input type="radio" name="oats" value="yes"> Yes
+                                                                <span></span>
+                                                            </label>
+                                <label class="m-radio">
+                                                                <input type="radio" name="oats" value="no"> No
+                                                                <span></span>
+                                                            </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3">
+                        <div class="m-form__group form-group">
+                            <label for="">Quinoa</label>
+                            <div class="m-radio-inline">
+                                <label class="m-radio">
+                                                                    <input type="radio" name="quinoa" value="yes"> Yes
+                                                                    <span></span>
+                                                                </label>
+                                <label class="m-radio">
+                                                                    <input type="radio" name="quinoa" value="no"> No
+                                                                    <span></span>
+                                                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3">
+                        <div class="m-form__group form-group">
+                            <label for="">Paneer</label>
+                            <div class="m-radio-inline">
+                                <label class="m-radio">
+                                                                        <input type="radio" name="paneer" value="yes"> Yes
+                                                                        <span></span>
+                                                                    </label>
+                                <label class="m-radio">
+                                                                        <input type="radio" name="paneer" value="no"> No
+                                                                        <span></span>
+                                                                    </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3">
+                        <div class="m-form__group form-group">
+                            <label for="">Nuts</label>
+                            <div class="m-radio-inline">
+                                <label class="m-radio">
+                                                                            <input type="radio" name="Nuts" value="yes"> Yes
+                                                                            <span></span>
+                                                                        </label>
+                                <label class="m-radio">
+                                                                            <input type="radio" name="Nuts" value="no"> No
+                                                                            <span></span>
+                                                                        </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3">
+                        <div class="m-form__group form-group">
+                            <label for="">Yoghurt</label>
+                            <div class="m-radio-inline">
+                                <label class="m-radio">
+                                                                                <input type="radio" name="yoghurt" value="yes"> Yes
+                                                                                <span></span>
+                                                                            </label>
+                                <label class="m-radio">
+                                                                                <input type="radio" name="yoghurt" value="no"> No
+                                                                                <span></span>
+                                                                            </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="m-portlet__foot">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <button type="submit" class="btn btn-primary">Save</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-12 col-md-12 col-sm-12" style="margin: 0px 0px 40px 25px;">
+        <div class="m-portlet">
+            <div class="m-portlet__head">
+                <div class="m-portlet__head-caption">
+                    <div class="m-portlet__head-title">
+                        <span class="m-portlet__head-icon">
+                                                <i class="la la-star"></i>
+                                            </span>
+                        <h3 class="m-portlet__head-text">
+                            Medical History <small>please give us your medical history</small>
+                        </h3>
+                    </div>
+                </div>
+            </div>
+            <div class="m-portlet__body">
+                <div class="row">
+
+                    <div class="col-lg-12">
+                        <div class="form-group m-form__group">
+                            <label for="medical"></label>
+                            <textarea class="form-control m-input m-input--solid" id="medical" rows="3"></textarea>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="m-portlet__foot">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <button type="submit" class="btn btn-primary">Save</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- end:: Body -->
+<script>
+</script>
