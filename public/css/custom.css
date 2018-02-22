@@ -42,13 +42,56 @@
     background-size: cover;
 }
 
+.trainersSection {
+    background: #F9F9F9;
+}
+
+.coach {
+    background: #FFFFFF;
+    padding: 10px;
+}
+
+.coach .info {
+    display: none;
+}
+
+.coach hr {
+    border-top: 2px solid rgb(130, 124, 124);
+    width: 100px;
+}
+
 .coach img {
     width: 300px !important;
-    margin-left: 15%;
+    margin-left: 25%;
+    border-radius: 235px;
+    transition-delay: 1s;
+    transition-duration: 1s;
+    transition-property: all;
+    transition-timing-function: ease-in-out;
+}
+
+.coach img:hover {
+    display: none;
+}
+
+.coach img:hover+.info {
+    display: block;
+}
+
+.coach h3:hover+h6+hr+img+.info {
+    display: block;
+}
+
+.coach .info:hover {
+    display: block;
 }
 
 .coach p {
     margin-bottom: 25px;
+}
+
+.coach .info {
+    font-size: 1.8em;
 }
 
 .theme-btn {
@@ -63,38 +106,29 @@
     height: 100%;
 }
 
-.testimonial {
-    position: relative;
-    padding: 15px 20px;
-    background: rgba(252, 251, 251, 0.542);
-    box-shadow: 2px 17px 20px #00000062;
-}
-
-.testimonial img {
+.quote-box img {
     display: inline-block !important;
     width: 100px !important;
     border-radius: 50%;
 }
 
-.testimonial .client {
+.quote-box .clientpic {
     position: absolute;
-    left: 100px;
-    top: 92px;
+    left: 10px;
+    top: 22px;
 }
 
-.testimonial .coach {
-    position: absolute;
-    left: 290px;
-    top: 110px;
-}
-
-.testimonial .coach+p {
+.quote-box .coach+p {
     margin-top: 50px;
 }
 
 .quickLinksSection .quicklinks {
     background-color: #1d1c1c;
     padding: 40px 20px;
+}
+
+.quicklinks {
+    font-size: 1.6em;
 }
 
 .quicklinks h4 {

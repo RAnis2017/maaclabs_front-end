@@ -184,28 +184,28 @@ newmanApp.controller('TestimonialController', ['$scope', function($scope) {
         clientname: "Swati Prajapati",
         coachname: "Monika Sharma",
         clientpic: "images/client1.jpg",
-        coachpic: "images/coach1.png",
+        coachpic: "images/home-3-2-571x483.jpg",
         intro: `Monika is very encouraging,supportive and always reachable. She never gave up on me,11kgs lighter,all because of her. She is an amazing mentor!`,
         id: 2332
     }, {
         clientname: "Swati Prajapati",
         coachname: "Monika Sharma",
         clientpic: "images/client1.jpg",
-        coachpic: "images/coach1.png",
+        coachpic: "images/home-3-3-571x483.jpg",
         intro: `Monika is very encouraging,supportive and always reachable. She never gave up on me,11kgs lighter,all because of her. She is an amazing mentor!`,
         id: 2332
     }, {
         clientname: "Swati Prajapati",
         coachname: "Monika Sharma",
         clientpic: "images/client1.jpg",
-        coachpic: "images/coach1.png",
+        coachpic: "images/home-3-4-571x483.jpg",
         intro: `Monika is very encouraging,supportive and always reachable. She never gave up on me,11kgs lighter,all because of her. She is an amazing mentor!`,
         id: 2332
     }, {
         clientname: "Swati Prajapati",
         coachname: "Monika Sharma",
         clientpic: "images/client1.jpg",
-        coachpic: "images/coach1.png",
+        coachpic: "images/home-3-2-571x483.jpg",
         intro: `Monika is very encouraging,supportive and always reachable. She never gave up on me,11kgs lighter,all because of her. She is an amazing mentor!`,
         id: 2332
     }];
