@@ -49,6 +49,7 @@
 .coach {
     background: #FFFFFF;
     padding: 10px;
+    position: relative;
 }
 
 .coach .info {
@@ -62,7 +63,8 @@
 
 .coach img {
     width: 300px !important;
-    margin-left: 25%;
+    position: absolute;
+    left: 23%;
     border-radius: 235px;
     transition-delay: 1s;
     transition-duration: 1s;
@@ -70,20 +72,67 @@
     transition-timing-function: ease-in-out;
 }
 
-.coach img:hover {
-    display: none;
+@media only screen and (max-width: 1680px) {
+    .coach img {
+        position: absolute;
+        left: 18%;
+    }
 }
 
-.coach img:hover+.info {
-    display: block;
+@media only screen and (max-width: 1280px) {
+    .coach img {
+        position: absolute;
+        left: 4%;
+    }
 }
 
-.coach h3:hover+h6+hr+img+.info {
-    display: block;
+@media only screen and (max-width: 1366px) {
+    .coach img {
+        position: absolute;
+        left: 10%;
+    }
 }
 
-.coach .info:hover {
-    display: block;
+@media only screen and (max-width: 1024px) {
+    .coach img {
+        position: absolute;
+        left: 0%;
+    }
+}
+
+@media only screen and (max-width: 768px) {
+    .coach img {
+        position: absolute;
+        left: 10%;
+    }
+}
+
+@media only screen and (max-width: 800px) {
+    .coach img {
+        position: absolute;
+        left: 6%;
+    }
+}
+
+@media only screen and (max-width: 640px) {
+    .coach img {
+        position: absolute;
+        left: 2%;
+    }
+}
+
+@media only screen and (max-width: 480px) {
+    .coach img {
+        position: absolute;
+        left: 14%;
+    }
+}
+
+@media only screen and (max-width: 320px) {
+    .coach img {
+        position: absolute;
+        left: 4%;
+    }
 }
 
 .coach p {
@@ -102,8 +151,9 @@
 }
 
 .testimonialsSection {
-    margin-top: 100px;
+    margin-top: 50px;
     height: 100%;
+    background-color: #232222;
 }
 
 .quote-box img {
@@ -747,4 +797,100 @@ a#googleplus {
 
 form.cd-form a:active {
     background-color: #222;
+}
+
+.card-container {
+    cursor: pointer;
+    height: 350px;
+    perspective: 600;
+    position: relative;
+    width: 100%;
+}
+
+.card {
+    height: 100%;
+    position: absolute;
+    transform-style: preserve-3d;
+    transition: all 1s ease-in-out;
+    width: 100%;
+}
+
+.card:hover {
+    transform: rotateY(180deg);
+}
+
+.card .side {
+    backface-visibility: hidden;
+    border-radius: 6px;
+    height: 100%;
+    position: absolute;
+    overflow: hidden;
+    width: 100%;
+}
+
+.card .back {
+    background: #F9F9F9;
+    color: #363636;
+    text-align: center;
+    padding: 100px 0px 0px 0px;
+    font-size: 1.8em;
+    transform: rotateY(180deg);
+}
+
+.testiowl {
+    margin-bottom: 100px !important;
+}
+
+.testiowl .owl-controls {
+    position: relative;
+}
+
+.testiowl .owl-controls .owl-next {
+    position: absolute;
+    width: 80px;
+    top: 85px;
+    left: 51%;
+}
+
+.testiowl .owl-controls .owl-next::before {
+    background: #EE4D1B;
+    color: white;
+}
+
+.testiowl .owl-controls .owl-prev {
+    position: absolute;
+    width: 80px;
+    top: 60px;
+    left: 45%;
+}
+
+.testiowl .owl-controls .owl-prev {
+    background: #EE4D1B;
+    color: white;
+}
+
+.testiowl .owl-controls .owl-prev::before {
+    margin-left: 10px;
+}
+
+.section-lg {
+    padding-bottom: 50px !important;
+}
+
+@media only screen and (max-width: 1024px) {
+    .testiowl .owl-controls .owl-next {
+        left: 49%;
+    }
+    .testiowl .owl-controls .owl-prev {
+        left: 40%;
+    }
+}
+
+@media only screen and (max-width: 480px) {
+    .testiowl .owl-controls .owl-next {
+        left: 49%;
+    }
+    .testiowl .owl-controls .owl-prev {
+        left: 30%;
+    }
 }

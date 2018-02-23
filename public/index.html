@@ -124,16 +124,28 @@
 
                     <div class="owl-carousel">
                         <div class="coach text-center" ng-repeat="coach in coaches">
-                            <hr class="trainerline">
-                            <h3>{{coach.name}}</h3>
-                            <h6>Trainer</h6>
-                            <hr class="trainerline">
-                            <img src="{{coach.coachpic}}" alt="">
-                            <div class="info">
-                                <p>{{coach.intro}}</p>
-                                <a href="checkout?{{coach.id}}" class="theme-btn">ENROLL NOW</a>
-                                <a href="coach/{{coach.id}}" class="theme-btn">DETAILS</a>
+                            <div class="card-container">
+                                <div class="card">
+                                    <div class="side">
+
+                                        <hr class="trainerline">
+                                        <h5 style="line-height: 20px; margin-top: 10px;">{{coach.name}}</h5>
+                                        <h6 style="line-height: 20px; margin-bottom: 10px;">Trainer</h6>
+                                        <hr class="trainerline">
+                                        <img src="{{coach.coachpic}}" alt="">
+                                    </div>
+                                    <div class="side back">
+
+                                        <p>{{coach.intro}}</p>
+                                        <a href="checkout?{{coach.id}}" class="theme-btn">ENROLL NOW</a>
+                                        <a href="coach/{{coach.id}}" class="theme-btn">DETAILS</a>
+
+                                    </div>
+                                </div>
                             </div>
+
+
+
                         </div>
 
                     </div>
@@ -234,11 +246,11 @@
         <section class="testimonialsSection">
             <div class="row">
 
-                <h2 class="text-spacing-0">Testimonials</h2>
+                <h2 class="text-spacing-0" style="color: #C4C8CD;">Testimonials</h2>
                 <!-- <h3 class="text-center">Our Clients Testimonials</h3> -->
-                <div class="col-lg-12 col-sm-12 col-md-12" style="margin-top: 100px;" ng-controller="TestimonialController">
+                <div class="col-lg-12 col-sm-12 col-md-12" style="margin-top: 50px;" ng-controller="TestimonialController">
 
-                    <div class="owl-carousel">
+                    <div class="owl-carousel testiowl">
                         <div class="owl-item" ng-repeat="testimonial in testimonials">
                             <div class="bg-dark quote-box" style="background: url({{testimonial.coachpic}}) no-repeat center; background-size: cover;">
                                 <img src="{{testimonial.clientpic}}" alt="" class="clientpic">
@@ -253,27 +265,28 @@
                                 </div>
                             </div>
                         </div>
-
                     </div>
+
+
                 </div>
 
             </div>
         </section>
         <!-- RD Parallax-->
-        <section class="section-lg text-center" style="background: url(&quot;images/bg-11.jpg&quot;) no-repeat center; background-size: cover;">
+        <section class="section-lg text-center" style="background: url(&quot;images/bg-11.jpg&quot;) no-repeat center; background-size: cover; height: 450px; ">
             <div class="shell-fluid">
-                <div class="range range-30 range-center">
+                <div class="range range-20 range-center">
                     <div class="cell-xs-12">
-                        <h3 class="text-uppercase text-white text-spacing-150">AND START YOURS ENROLL NOW
-                        </h3>
+                        <h4 class="text-uppercase text-white text-spacing-150">AND START YOURS ENROLL NOW
+                        </h4>
                         <a href="checkout" class="button button-white">ENROLL NOW</a>
                     </div>
                     <div class="cell-xs-12"><span class="icon icon-lg thin-icon-checklist text-white"></span></div>
                     <div class="cell-xs-12 cell-lg-10">
 
-                        <h2 class="text-uppercase text-white text-spacing-150">Daily Workouts</h2>
-                        <h2 class="text-uppercase text-white text-spacing-150">Daily Diet</h2>
-                        <h4 class="text-regular text-white text-uppercase text-spacing-150">personalized for every client</h4>
+                        <h4 class="text-uppercase text-white text-spacing-150">Daily Workouts</h4>
+                        <h4 class="text-uppercase text-white text-spacing-150">Daily Diet</h4>
+                        <h6 class="text-regular text-white text-uppercase text-spacing-150">personalized for every client</h6>
                     </div>
                     <div class="cell-xs-12"><a class="button button-white" href="adult-programs.html">view trainers</a></div>
                 </div>
