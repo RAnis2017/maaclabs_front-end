@@ -118,7 +118,7 @@
 
                 <div class="col-lg-12 col-sm-12 col-md-12 trainerImg">
                 </div>
-                <h3 class="text-center" style="margin: 50px 0px 140px 0px;">Our Trainers</h3>
+                <h3 class="text-center" style="margin: 50px 0px 30px 0px;">Our Trainers</h3>
 
                 <div class="col-lg-12 col-sm-12 col-md-12" ng-controller="CoachController">
 
@@ -129,8 +129,8 @@
                                     <div class="side">
 
                                         <hr class="trainerline">
-                                        <h5 style="line-height: 20px; margin-top: 10px;">{{coach.name}}</h5>
-                                        <h6 style="line-height: 20px; margin-bottom: 10px;">Trainer</h6>
+                                        <h5 style="line-height: 20px; margin-top: 10px; color: #8C8B97;">{{coach.name}}</h5>
+                                        <h6 style="line-height: 20px; margin-bottom: 10px; color: #8C8B97; font-family: 'Droid Serif', serif; font-style: italic;">Trainer</h6>
                                         <hr class="trainerline">
                                         <img src="{{coach.coachpic}}" alt="">
                                     </div>
@@ -243,12 +243,12 @@
                 </div>
             </div>
         </section>
-        <section class="testimonialsSection" style="margin-top: 15px;">
+        <section class="testimonialsSection" style="margin-top: 0px;">
             <div class="row">
 
-                <h2 class="text-spacing-0" style="color: rgb(255, 255, 255); margin-top: 10px;">Testimonials</h2>
+                <h2 class="text-spacing-0" style="color: rgb(255, 255, 255); margin-top: 7px; font-family: Montserrat, ' Times New Roman ', Times, serif;">Testimonials</h2>
                 <!-- <h3 class="text-center">Our Clients Testimonials</h3> -->
-                <div class="col-lg-12 col-sm-12 col-md-12" style="margin-top: 20px;" ng-controller="TestimonialController">
+                <div class="col-lg-12 col-sm-12 col-md-12" style="margin-top: 7px;" ng-controller="TestimonialController">
 
                     <div class="owl-carousel testiowl">
                         <div class="owl-item" ng-repeat="testimonial in testimonials">
@@ -273,19 +273,18 @@
             </div>
         </section>
         <!-- RD Parallax-->
-        <section class="section-lg text-center" style="background: url(&quot;images/bg-11.jpg&quot;) no-repeat center; background-size: cover; height: 450px; ">
+        <section class="section-lg text-center" style="background: url(&quot;images/bg-11.jpg&quot;) no-repeat center; background-size: cover; ">
             <div class="shell-fluid">
                 <div class="range range-20 range-center">
                     <div class="cell-xs-12">
-                        <h4 class="text-uppercase text-white text-spacing-150">AND START YOURS ENROLL NOW
-                        </h4>
+                        <h4 class="text-uppercase text-white text-spacing-150" style="margin-top: -40px; margin-bottom: 14px;">AND START YOURS ENROLL NOW</h4>
                         <a href="checkout" class="button button-white">ENROLL NOW</a>
                     </div>
                     <div class="cell-xs-12"><span class="icon icon-lg thin-icon-checklist text-white"></span></div>
                     <div class="cell-xs-12 cell-lg-10">
 
                         <h4 class="text-uppercase text-white text-spacing-150">Daily Workouts</h4>
-                        <h4 class="text-uppercase text-white text-spacing-150">Daily Diet</h4>
+                        <h4 class="text-uppercase text-white text-spacing-150" style="margin-bottom: 14px;">Daily Diet</h4>
                         <h6 class="text-regular text-white text-uppercase text-spacing-150">personalized for every client</h6>
                     </div>
                     <div class="cell-xs-12"><a class="button button-white" href="adult-programs.html">view trainers</a></div>
@@ -386,7 +385,7 @@
 
                 <!-- <h3 class="text-center">Our Clients Testimonials</h3> -->
                 <div class="col-lg-12 col-sm-12 col-md-12 quicklinks" ng-controller="quickLinksController">
-                    <h4 class="text-center" style="margin-top: -30px;">Links</h4>
+                    <h4 class="text-center" style="margin-top: -20px; margin-bottom: 30px; font-family: Montserrat, 'Times New Roman', Times, serif;">Links</h4>
                     <div class="col-lg-3 col-sm-3 col-md-3" ng-repeat="link in links">
                         <h4>{{link.linkname}}</h4>
                         <p>{{link.info}}</p>

@@ -266,7 +266,7 @@ $document.ready(function() {
 
         $(".owl-carousel").owlCarousel({
             loop: true,
-            margin: 60,
+            margin: 30,
             responsiveClass: true,
             responsive: {
                 0: {

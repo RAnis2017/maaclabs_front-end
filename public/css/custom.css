@@ -159,6 +159,7 @@
 .testimonialsSection {
     margin-top: 50px;
     height: 100%;
+    padding: 0px 10px;
     background-color: #232222;
 }
 
@@ -817,12 +818,17 @@ form.cd-form a:active {
     outline: none;
 }
 
+.coach {
+    padding: 0;
+}
+
 .card-container {
     cursor: pointer;
     height: 400px;
     perspective: 600;
     position: relative;
     width: 100%;
+    padding: 0;
 }
 
 .card {
@@ -831,10 +837,20 @@ form.cd-form a:active {
     transform-style: preserve-3d;
     transition: all 1s ease-in-out;
     width: 100%;
+    padding: 0;
 }
 
-.card:hover {
+.card-container:hover .card {
     transform: rotateY(180deg);
+}
+
+.card-container:hover .card img {
+    display: none;
+}
+
+.card-container .card img {
+    transform-style: preserve-3d;
+    transition: all 1s ease-in-out;
 }
 
 .card .side {
@@ -855,8 +871,17 @@ form.cd-form a:active {
     transform: rotateY(180deg);
 }
 
+.side.back .button {
+    position: relative;
+    z-index: 200;
+}
+
 .testiowl {
     margin-bottom: 100px !important;
+}
+
+.testiowl .owl-dots {
+    display: none !important;
 }
 
 .testiowl .owl-controls {
@@ -865,7 +890,7 @@ form.cd-form a:active {
 
 .testiowl .owl-controls .owl-next {
     position: absolute;
-    width: 80px;
+    width: 50px;
     top: 85px;
     left: 51%;
 }
@@ -877,18 +902,14 @@ form.cd-form a:active {
 
 .testiowl .owl-controls .owl-prev {
     position: absolute;
-    width: 80px;
+    width: 50px;
     top: 60px;
-    left: 45%;
+    left: 46%;
 }
 
 .testiowl .owl-controls .owl-prev {
     background: #EE4D1B;
     color: white;
-}
-
-.testiowl .owl-controls .owl-prev::before {
-    margin-left: 10px;
 }
 
 .section-lg {
@@ -897,10 +918,10 @@ form.cd-form a:active {
 
 @media only screen and (max-width: 1024px) {
     .testiowl .owl-controls .owl-next {
-        left: 49%;
+        left: 52%;
     }
     .testiowl .owl-controls .owl-prev {
-        left: 40%;
+        left: 44%;
     }
 }
 
@@ -920,4 +941,13 @@ form.cd-form a:active {
     .testiowl .owl-controls .owl-prev {
         left: 30%;
     }
+}
+
+.trainersSection .owl-next {
+    left: 97%;
+}
+
+.trainersSection .owl-prev {
+    width: 46px;
+    overflow: hidden;
 }
