@@ -1,3 +1,10 @@
+body {
+    font-size: 100%;
+    font-family: "PT Sans", sans-serif;
+    color: #505260;
+    background-color: #fff;
+}
+
 .exerciseSelect {
     padding: 10px 15px;
     background-color: rgb(189, 199, 199);
@@ -88,6 +95,7 @@
 .fileBox {
     display: block;
     padding: 10px 15px;
+    font-size: 1.2em;
 }
 
 a.fileBox:hover {
@@ -112,19 +120,33 @@ a.fileBox:hover {
 }
 
 .btn.m-btn--gradient-from-brand.m-btn--gradient-to-info {
-    background: #ED4E21;
-    background: -webkit-linear-gradient(135deg, #ED4E21 30%, rgb(174, 93, 70) 100%);
-    background: -o-linear-gradient(135deg, #ED4E21 30%, rgb(174, 93, 70) 100%);
-    background: -moz-linear-gradient(135deg, #ED4E21 30%, rgb(174, 93, 70) 100%);
-    background: linear-gradient(135deg, #ED4E21 30%, rgb(174, 93, 70) 100%);
+    display: inline-block;
+    position: relative;
+    font-family: Montserrat, "Times New Roman", Times, serif;
+    padding: 13px 22px;
+    font-size: 14px;
+    line-height: 20px;
+    border: 2px solid #ef4c14 !important;
+    border-radius: 0;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    text-transform: uppercase;
+    text-align: center;
+    letter-spacing: 0.15em;
+    cursor: pointer;
+    vertical-align: middle;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    transition: 250ms all ease-in-out;
+    color: #ef4c14 !important;
+    background: transparent;
 }
 
 .btn.m-btn--gradient-from-brand.m-btn--gradient-to-info:hover {
-    background: #ED4E21;
-    background: -webkit-linear-gradient(135deg, rgb(174, 93, 70) 30%, #ED4E21 100%);
-    background: -o-linear-gradient(135deg, rgb(174, 93, 70) 30%, #ED4E21 100%);
-    background: -moz-linear-gradient(135deg, rgb(174, 93, 70) 30%, #ED4E21 100%);
-    background: linear-gradient(135deg, rgb(174, 93, 70) 30%, #ED4E21 100%);
+    color: #ffffff !important;
+    background: #ef4c14;
 }
 
 .m--bg-brand {
@@ -141,17 +163,48 @@ a.fileBox:hover {
 }
 
 .btn-primary {
-    color: rgb(255, 255, 255);
-    background-color: rgb(194, 99, 73);
-    border-color: rgb(194, 99, 73);
+    display: inline-block;
+    position: relative;
+    font-family: Montserrat, "Times New Roman", Times, serif;
+    padding: 13px 22px;
+    font-size: 14px;
+    line-height: 20px;
+    border: 2px solid #ef4c14 !important;
+    border-radius: 0;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    text-transform: uppercase;
+    text-align: center;
+    letter-spacing: 0.15em;
+    cursor: pointer;
+    vertical-align: middle;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    transition: 250ms all ease-in-out;
+    color: #ef4c14 !important;
+    background: transparent;
 }
 
 .btn-primary:hover {
-    color: rgb(255, 255, 255);
-    background-color: #ED4E21;
-    border-color: #ED4E21;
+    color: #ffffff !important;
+    background: #ef4c14;
 }
 
 .m-brand.m-brand--skin-dark {
     background: rgb(63, 62, 62);
 }
+
+.m-menu__link-text,
+.m-menu__section-text,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-family: Montserrat, "Times New Roman", Times, serif !important;
+}
+
+.m-portlet__body {}
