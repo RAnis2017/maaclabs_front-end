@@ -207,4 +207,48 @@ h6 {
     font-family: Montserrat, "Times New Roman", Times, serif !important;
 }
 
-.m-portlet__body {}
+h1 {
+    font-size: 1.6rem !important;
+}
+
+h2 {
+    font-size: 1.5rem !important;
+}
+
+h3 {
+    font-size: 1.4rem !important;
+}
+
+h4 {
+    font-size: 1.3rem !important;
+}
+
+h5 {
+    font-size: 1.2rem !important;
+}
+
+h6 {
+    font-size: 1.1rem !important;
+}
+
+label {
+    font-size: 1.3rem !important;
+}
+
+.m-list-search__result-category {
+    font-size: 1.4rem !important;
+}
+
+.m-list-search__result-item-text {
+    font-size: 1.3rem !important;
+}
+
+.stats {
+    margin: -360px 0px 40px 25px;
+}
+
+@media only screen and (max-width: 1024px) {
+    .stats {
+        margin: 20px 0px 40px 25px;
+    }
+}

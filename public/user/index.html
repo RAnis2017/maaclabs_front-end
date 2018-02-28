@@ -50,6 +50,20 @@
     <script src="assets/angular-plotly.js"></script>
     <script src="../app/lib/angular-route.min.js"></script>
     <script src="app/app.js"></script>
+    <style>
+        body {
+            width: 100%;
+            height: 100%;
+            overflow-x: hidden;
+            margin: 0;
+        }
+        
+        html {
+            width: 100%;
+            height: 100%;
+            overflow-x: hidden;
+        }
+    </style>
 </head>
 <!-- end::Head -->
 
@@ -74,9 +88,13 @@
 
         <!-- end:: Page -->
         <!-- begin::Footer -->
-        <footer ng-include="'footer.html'" class="m-grid__item	m-footer ">
+        <div class="container-fluid">
+            <div class="row">
+                <footer ng-include="'footer.html'" class="m-grid__item	m-footer ">
 
-        </footer>
+                </footer>
+            </div>
+        </div>
         <!-- end::Footer -->
     </div>
 
