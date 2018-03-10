@@ -1,0 +1,23 @@
+<div class="container-fluid">
+    <section class="workoutSection" style="text-align:left; padding: 20px;" ng-controller="workoutsController">
+        <div class="row">
+
+
+            <h3 style="margin: 10px;">WORKOUTS</h3>
+            <h6 style="text-transform: capitalize; font-weight:bolder; margin: 10px;">The best moves from trainers and other fitness pros</h6>
+
+            <div class="col-lg-3 col-sm-6 col-md-3" style="margin: 20px 0px;" ng-repeat="workout in workouts">
+
+                <a href="#linktoarticle" class="workout">
+                    <div class="overlay">
+                        <img src="{{workout.image}}" alt="{{workout.heading}}">
+                    </div>
+                    <img src="images/logo.png" class="centerlogo">
+                    <h5>{{workout.heading}}</h5>
+                    <h6>{{workout.category}}</h6>
+
+                </a>
+            </div>
+        </div>
+    </section>
+</div>

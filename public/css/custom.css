@@ -951,3 +951,94 @@ form.cd-form a:active {
     width: 46px;
     overflow: hidden;
 }
+
+.workout {
+    text-align: center;
+}
+
+.workout:hover .overlay {
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.workout:hover img {
+    opacity: 0.5;
+}
+
+.workout:hover .centerlogo {
+    opacity: 1;
+}
+
+.centerlogo {
+    width: 140px;
+    position: relative;
+    z-index: 200;
+    top: -60px;
+    left: 33%;
+    margin-bottom: -50px;
+}
+
+@media only screen and (max-width: 1280px) {
+    .centerlogo {
+        width: 140px;
+        position: relative;
+        z-index: 200;
+        top: -60px;
+        left: 27%;
+        margin-bottom: -50px;
+    }
+}
+
+@media only screen and (max-width: 1366px) {
+    .centerlogo {
+        width: 140px;
+        position: relative;
+        z-index: 200;
+        top: -60px;
+        left: 26%;
+        margin-bottom: -50px;
+    }
+}
+
+@media only screen and (max-width: 1024px) {
+    .centerlogo {
+        width: 140px;
+        position: relative;
+        z-index: 200;
+        top: -60px;
+        left: 18%;
+        margin-bottom: -50px;
+    }
+}
+
+@media only screen and (max-width: 768px) {
+    .centerlogo {
+        width: 140px;
+        position: relative;
+        z-index: 200;
+        top: -60px;
+        left: 30%;
+        margin-bottom: -50px;
+    }
+}
+
+@media only screen and (max-width: 640px) {
+    .centerlogo {
+        width: 140px;
+        position: relative;
+        z-index: 200;
+        top: -60px;
+        left: 36%;
+        margin-bottom: -50px;
+    }
+}
+
+@media only screen and (max-width: 340px) {
+    .centerlogo {
+        width: 140px;
+        position: relative;
+        z-index: 200;
+        top: -60px;
+        left: 20%;
+        margin-bottom: -50px;
+    }
+}

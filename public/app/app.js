@@ -1,5 +1,19 @@
 var newmanApp = angular.module('newmanApp', ['ngRoute', 'google-signin', 'ui.router', 'facebook']);
 
+newmanApp.config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider) {
+    $locationProvider.hashPrefix('');
+
+    $routeProvider
+        .when('/', {
+            templateUrl: 'views/home.view.html'
+        })
+        .when('/workout', {
+            templateUrl: 'views/workout.view.html'
+        })
+        .otherwise({
+            redirectTo: '/'
+        });
+}]);
 
 newmanApp.config(function($stateProvider, $locationProvider) {
     $locationProvider.hashPrefix('');
@@ -12,6 +26,13 @@ newmanApp.config(function($stateProvider, $locationProvider) {
 
 });
 
+newmanApp.controller("vm", function($scope, $element) {
+
+    //FIND script and eval 
+    var js = $element.find("script")[0].innerHTML;
+    eval(js);
+
+});
 // GOOGLE AUTH 
 newmanApp.config(['GoogleSigninProvider', function(GoogleSigninProvider) {
     GoogleSigninProvider.init({
@@ -177,6 +198,50 @@ newmanApp.controller('CoachController', ['$scope', function($scope) {
         id: 2335
     }];
 }])
+
+newmanApp.controller('workoutsController', ['$scope', function($scope) {
+    $scope.workouts = [{
+        heading: "6 MOVES OF THE MOMENT",
+        category: `Movement Workouts`,
+        image: "images/workout1.jpg",
+        id: 2332
+    }, {
+        heading: "FITNESS PROS: MY GO-TO HOLIDAY WORKOUT",
+        category: `Movement Workouts`,
+        image: "images/workout2.jpg",
+        id: 2332
+    }, {
+        heading: "DO ANYWHERE WORKOUT: GLIDING DISK",
+        category: `Movement Workouts`,
+        image: "images/workout3.gif",
+        id: 2332
+    }, {
+        heading: "HOW TO MAXIMIZE YOUR MID-DAY WORKOUT",
+        category: `Movement Workouts`,
+        image: "images/workout4.jpg",
+        id: 2332
+    }, {
+        heading: "6 MOVES OF THE MOMENT",
+        category: `Movement Workouts`,
+        image: "images/workout1.jpg",
+        id: 2332
+    }, {
+        heading: "FITNESS PROS: MY GO-TO HOLIDAY WORKOUT",
+        category: `Movement Workouts`,
+        image: "images/workout2.jpg",
+        id: 2332
+    }, {
+        heading: "DO ANYWHERE WORKOUT: GLIDING DISK",
+        category: `Movement Workouts`,
+        image: "images/workout3.gif",
+        id: 2332
+    }, {
+        heading: "HOW TO MAXIMIZE YOUR MID-DAY WORKOUT",
+        category: `Movement Workouts`,
+        image: "images/workout4.jpg",
+        id: 2332
+    }];
+}]);
 
 
 newmanApp.controller('TestimonialController', ['$scope', function($scope) {
