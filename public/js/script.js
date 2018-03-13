@@ -286,6 +286,7 @@ $document.ready(function() {
                 }
             }
         });
+
         $(".testimonialsSection .owl-carousel").owlCarousel({
             loop: true,
             margin: 60,

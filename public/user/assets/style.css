@@ -252,3 +252,18 @@ label {
         margin: 20px 0px 40px 25px;
     }
 }
+
+.angular-time-picker-dark {
+    background: #ef4c14;
+    color: #fff;
+    border: 1px solid #444;
+}
+
+.m-radio>input:checked~span {
+    border: 1px solid #ef4c14;
+}
+
+.m-radio>span:after {
+    border: solid #ef4c14;
+    background: #ef4c14;
+}
