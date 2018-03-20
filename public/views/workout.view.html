@@ -1,12 +1,32 @@
+<style>
+    .cd-user-modal {
+        display: none;
+    }
+</style>
 <div class="container-fluid">
     <section class="workoutSection" style="text-align:left; padding: 20px;" ng-controller="workoutsController">
-        <div class="row" style="height: 90%;">
+        <div class="row">
 
 
             <h3 style="margin: 10px;">WORKOUTS</h3>
             <h6 style="text-transform: capitalize; font-weight:bolder; margin: 10px;">The best moves from trainers and other fitness pros</h6>
-            <div class="owl-carousel" style="margin: 0px 0px 10px 0px;">
-                <div class="col-lg-8 col-sm-12 col-md-3" ng-repeat="workout in workouts">
+            <div class="owl-carouselworkout" style="margin: 0px 0px 10px 0px;">
+                <div class="col-lg-12 col-sm-12 col-md-3" ng-repeat="workout in workouts">
+
+                    <a href="#linktoarticle" class="workout">
+                        <div class="overlay">
+                            <img src="{{workout.image}}" alt="{{workout.heading}}">
+                        </div>
+                        <img src="images/logo.png" class="centerlogo">
+                        <h5>{{workout.heading}}</h5>
+                        <h6>{{workout.category}}</h6>
+
+                    </a>
+                </div>
+            </div>
+            <h6 style="text-transform: capitalize; font-weight:bolder; margin: 10px;">The best moves from trainers and other fitness pros</h6>
+            <div class="owl-carouselworkout" style="margin: 0px 0px 10px 0px;">
+                <div class="col-lg-12 col-sm-12 col-md-3" ng-repeat="workout in workouts">
 
                     <a href="#linktoarticle" class="workout">
                         <div class="overlay">
@@ -20,12 +40,15 @@
                 </div>
             </div>
         </div>
-        <div class="row" style="height: 90%;">
+
+    </section>
+    <section class="workoutSection" style="text-align:left; padding: 20px; display:none;" ng-controller="workoutsController">
+        <div class="row">
 
 
             <h6 style="text-transform: capitalize; font-weight:bolder; margin: 10px;">The best moves from trainers and other fitness pros</h6>
             <div class="owl-carousel" style="margin: 0px 0px 10px 0px;">
-                <div class="col-lg-8 col-sm-12 col-md-3" ng-repeat="workout in workouts">
+                <div class="col-lg-12 col-sm-12 col-md-3" ng-repeat="workout in workouts">
 
                     <a href="#linktoarticle" class="workout">
                         <div class="overlay">

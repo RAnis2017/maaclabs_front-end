@@ -952,9 +952,7 @@ form.cd-form a:active {
     overflow: hidden;
 }
 
-.workoutSection .owl-item {
-    margin-right: -120px !important;
-}
+.workoutSection .owl-item {}
 
 .workout {
     text-align: center;

@@ -287,6 +287,50 @@ $document.ready(function() {
             }
         });
 
+        $(".owl-carouselworkout").owlCarousel({
+            loop: true,
+            margin: 30,
+            responsiveClass: true,
+            responsive: {
+                0: {
+                    items: 1,
+                    nav: true,
+                    loop: true
+                },
+                600: {
+                    items: 2,
+                    nav: true,
+                    loop: true
+                },
+                1000: {
+                    items: 4,
+                    nav: true,
+                    loop: true
+                }
+            }
+        });
+        $(".owl-carouselworkout2").owlCarousel({
+            loop: true,
+            margin: 30,
+            responsiveClass: true,
+            responsive: {
+                0: {
+                    items: 1,
+                    nav: true,
+                    loop: true
+                },
+                600: {
+                    items: 2,
+                    nav: true,
+                    loop: true
+                },
+                1000: {
+                    items: 4,
+                    nav: true,
+                    loop: true
+                }
+            }
+        });
         $(".testimonialsSection .owl-carousel").owlCarousel({
             loop: true,
             margin: 60,
