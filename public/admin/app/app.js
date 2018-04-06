@@ -1,4 +1,4 @@
-var adminApp = angular.module('adminApp', ['ngRoute']);
+var adminApp = angular.module('adminApp', ['ngRoute', 'ngQuill']);
 
 adminApp.config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider) {
     $locationProvider.hashPrefix('');
@@ -34,7 +34,13 @@ adminApp.config(['$routeProvider', '$locationProvider', function($routeProvider,
             redirectTo: '/admin'
         });
 }]);
+adminApp.controller("vm", function($scope, $element) {
 
+    //FIND script and eval
+    var js = $element.find("script")[0].innerHTML;
+    eval(js);
+
+});
 adminApp.service('sharedProperties', function() {
     var formExercises = [{
         id: 0,
@@ -72,8 +78,9 @@ adminApp.service('sharedProperties', function() {
         }
     };
 });
+adminApp.controller('workoutdayController', ['$scope', 'sharedProperties', function($scope, shared) {
+    $scope.formExercises = shared.getformExercises();
 
-adminApp.controller('exerciseController', ['$scope', 'sharedProperties', function($scope, shared) {
     $scope.removeExercise = function(exercise) {
         var removedExercise = $scope.exercises.indexOf(exercise);
         $scope.exercises.splice(removedExercise, 1);
@@ -83,7 +90,64 @@ adminApp.controller('exerciseController', ['$scope', 'sharedProperties', functio
         $scope.formExercises.splice(removedExercise, 1);
         shared.setformExercises($scope.formExercises.splice(removedExercise, 1));
     };
+    $scope.dayexercises = [];
+    $scope.exercises = [{
+            id: 0,
+            name: "Dumbells",
+            description: "Use dumbells for this exercise",
+            videoUrl: "https://youtu.be/y1r9toPQNkM",
 
+        },
+        {
+            id: 1,
+            name: "Pullups",
+            description: "Use rod to pull yourself up for this exercise",
+            videoUrl: "https://youtu.be/y1r9toPQNkM"
+        },
+        {
+            id: 2,
+            name: "Pushups",
+            description: "Use ground for this exercise",
+            videoUrl: "https://youtu.be/y1r9toPQNkM"
+        },
+        {
+            id: 3,
+            name: "Squats",
+            description: "Use dumbells to do better squats for this exercise",
+            videoUrl: "https://youtu.be/y1r9toPQNkM"
+        }
+    ];
+    $scope.dayexercisesmod = [];
+    $scope.addExercise = function(exercise, index) {
+
+        $scope.dayexercises.push({
+            id: $scope.dayexercises.length + 1,
+            name: exercise.name,
+            reps: $scope.dayexercisesmod[index].reps,
+            sets: $scope.dayexercisesmod[index].sets
+        });
+
+        $scope.dayexercisesmod[index].name = "";
+        $scope.dayexercisesmod[index].reps = "";
+        $scope.dayexercisesmod[index].sets = "";
+
+
+    };
+
+    $scope.workoutday = [];
+    $scope.addWorkoutDay = function() {
+        $scope.workoutday.push({
+            id: $scope.workoutday.length + 1,
+            name: $scope.workoutday.name,
+            description: $scope.workoutday.description,
+            exercises: $scope.dayexercises[$scope.workoutday.length + 1],
+        });
+        $scope.workoutday.name = "";
+        $scope.workoutday.description = "";
+        // $scope.dayexercises = [];
+    };
+}])
+adminApp.controller('exerciseController', ['$scope', 'sharedProperties', function($scope, shared) {
 
 
 

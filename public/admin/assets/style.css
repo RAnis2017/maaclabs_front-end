@@ -24,3 +24,4 @@
     color: white !important;
     float: right;
 }
+[ng-quill-editor] { display: block; }

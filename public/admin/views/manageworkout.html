@@ -40,13 +40,65 @@
                             <input type="text" class="form-control m-input" id="ename" aria-describedby="Workout Name" placeholder="Enter workout name" ng-model="newworkout.name">
 
                         </div>
+
                         <div class="form-group m-form__group">
-                            <label for="edescription">Description</label>
-                            <textarea class="form-control m-input" id="edescription" rows="3" ng-model="newworkout.description"></textarea>
+                            <label for="edescription">Short Description:</label>
+                            <input type="text" class="form-control m-input" id="edescription" aria-describedby="Workout Description" placeholder="Enter workout short description" ng-model="newworkout.description">
+
                         </div>
                         <div class="form-group m-form__group">
-                            <label for="eresult">Result</label>
-                            <textarea class="form-control m-input" id="eresult" rows="3" ng-model="newworkout.result"></textarea>
+                            <label for="eimg">Workout Image:</label>
+                            <input type="file" class="form-control m-input" id="eimg" aria-describedby="Workout Image">
+                        </div>
+                        <div class="form-group m-form__group">
+                            <label for="ename">Description:</label>
+                            <ng-quill-editor ng-model="message"></ng-quill-editor>
+
+                        </div>
+
+                        <div class="form-group m-form__group">
+                            <label for="eresult">Main Goal:</label>
+                            <input type="text" class="form-control m-input" id="eresult" ng-model="newworkout.result">
+                        </div>
+                        <div class="form-group m-form__group">
+                            <label for="etype">Workout Type:</label>
+                            <input type="text" class="form-control m-input" id="etype">
+                        </div>
+                        <div class="form-group m-form__group">
+                            <label for="etraining">Training Level:</label>
+                            <input type="text" class="form-control m-input" id="etraining">
+                        </div>
+                        <div class="form-group m-form__group">
+                            <label for="eprogram">Program Duration:</label>
+                            <input type="text" class="form-control m-input" id="eprogram">
+                        </div>
+                        <div class="form-group m-form__group">
+                            <label for="eday">Days Per Workout:</label>
+                            <input type="text" class="form-control m-input" id="eday">
+                        </div>
+                        <div class="form-group m-form__group">
+                            <label for="etime">Time Per Workout:</label>
+                            <input type="text" class="form-control m-input" id="etime">
+                        </div>
+                        <div class="form-group m-form__group">
+                            <label for="eequip">Equipment Required:</label>
+                            <input type="text" class="form-control m-input" id="eequip">
+                        </div>
+                        <div class="form-group m-form__group">
+                            <label for="egender">Target Gender:</label>
+                            <input type="text" class="form-control m-input" id="egender">
+                        </div>
+                        <div class="form-group m-form__group">
+                            <label for="erecommended">Recommended Supplements:</label>
+                            <input type="text" class="form-control m-input" id="erecommended">
+                        </div>
+                        <div class="form-group m-form__group">
+                            <label for="eauthor">Author:</label>
+                            <input type="text" class="form-control m-input" id="eauthor">
+                        </div>
+                        <div class="form-group m-form__group">
+                            <label for="epdf">Download PDF:</label>
+                            <input type="file" class="form-control m-input" id="epdf" aria-describedby="Workout PDF">
                         </div>
                         <div class="form-group m-form__group">
                             <label for="efrom">From Day:</label>
@@ -58,26 +110,61 @@
                             <input type="number" min="1" max="365" class="form-control m-input" id="eto" aria-describedby="Plan Finish Day" placeholder="Plan Finish Day" ng-model="newworkout.to">
 
                         </div>
-                        <div ng-controller="exerciseController">
-                            <div class="form-group m-form__group">
-                                <h4 ng-repeat="exercise in exercises" ng-click="addToForm(exercise)" class="exerciseSelect">{{exercise.name}}</h4>
-                            </div>
-                            <div class="form-group m-form__group">
-                                <ul>
-                                    <li ng-repeat="exercise in formExercises track by $index">
-                                        <label for="eDuration">{{exercise.name}}</label>
-                                        <input type="number" min="1" max="30" class="form-control m-input" id="eto" aria-describedby="Number of days for this exercise" placeholder="No of days for this exercise" ng-model="newworkout.duration[$index]">
+                        <div ng-controller="workoutdayController">
 
-                                        <a ng-click="removeFormExercise(exercise)" title="Delete" class="remover">x</a>
-                                        <a ng-click="addtoExercises(exercise,newworkout.duration[$index])" title="Add" class="adder">ADD</a>
-                                    </li>
-                                </ul>
+
+                            <div>
+                                <div class="form-group m-form__group">
+                                    <label for="etitle">Workout Day Title:</label>
+                                    <input type="text" class="form-control m-input" id="etitle" aria-describedby="Workout Day Title" placeholder="Enter workout day title" ng-model="workoutday.name">
+
+                                </div>
+                                <div class="form-group m-form__group">
+                                    <label for="edaydesc">Workout Day Description:</label>
+                                    <input type="text" class="form-control m-input" id="edaydesc" aria-describedby="Workout Day Description" placeholder="Enter workout day desc" ng-model="workoutday.description">
+
+                                </div>
+                                <div class="form-group m-form__group">
+                                    <input type="button" value="Add new Workout Day" ng-click="addWorkoutDay()" class="btn btn-primary m-btn m-btn--custom m-btn--icon m-btn--air m-btn--pill">
+                                </div>
+                                <div class="form-group m-form__group" ng-repeat="exercise in exercises">
+                                    <h4 class="exerciseSelect">{{exercise.name}}</h4>
+                                    <input type="hidden" class="form-control m-input" id="eto" aria-describedby="Number of sets for this exercise" placeholder="No of sets for this exercise" ng-model="dayexercisesmod[$index].name" value="{{exercise.name}}">
+                                    <input type="text" class="form-control m-input" id="eto" aria-describedby="Number of sets for this exercise" placeholder="No of sets for this exercise" ng-model="dayexercisesmod[$index].reps">
+                                    <input type="text" class="form-control m-input" id="eto" aria-describedby="Number of reps for this exercise" placeholder="No of reps for this exercise" ng-model="dayexercisesmod[$index].sets">
+                                    <input type="button" value="Add to Workout Day Exercise" ng-click="addExercise(exercise,$index)" class="btn btn-primary m-btn m-btn--custom m-btn--icon m-btn--air m-btn--pill">
+
+                                </div>
+
                             </div>
-                            <div class="form-group m-form__group" style="margin-top: 90px;">
-                                <h4 ng-repeat="exercise in workoutexercises" ng-click="removeWorkoutExercise(exercise)" class="exerciseSelect">{{exercise.name}} - Added <small>(click to remove)</small></h4>
+                            <div class="m-portlet m-portlet--creative m-portlet--first m-portlet--bordered-semi" style="margin: 15px 0px;" ng-repeat="wd in workoutday">
+                                <div class="m-portlet__head">
+                                    <div class="m-portlet__head-caption">
+                                        <div class="m-portlet__head-title">
+                                            <span class="m-portlet__head-icon m--hide">
+                                                <i class="flaticon-statistics"></i>
+                                            </span>
+                                            <h3 class="m-portlet__head-text" ng-init="wdNo = $index">
+                                                {{wd.description}}
+                                            </h3>
+                                            <h2 class="m-portlet__head-label m-portlet__head-label--danger">
+                                                <span>{{wd.name}}</span>
+                                            </h2>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="m-portlet__body">
+                                    <ul class="m-portlet__nav">
+                                        <li ng-repeat="exercise in dayexercises">
+                                            <h3>{{exercise.name}} | - reps : {{exercise.reps}} | - sets : {{exercise.sets}}</h3>
+                                        </li>
+                                    </ul>
+                                </div>
                             </div>
 
                         </div>
+
+
                         <div class="form-group m-form__group">
                             <label for="eimagefile">File Image</label>
                             <div></div>
@@ -187,7 +274,7 @@
                                     <ul>
                                         <li ng-repeat="exercise in workout.exercises">{{exercise.name}} - {{exercise.duration}} Days</li>
                                     </ul>
-                                    
+
                                 </span></td>
 
                                 <td data-field="Actions" class="m-datatable__cell"><span style="overflow: visible; width: 110px;">											<a href="#/manageexercise" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill" title="Edit details">							<i class="la la-edit"></i>						</a>						<a ng-click="removeWorkout(workout)" class="m-portlet__nav-link btn m-btn m-btn--hover-danger m-btn--icon m-btn--icon-only m-btn--pill" title="Delete">							<i class="la la-trash"></i>						</a>					</span></td>
@@ -230,4 +317,3 @@
         </div>
     </div>
 </div>
-<!-- end:: Body -->
