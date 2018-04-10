@@ -1,6 +1,6 @@
-var newmanApp = angular.module('newmanApp', ['ngRoute', 'google-signin', 'ui.router', 'facebook']);
+var newmanApp = angular.module('newmanApp', ['ngRoute', 'google-signin', 'ui.router', 'facebook', 'ngSanitize']);
 
-newmanApp.config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider) {
+newmanApp.config(['$routeProvider', '$stateProvider', '$locationProvider', function($routeProvider, $stateProvider, $locationProvider) {
     $locationProvider.hashPrefix('');
 
     $routeProvider
@@ -10,21 +10,24 @@ newmanApp.config(['$routeProvider', '$locationProvider', function($routeProvider
         .when('/workout', {
             templateUrl: 'views/workout.view.html'
         })
-        .otherwise({
-            redirectTo: '/'
-        });
+        .when('/workout/:id', {
+            templateUrl: 'views/single-workout.view.html'
+        }).otherwise('/');
+
+    // $stateProvider
+    //     .state('login', {
+    //         url: '/login/:username',
+    //         templateUrl: 'login.html'
+    //     }).state('workoutsingle', {
+    //         url: '/workout/single/:workout',
+    //         templateUrl: 'views/single-workout.view.html',
+    //         controller: 'SingleWorkout',
+    //         params: {
+    //             paramOne: { singleworkout: "there is no workout" }, //default value
+
+    //         }
+    //     })
 }]);
-
-newmanApp.config(function($stateProvider, $locationProvider) {
-    $locationProvider.hashPrefix('');
-
-    $stateProvider
-        .state('login', {
-            url: '/login/:username',
-            templateUrl: 'login.html'
-        })
-
-});
 
 newmanApp.controller("vm", function($scope, $element) {
 
@@ -199,48 +202,58 @@ newmanApp.controller('CoachController', ['$scope', function($scope) {
     }];
 }])
 
-newmanApp.controller('workoutsController', ['$scope', function($scope) {
-    $scope.workouts = [{
-        heading: "6 MOVES OF THE MOMENT",
-        category: `Movement Workouts`,
-        image: "images/workout1.jpg",
-        id: 2332
-    }, {
-        heading: "FITNESS PROS: MY GO-TO HOLIDAY WORKOUT",
-        category: `Movement Workouts`,
-        image: "images/workout2.jpg",
-        id: 2332
-    }, {
-        heading: "DO ANYWHERE WORKOUT: GLIDING DISK",
-        category: `Movement Workouts`,
-        image: "images/workout3.gif",
-        id: 2332
-    }, {
-        heading: "HOW TO MAXIMIZE YOUR MID-DAY WORKOUT",
-        category: `Movement Workouts`,
-        image: "images/workout4.jpg",
-        id: 2332
-    }, {
-        heading: "6 MOVES OF THE MOMENT",
-        category: `Movement Workouts`,
-        image: "images/workout1.jpg",
-        id: 2332
-    }, {
-        heading: "FITNESS PROS: MY GO-TO HOLIDAY WORKOUT",
-        category: `Movement Workouts`,
-        image: "images/workout2.jpg",
-        id: 2332
-    }, {
-        heading: "DO ANYWHERE WORKOUT: GLIDING DISK",
-        category: `Movement Workouts`,
-        image: "images/workout3.gif",
-        id: 2332
-    }, {
-        heading: "HOW TO MAXIMIZE YOUR MID-DAY WORKOUT",
-        category: `Movement Workouts`,
-        image: "images/workout4.jpg",
-        id: 2332
-    }];
+newmanApp.controller('workoutsController', ['$scope', '$http', function($scope, $http) {
+    $scope.workouts = []
+    $scope.workoutg = []
+    $scope.loadworkouts = function() {
+        $http({
+            method: 'GET',
+            url: 'http://localhost:81/newmanapi/public/workouts/getworkouts',
+        }).then(function successCallback(response) {
+            for (i = 0; i < response.data.length; i++) {
+                response.data[i].workoutdays = $.parseJSON(response.data[i].workoutdays);
+            }
+            $scope.workouts = response.data;
+            console.log(response)
+        }, function errorCallback(response) {
+            console.log(response)
+        });
+        $http({
+            method: 'GET',
+            url: 'http://localhost:81/newmanapi/public/workouts/getworkoutgroups',
+        }).then(function successCallback(response) {
+            $scope.workoutg = response.data;
+            console.log(response)
+        }, function errorCallback(response) {
+            console.log(response)
+        });
+    };
+
+}]);
+
+newmanApp.controller('SingleWorkout', ['$state', '$scope', '$routeParams', '$http', '$sce', function($state, $scope, $routeParams, $http, $sce) {
+
+    // $scope.paramOne = $stateParams.paramOne;
+    // console.log($stateParams.workout);
+    $scope.id = $routeParams.id;
+    $scope.loadworkouts = function() {
+        $http({
+            method: 'GET',
+            url: 'http://localhost:81/newmanapi/public/workouts/getworkout/' + $scope.id,
+        }).then(function successCallback(response) {
+            response.data[0].workoutdays = $.parseJSON(response.data[0].workoutdays);
+            $scope.workout = response.data;
+            $scope.fulldescription = $sce.trustAsHtml($scope.workout.fulldescription);
+
+            console.log(response)
+        }, function errorCallback(response) {
+            console.log(response)
+        });
+        $scope.deliberatelyTrustDangerousSnippet = function() {
+            return $sce.trustAsHtml($scope.fulldescription);
+        };
+    }
+
 }]);
 
 

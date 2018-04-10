@@ -78,7 +78,17 @@ adminApp.service('sharedProperties', function() {
         }
     };
 });
-adminApp.controller('workoutdayController', ['$scope', 'sharedProperties', function($scope, shared) {
+adminApp.factory('dataService', function() {
+
+    // private variable
+    var _dataObj = {};
+
+    // public API
+    return {
+        dataObj: _dataObj
+    };
+})
+adminApp.controller('workoutdayController', ['$scope', 'sharedProperties', 'dataService', '$rootScope', function($scope, shared, dataService, $rootScope) {
     $scope.formExercises = shared.getformExercises();
 
     $scope.removeExercise = function(exercise) {
@@ -140,12 +150,20 @@ adminApp.controller('workoutdayController', ['$scope', 'sharedProperties', funct
             id: $scope.workoutday.length + 1,
             name: $scope.workoutday.name,
             description: $scope.workoutday.description,
-            exercises: $scope.dayexercises[$scope.workoutday.length + 1],
+            exercises: $scope.dayexercises,
         });
         $scope.workoutday.name = "";
         $scope.workoutday.description = "";
-        // $scope.dayexercises = [];
+        $scope.dayexercises = [];
+        dataService.workoutday = $scope.workoutday;
     };
+    $rootScope.$on("CallParentMethod", function() {
+        $scope.parentmethod();
+    });
+
+    $scope.parentmethod = function() {
+        $scope.workoutday = [];
+    }
 }])
 adminApp.controller('exerciseController', ['$scope', 'sharedProperties', function($scope, shared) {
 
@@ -201,8 +219,26 @@ adminApp.controller('exerciseController', ['$scope', 'sharedProperties', functio
     };
 }]);
 
+adminApp.directive("fileread", [function() {
+    return {
+        scope: {
+            fileread: "="
+        },
+        link: function(scope, element, attributes) {
+            element.bind("change", function(changeEvent) {
+                var reader = new FileReader();
+                reader.onload = function(loadEvent) {
+                    scope.$apply(function() {
+                        scope.fileread = loadEvent.target.result;
+                    });
+                }
+                reader.readAsDataURL(changeEvent.target.files[0]);
+            });
+        }
+    }
+}]);
 
-adminApp.controller('workoutController', ['$scope', 'sharedProperties', function($scope, shared) {
+adminApp.controller('workoutController', ['$scope', 'sharedProperties', 'dataService', '$rootScope', '$http', function($scope, shared, dataService, $rootScope, $http) {
 
 
     $scope.removeWorkout = function(workout) {
@@ -214,6 +250,80 @@ adminApp.controller('workoutController', ['$scope', 'sharedProperties', function
         var removedExercise = $scope.workoutexercises.indexOf(exercise);
         $scope.workoutexercises.splice(removedExercise, 1);
     };
+    $scope.successWOU = 0;
+    $scope.updateWorkout = function(id, wd) {
+        $http({
+            method: 'PUT',
+            url: 'http://localhost:81/newmanapi/public/workouts/updateworkout/' + id,
+            data: {
+                "name": wd.name,
+                "videourl": wd.videourl,
+                "description": wd.description,
+                "group": wd.group,
+                "position": wd.position,
+                "fulldescription": wd.fulldesc,
+                "result": wd.result,
+                "type": wd.type,
+                "level": wd.level,
+                "duration": wd.duration,
+                "daysperworkout": wd.daysperworkout,
+                "timeperworkout": wd.timeperworkout,
+                "equipment": wd.equipment,
+                "targetgender": wd.targetgender,
+                "supplements": wd.supplements,
+                "author": wd.author,
+                "pdf": wd.pdf,
+                "image": wd.image,
+                "workoutdays": wd.workoutdays
+            }
+        }).then(function successCallback(response) {
+            $scope.successWOU = 1
+            console.log(response)
+
+        }, function errorCallback(response) {
+            $scope.successWOU = 2
+            console.log(response)
+        });
+    };
+    $scope.successWOD = 0
+    $scope.deleteWorkout = function(id) {
+        $http({
+            method: 'DELETE',
+            url: 'http://localhost:81/newmanapi/public/workouts/deleteworkout/' + id,
+        }).then(function successCallback(response) {
+            $scope.successWOD = 1
+            console.log(response)
+
+        }, function errorCallback(response) {
+            $scope.successWOD = 2
+            console.log(response)
+        });
+    };
+
+    $scope.loadworkouts = function() {
+        $http({
+            method: 'GET',
+            url: 'http://localhost:81/newmanapi/public/workouts/getworkouts',
+        }).then(function successCallback(response) {
+            for (i = 0; i < response.data.length; i++) {
+                response.data[i].workoutdays = $.parseJSON(response.data[i].workoutdays);
+            }
+            $scope.workouts = response.data;
+            console.log(response)
+        }, function errorCallback(response) {
+            console.log(response)
+        });
+        $http({
+            method: 'GET',
+            url: 'http://localhost:81/newmanapi/public/workouts/getworkoutgroups',
+        }).then(function successCallback(response) {
+            $scope.workoutg = response.data;
+            console.log(response)
+        }, function errorCallback(response) {
+            console.log(response)
+        });
+    };
+
 
     $scope.workouts = [{
             id: 0,
@@ -282,29 +392,113 @@ adminApp.controller('workoutController', ['$scope', 'sharedProperties', function
             duration: duration
         });
     }
+    $scope.workoutday = dataService.workoutday;
+
+    $scope.workoutg = [{
+        id: 0,
+        name: "Fat Loss Exercises"
+    }];
+
+    $scope.success = 0;
+    $scope.addWorkoutGroup = function() {
+        $scope.workoutg.push({
+            id: $scope.workoutg.length + 1,
+            name: $scope.newworkoutgroup.gname
+        });
+
+        $http({
+            method: 'POST',
+            url: 'http://localhost:81/newmanapi/public/workouts/addworkoutgroup',
+            data: { "name": $scope.newworkoutgroup.gname }
+        }).then(function successCallback(response) {
+            $scope.success = 1
+            console.log(response)
+            $scope.newworkoutgroup.gname = "";
+        }, function errorCallback(response) {
+            $scope.success = 2
+            console.log(response)
+        });
+    }
+
     $scope.addWorkout = function() {
-
-
-
-
 
         $scope.workouts.push({
             id: $scope.workouts.length + 1,
             name: $scope.newworkout.name,
+            videourl: $scope.newworkout.videourl,
             description: $scope.newworkout.description,
+            group: $scope.newworkout.group,
+            position: $scope.newworkout.position,
+            fulldescription: $scope.newworkout.fulldesc,
             result: $scope.newworkout.result,
-            from: $scope.newworkout.from,
-            to: $scope.newworkout.to,
-            exercises: $scope.workoutexercises
+            type: $scope.newworkout.type,
+            level: $scope.newworkout.level,
+            duration: $scope.newworkout.duration,
+            daysperworkout: $scope.newworkout.daysperworkout,
+            timeperworkout: $scope.newworkout.timeperworkout,
+            equipment: $scope.newworkout.equipment,
+            targetgender: $scope.newworkout.targetgender,
+            supplements: $scope.newworkout.supplements,
+            author: $scope.newworkout.author,
+            pdf: $scope.newworkout.pdf,
+            image: $scope.newworkout.image,
+            workoutdays: dataService.workoutday
 
         });
-        $scope.newworkout.name = "";
-        $scope.newworkout.description = "";
-        $scope.newworkout.result = "";
-        $scope.newworkout.from = "";
-        $scope.newworkout.to = "";
-        $scope.formExercises = [];
-        $scope.workoutexercises = [];
+        $scope.successWO = 0;
+
+        $http({
+            method: 'POST',
+            url: 'http://localhost:81/newmanapi/public/workouts/addworkout',
+            data: {
+                "name": $scope.newworkout.name,
+                "videourl": $scope.newworkout.videourl,
+                "description": $scope.newworkout.description,
+                "group": $scope.newworkout.group,
+                "position": $scope.newworkout.position,
+                "fulldescription": $scope.newworkout.fulldesc,
+                "result": $scope.newworkout.result,
+                "type": $scope.newworkout.type,
+                "level": $scope.newworkout.level,
+                "duration": $scope.newworkout.duration,
+                "daysperworkout": $scope.newworkout.daysperworkout,
+                "timeperworkout": $scope.newworkout.timeperworkout,
+                "equipment": $scope.newworkout.equipment,
+                "targetgender": $scope.newworkout.targetgender,
+                "supplements": $scope.newworkout.supplements,
+                "author": $scope.newworkout.author,
+                "pdf": $scope.newworkout.pdf,
+                "image": $scope.newworkout.image,
+                "workoutdays": dataService.workoutday
+            }
+        }).then(function successCallback(response) {
+            $scope.successWO = 1
+            console.log(response)
+            $scope.newworkout.name = "";
+            $scope.newworkout.videourl = "";
+            $scope.newworkout.description = "";
+            $scope.newworkout.fulldesc = "";
+            $scope.newworkout.result = "";
+            $scope.newworkout.type = "";
+            $scope.newworkout.level = "";
+            $scope.newworkout.duration = "";
+            $scope.newworkout.daysperworkout = "";
+            $scope.newworkout.timeperworkout = "";
+            $scope.newworkout.equipment = "";
+            $scope.newworkout.targetgender = "";
+            $scope.newworkout.supplements = "";
+            $scope.newworkout.author = "";
+            $scope.newworkout.pdf = "";
+            $scope.newworkout.image = "";
+            dataService.workoutday = [];
+            $scope.workoutday = [];
+        }, function errorCallback(response) {
+            $scope.successWO = 2
+            console.log(response)
+        });
+
+        $rootScope.$emit("CallParentMethod", {});
+
     };
 
 
