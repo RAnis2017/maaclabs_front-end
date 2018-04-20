@@ -151,6 +151,142 @@ $app->post('/workouts/addworkout', function (Request $request, Response $respons
 
     return $response;
 });
+$app->post('/exercises/addexercise', function (Request $request, Response $response, array $args) {
+    $name = $request->getParam('name');
+    $videourl = $request->getParam('videourl');
+    $description = $request->getParam('description');
+    $group1 = $request->getParam('group1');
+    $type = $request->getParam('type');
+    $equipment = $request->getParam('equipment');
+    $level = $request->getParam('level');
+    $secondary = $request->getParam('secondary');
+
+    $image = $request->getParam('image');
+    $image = save_base64_image($image, randomKey(20), '../../newman/public/images/exercises/');
+    $sql = "INSERT INTO exercises (`name`,`videourl`,`description`,`image`,`group1`,`type`,`equipment`,`level`,`secondary`) VALUES (:name,:videourl,:description,:image,:group1,:type,:equipment,:level,:secondary)";
+    try {
+        $db = new db();
+        $db = $db->connect();
+        $stmt = $db->prepare($sql);
+        $stmt->bindParam(':name', $name);
+        $stmt->bindParam(':videourl', $videourl);
+        $stmt->bindParam(':description', $description);
+        $stmt->bindParam(':image', $image);
+        $stmt->bindParam(':group1', $group1);
+        $stmt->bindParam(':type', $type);
+        $stmt->bindParam(':equipment', $equipment);
+        $stmt->bindParam(':level', $level);
+        $stmt->bindParam(':secondary', $secondary);
+        $stmt->execute();
+        $db = null;
+        echo '{"notice": {"text": "Exercise Added"}}';
+    } catch (PDOException $e) {
+        echo '{"error":{"text": ' . $e->getMessage() . '}}';
+    }
+
+    return $response;
+});
+$app->get('/exercises/getexercises', function (Request $request, Response $response, array $args) {
+    $sql = "SELECT * FROM exercises";
+    try {
+        $db = new db();
+        $db = $db->connect();
+        $stmt = $db->query($sql);
+        $exercises = $stmt->fetchAll(PDO::FETCH_OBJ);
+        $db = null;
+
+        echo json_encode($exercises);
+    } catch (PDOException $e) {
+        echo '{"error":{"text": ' . $e->getMessage() . '}}';
+    }
+
+    return $response;
+});
+$app->delete('/exercises/deleteexercise/{id}', function (Request $request, Response $response, array $args) {
+    $id = $request->getAttribute('id');
+    $sql = "DELETE FROM exercises 
+            WHERE id = $id";
+    try {
+        $db = new db();
+        $db = $db->connect();
+        $stmt = $db->query($sql);
+        $workoutsg = $stmt->fetchAll(PDO::FETCH_OBJ);
+        $db = null;
+
+        echo '{"notice": {"text": "Exercise Deleted"}}';
+    } catch (PDOException $e) {
+        echo '{"error":{"text": ' . $e->getMessage() . '}}';
+    }
+
+    return $response;
+});
+$app->put('/exercises/updateexercise/{id}', function (Request $request, Response $response, array $args) {
+    $id = $request->getAttribute('id');
+    $name = $request->getParam('name');
+    $videourl = $request->getParam('videourl');
+    $description = $request->getParam('description');
+    $image = $request->getParam('image',"");
+    
+    $group1 = $request->getParam('group1');
+    $type = $request->getParam('type');
+    $equipment = $request->getParam('equipment');
+    $level = $request->getParam('level');
+    $secondary = $request->getParam('secondary');
+
+    $image = save_base64_image($image, randomKey(20), '../../newman/public/images/exercises/');
+    $sql = "UPDATE exercises SET
+            `name` = :name,
+            `videourl` = :videourl,
+            `description` = :description,
+            `image` = :image,
+            `group1` = :group1,
+            `type` = :type,
+            `equipment` = :equipment,
+            `level` = :level,
+            `secondary` = :secondary
+        WHERE id = $id";
+    
+    try {
+        $db = new db();
+        $db = $db->connect();
+        $stmt = $db->prepare($sql);
+        $stmt->bindParam(':name', $name);
+        $stmt->bindParam(':videourl', $videourl);
+        $stmt->bindParam(':description', $description);
+        $stmt->bindParam(':image', $image);
+
+        $stmt->bindParam(':group1', $group1);
+        $stmt->bindParam(':type', $type);
+        $stmt->bindParam(':equipment', $equipment);
+        $stmt->bindParam(':level', $level);
+        $stmt->bindParam(':secondary', $secondary);
+        $stmt->execute();
+        $db = null;
+        echo '{"notice": {"text": "Exercise Updated"}}';
+    } catch (PDOException $e) {
+        echo '{"error":{"text": ' . $e->getMessage() . '}}';
+    }
+
+    return $response;
+});
+$app->get('/exercises/getexercise/{id}', function (Request $request, Response $response, array $args) {
+    $id = $request->getAttribute('id');
+    $sql = "SELECT * FROM exercises 
+            WHERE id = $id";
+    try {
+        $db = new db();
+        $db = $db->connect();
+        $stmt = $db->query($sql);
+        $exercise = $stmt->fetchAll(PDO::FETCH_OBJ);
+        $db = null;
+
+        echo json_encode($exercise);
+    } catch (PDOException $e) {
+        echo '{"error":{"text": ' . $e->getMessage() . '}}';
+    }
+
+    return $response;
+});
 $app->put('/workouts/updateworkout/{id}', function (Request $request, Response $response, array $args) {
     $id = $request->getAttribute('id');
     $name = $request->getParam('name');

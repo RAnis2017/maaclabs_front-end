@@ -12,6 +12,9 @@ newmanApp.config(['$routeProvider', '$stateProvider', '$locationProvider', funct
         })
         .when('/workout/:id', {
             templateUrl: 'views/single-workout.view.html'
+        })
+        .when('/exercise/:id', {
+            templateUrl: 'views/single-exercise.view.html'
         }).otherwise('/');
 
     // $stateProvider
@@ -256,6 +259,29 @@ newmanApp.controller('SingleWorkout', ['$state', '$scope', '$routeParams', '$htt
 
 }]);
 
+newmanApp.controller('SingleExercise', ['$state', '$scope', '$routeParams', '$http', '$sce', function($state, $scope, $routeParams, $http, $sce) {
+
+    // $scope.paramOne = $stateParams.paramOne;
+    // console.log($stateParams.workout);
+    $scope.id = $routeParams.id;
+    $scope.loadexercises = function() {
+        $http({
+            method: 'GET',
+            url: 'http://localhost:81/newmanapi/public/exercises/getexercise/' + $scope.id,
+        }).then(function successCallback(response) {
+            $scope.exercise = response.data;
+            $scope.description = $sce.trustAsHtml($scope.exercise.description);
+
+            console.log(response)
+        }, function errorCallback(response) {
+            console.log(response)
+        });
+        $scope.deliberatelyTrustDangerousSnippet = function() {
+            return $sce.trustAsHtml($scope.description);
+        };
+    }
+
+}]);
 
 newmanApp.controller('TestimonialController', ['$scope', function($scope) {
     $scope.testimonials = [{

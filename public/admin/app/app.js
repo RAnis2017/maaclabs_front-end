@@ -88,7 +88,7 @@ adminApp.factory('dataService', function() {
         dataObj: _dataObj
     };
 })
-adminApp.controller('workoutdayController', ['$scope', 'sharedProperties', 'dataService', '$rootScope', function($scope, shared, dataService, $rootScope) {
+adminApp.controller('workoutdayController', ['$scope', 'sharedProperties', 'dataService', '$rootScope', '$http', function($scope, shared, dataService, $rootScope, $http) {
     $scope.formExercises = shared.getformExercises();
 
     $scope.removeExercise = function(exercise) {
@@ -127,6 +127,18 @@ adminApp.controller('workoutdayController', ['$scope', 'sharedProperties', 'data
             videoUrl: "https://youtu.be/y1r9toPQNkM"
         }
     ];
+    $scope.loadexercises = function() {
+        $http({
+            method: 'GET',
+            url: 'http://localhost:81/newmanapi/public/exercises/getexercises',
+        }).then(function successCallback(response) {
+
+            $scope.exercises = response.data;
+            console.log(response)
+        }, function errorCallback(response) {
+            console.log(response)
+        });
+    };
     $scope.dayexercisesmod = [];
     $scope.addExercise = function(exercise, index) {
 
@@ -165,9 +177,12 @@ adminApp.controller('workoutdayController', ['$scope', 'sharedProperties', 'data
         $scope.workoutday = [];
     }
 }])
-adminApp.controller('exerciseController', ['$scope', 'sharedProperties', function($scope, shared) {
+adminApp.controller('exerciseController', ['$scope', 'sharedProperties', 'dataService', '$rootScope', '$http', function($scope, shared, dataService, $rootScope, $http) {
 
-
+    $scope.removeExercise = function(exercise) {
+        var removedExercise = $scope.exercises.indexOf(exercise);
+        $scope.exercises.splice(removedExercise, 1);
+    };
 
     $scope.exercises = [{
             id: 0,
@@ -199,13 +214,95 @@ adminApp.controller('exerciseController', ['$scope', 'sharedProperties', functio
             id: $scope.exercises.length + 1,
             name: $scope.newexercise.name,
             description: $scope.newexercise.description,
+            group1: $scope.newexercise.group1,
+            type: $scope.newexercise.type,
+            equipment: $scope.newexercise.equipment,
+            level: $scope.newexercise.level,
+            secondary: $scope.newexercise.secondary,
             videoUrl: $scope.newexercise.video,
+            image: $scope.newexercise.image
         });
-        $scope.newexercise.name = "";
-        $scope.newexercise.description = "";
-        $scope.newexercise.video = "";
-    };
+        $scope.successE = 0;
 
+        $http({
+            method: 'POST',
+            url: 'http://localhost:81/newmanapi/public/exercises/addexercise',
+            data: {
+                "name": $scope.newexercise.name,
+                "videourl": $scope.newexercise.video,
+                "group1": $scope.newexercise.group1,
+                "type": $scope.newexercise.type,
+                "equipment": $scope.newexercise.equipment,
+                "level": $scope.newexercise.level,
+                "secondary": $scope.newexercise.secondary,
+                "description": $scope.newexercise.description,
+                "image": $scope.newexercise.image
+            }
+        }).then(function successCallback(response) {
+            $scope.successE = 1
+            console.log(response)
+            $scope.newexercise.name = "";
+            $scope.newexercise.videourl = "";
+            $scope.newexercise.description = "";
+            $scope.newexercise.image = "";
+        }, function errorCallback(response) {
+            $scope.successE = 2
+            console.log(response)
+        });
+
+    };
+    $scope.updateExercise = function(id, exercise) {
+        $scope.successEU = 0
+        $http({
+            method: 'PUT',
+            url: 'http://localhost:81/newmanapi/public/exercises/updateexercise/' + id,
+            data: {
+                "name": exercise.name,
+                "videourl": exercise.videourl,
+                "group1": exercise.group1,
+                "type": exercise.type,
+                "equipment": exercise.equipment,
+                "level": exercise.level,
+                "secondary": exercise.secondary,
+                "description": exercise.description,
+                "image": exercise.image
+            }
+        }).then(function successCallback(response) {
+            $scope.successEU = 1
+            console.log(response)
+
+        }, function errorCallback(response) {
+            $scope.successEU = 2
+            console.log(response)
+        });
+    };
+    $scope.deleteExercise = function(id) {
+        $scope.successED = 0;
+
+        $http({
+            method: 'DELETE',
+            url: 'http://localhost:81/newmanapi/public/exercises/deleteexercise/' + id,
+        }).then(function successCallback(response) {
+            $scope.successED = 1
+            console.log(response)
+
+        }, function errorCallback(response) {
+            $scope.successED = 2
+            console.log(response)
+        });
+    };
+    $scope.loadexercises = function() {
+        $http({
+            method: 'GET',
+            url: 'http://localhost:81/newmanapi/public/exercises/getexercises',
+        }).then(function successCallback(response) {
+
+            $scope.exercises = response.data;
+            console.log(response)
+        }, function errorCallback(response) {
+            console.log(response)
+        });
+    };
     $scope.formExercises = shared.getformExercises();
 
     $scope.addToForm = function(exercise) {

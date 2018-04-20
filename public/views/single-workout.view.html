@@ -122,7 +122,7 @@
                 <h6 style="text-transform: capitalize; font-weight:bolder; margin: 10px;">{{workout[0].description}}</h6>
                 <h3>BY : {{workout[0].author}} | {{workout[0].type}}</h3>
                 <h6>DATE: {{workout[0].date}}</h6>
-                <div ng-bind-html="workout[0].fulldescription"></div>
+                <div ng-bind-html="workout[0].fulldescription" style="font-size: 1.8em;"></div>
                 <div class="workoutdays" ng-repeat="wd in workout[0].workoutdays" style="margin-top:22px;">
                     <h3 style="background-color:rgb(68, 68, 177); color: white;">{{wd.name}}</h3>
                     <h4 style="margin-top:-2px;">{{wd.description}}</h4>

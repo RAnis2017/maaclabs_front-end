@@ -84,7 +84,7 @@
                             </select>
                             </div>
                             <div class="form-group m-form__group">
-                                <label for="eposition">Position:</label>
+                                <label for="eposition">Group Position:</label>
                                 <input type="number" class="form-control m-input" id="eposition" aria-describedby="Workout Position" placeholder="Enter workout Position" ng-model="newworkout.position">
 
                             </div>
@@ -139,7 +139,7 @@
                                 <input type="file" class="form-control m-input" id="epdf" aria-describedby="Workout PDF" fileread="newworkout.pdf">
                             </div>
 
-                            <div ng-controller="workoutdayController">
+                            <div ng-controller="workoutdayController" ng-init="loadexercises()">
 
 
                                 <div>

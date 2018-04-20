@@ -12,7 +12,7 @@
         <h3>Manage Exercise</h3>
         <h6>Add/Delete/Update Exercises</h6>
     </div>
-    <div class="m-content" ng-controller="exerciseController">
+    <div class="m-content" ng-controller="exerciseController" ng-init="loadexercises()">
 
 
         <div class="m-portlet m-portlet--mobile">
@@ -42,23 +42,54 @@
                         </div>
                         <div class="form-group m-form__group">
                             <label for="edescription">Description</label>
-                            <textarea class="form-control m-input" id="edescription" rows="3" ng-model="newexercise.description"></textarea>
+                            <ng-quill-editor ng-model="newexercise.description"></ng-quill-editor>
                         </div>
                         <div class="form-group m-form__group">
-                            <label for="eurl">Exercise Video Url:</label>
-                            <input type="text" class="form-control m-input" id="eurl" aria-describedby="Exercise Name" placeholder="Enter exercise name" ng-model="newexercise.video">
+                            <label for="em">Main Muscle Group:</label>
+                            <input type="text" class="form-control m-input" id="em" aria-describedby="Exercise Main Muscle Group" placeholder="Exercise Main Muscle Group" ng-model="newexercise.group1">
 
                         </div>
                         <div class="form-group m-form__group">
-                            <label for="eimagefile">File Image</label>
-                            <div></div>
-                            <div class="custom-file">
-                                <input type="file" class="custom-file-input" id="eimagefile">
-                                <label class="custom-file-label" for="customFile">Choose file</label>
-                            </div>
+                            <label for="et">Exercise Type:</label>
+                            <input type="text" class="form-control m-input" id="et" aria-describedby="Exercise Type" placeholder="Exercise Type" ng-model="newexercise.type">
+
+                        </div>
+                        <div class="form-group m-form__group">
+                            <label for="ee">Equipment Required:</label>
+                            <input type="text" class="form-control m-input" id="ee" aria-describedby="Equipment Required" placeholder="Equipment Required" ng-model="newexercise.equipment">
+
+                        </div>
+                        <div class="form-group m-form__group">
+                            <label for="el">Experience Level:</label>
+                            <input type="text" class="form-control m-input" id="el" aria-describedby="Experience Level" placeholder="Experience Level" ng-model="newexercise.level">
+
+                        </div>
+                        <div class="form-group m-form__group">
+                            <label for="em2">Secondary Muscles:</label>
+                            <input type="text" class="form-control m-input" id="em2" aria-describedby="Secondary Muscles" placeholder="Secondary Muscles" ng-model="newexercise.secondary">
+
+                        </div>
+                        <div class="form-group m-form__group">
+                            <label for="eurl">Exercise Video Url:</label>
+                            <input type="text" class="form-control m-input" id="eurl" aria-describedby="Exercise Video" placeholder="Enter exercise video" ng-model="newexercise.video">
+
+                        </div>
+                        <div class="form-group m-form__group">
+                            <label for="epdf">Image:</label>
+                            <input type="file" class="form-control m-input" id="epdf" aria-describedby="Exercise Image" fileread="newexercise.image">
                         </div>
                         <div class="form-group m-form__group">
                             <input type="submit" value="Add new Exercise" class="btn btn-primary m-btn m-btn--custom m-btn--icon m-btn--air m-btn--pill">
+                        </div>
+                        <div class="alert alert-success alert-dismissible fade show" role="alert" ng-if="successE == 1">
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                </button>
+                            <strong>Well done!</strong> You successfully added new workout.
+                        </div>
+                        <div class="alert alert-danger alert-dismissible fade show" role="alert" ng-if="successE == 2">
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                </button>
+                            <strong>Oh snap!</strong> Change a few things up and try submitting again.
                         </div>
                     </form>
                 </div>
@@ -149,12 +180,22 @@
                                 <td data-field="RecordID" class="m-datatable__cell--center m-datatable__cell"><span style="width: 40px;">{{exercise.id}}</span></td>
                                 <td data-field="name" class="m-datatable__cell"><span style="width: 150px;">{{exercise.name}}</span></td>
                                 <td data-field="description" class="m-datatable__cell"><span style="width: 350px;">{{exercise.description}}</span></td>
-                                <td data-field="video" class="m-datatable__cell"><span style="width: 210px;">{{exercise.videoUrl}}</span></td>
+                                <td data-field="video" class="m-datatable__cell"><span style="width: 210px;">{{exercise.videourl}}</span></td>
 
-                                <td data-field="Actions" class="m-datatable__cell"><span style="overflow: visible; width: 110px;">											<a href="#/manageexercise" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill" title="Edit details">							<i class="la la-edit"></i>						</a>						<a ng-click="removeExercise(exercise)" class="m-portlet__nav-link btn m-btn m-btn--hover-danger m-btn--icon m-btn--icon-only m-btn--pill" title="Delete">							<i class="la la-trash"></i>						</a>					</span></td>
+                                <td data-field="Actions" class="m-datatable__cell"><span style="overflow: visible; width: 110px;">											<button type="button" data-toggle="modal" data-target="#m_modal_{{$index}}" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill" title="Edit details">					<i class="la la-edit"></i>						</button>						<a ng-click="deleteExercise(exercise.id)" class="m-portlet__nav-link btn m-btn m-btn--hover-danger m-btn--icon m-btn--icon-only m-btn--pill" title="Delete">							<i class="la la-trash"></i>						</a>					</span></td>
                             </tr>
                         </tbody>
                     </table>
+                    <div class="alert alert-success alert-dismissible fade show" role="alert" ng-if="successED == 1">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            </button>
+                        <strong>Well done!</strong> You successfully deleted this workout.
+                    </div>
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert" ng-if="successED == 2">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            </button>
+                        <strong>Oh snap!</strong> Change a few things up and try submitting again.
+                    </div>
                     <div class="m-datatable__pager m-datatable--paging-loaded clearfix">
                         <ul class="m-datatable__pager-nav">
                             <li><a title="First" class="m-datatable__pager-link m-datatable__pager-link--first m-datatable__pager-link--disabled" data-page="1" disabled="disabled"><i class="la la-angle-double-left"></i></a></li>
@@ -187,6 +228,81 @@
                     </div>
                 </div>
                 <!--end: Datatable -->
+            </div>
+            <div class="modal fade" id="m_modal_{{$index}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" style="display: none;" ng-repeat="exercise in exercises">
+                <div class="modal-dialog modal-lg" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Edit {{exercise.name}}</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">×</span>
+          </button>
+                        </div>
+                        <div class="modal-body">
+                            <form>
+                                <div class="form-group m-form__group">
+                                    <label for="ename">Exercise Name:</label>
+                                    <input type="text" class="form-control m-input" id="ename" aria-describedby="Exercise Name" placeholder="Enter exercise name" ng-model="exercise.name">
+                                    <input type="hidden" class="form-control m-input" id="ename" value="{{exercise.id}}" ng-model="exercise.id">
+
+                                </div>
+                                <div class="form-group m-form__group">
+                                    <label for="edescription">Description</label>
+                                    <ng-quill-editor ng-model="exercise.description"></ng-quill-editor>
+                                </div>
+                                <div class="form-group m-form__group">
+                                    <label for="em">Main Muscle Group:</label>
+                                    <input type="text" class="form-control m-input" id="em" aria-describedby="Exercise Main Muscle Group" placeholder="Exercise Main Muscle Group" ng-model="exercise.group1">
+
+                                </div>
+                                <div class="form-group m-form__group">
+                                    <label for="et">Exercise Type:</label>
+                                    <input type="text" class="form-control m-input" id="et" aria-describedby="Exercise Type" placeholder="Exercise Type" ng-model="exercise.type">
+
+                                </div>
+                                <div class="form-group m-form__group">
+                                    <label for="ee">Equipment Required:</label>
+                                    <input type="text" class="form-control m-input" id="ee" aria-describedby="Equipment Required" placeholder="Equipment Required" ng-model="exercise.equipment">
+
+                                </div>
+                                <div class="form-group m-form__group">
+                                    <label for="el">Experience Level:</label>
+                                    <input type="text" class="form-control m-input" id="el" aria-describedby="Experience Level" placeholder="Experience Level" ng-model="exercise.level">
+
+                                </div>
+                                <div class="form-group m-form__group">
+                                    <label for="em2">Secondary Muscles:</label>
+                                    <input type="text" class="form-control m-input" id="em2" aria-describedby="Secondary Muscles" placeholder="Secondary Muscles" ng-model="exercise.secondary">
+
+                                </div>
+                                <div class="form-group m-form__group">
+                                    <label for="eurl">Exercise Video Url:</label>
+                                    <input type="text" class="form-control m-input" id="eurl" aria-describedby="Exercise Video" placeholder="Enter exercise video" ng-model="exercise.videourl">
+
+                                </div>
+                                <div class="form-group m-form__group">
+                                    <label for="epdf">Image:</label>
+                                    <input type="file" class="form-control m-input" id="epdf" aria-describedby="Exercise Image" fileread="exercise.image">
+                                </div>
+
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-primary" ng-click="updateExercise(exercise.id,exercise)">Update</button>
+                            <div class="alert alert-success alert-dismissible fade show" role="alert" ng-if="successEU == 1">
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                </button>
+                                <strong>Well done!</strong> You successfully updated this workout.
+                            </div>
+                            <div class="alert alert-danger alert-dismissible fade show" role="alert" ng-if="successEU == 2">
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                </button>
+                                <strong>Oh snap!</strong> Change a few things up and try submitting again.
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
