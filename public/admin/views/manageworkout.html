@@ -145,11 +145,12 @@
                                 <div>
                                     <h3>Add all Exercises first then enter the title and description of the Day</h3>
                                     <div class="form-group m-form__group" ng-repeat="exercise in exercises">
-                                        <h4 class="exerciseSelect">{{exercise.name}}</h4>
-                                        <input type="hidden" class="form-control m-input" id="eto" aria-describedby="Number of sets for this exercise" placeholder="No of sets for this exercise" ng-model="dayexercisesmod[$index].name" value="{{exercise.name}}">
-                                        <input type="text" class="form-control m-input" id="eto" aria-describedby="Number of sets for this exercise" placeholder="No of sets for this exercise" ng-model="dayexercisesmod[$index].reps">
-                                        <input type="text" class="form-control m-input" id="eto" aria-describedby="Number of reps for this exercise" placeholder="No of reps for this exercise" ng-model="dayexercisesmod[$index].sets">
-                                        <input type="button" value="Add to Workout Day Exercise" ng-click="addExercise(exercise,$index)" class="btn btn-primary m-btn m-btn--custom m-btn--icon m-btn--air m-btn--pill">
+                                        <h4 class="exerciseSelect" ng-click="showDetails = ! showDetails">{{exercise.name}}</h4>
+                                        <div ng-show="showDetails"> <input type="hidden" class="form-control m-input" id="eto" aria-describedby="Number of sets for this exercise" placeholder="No of sets for this exercise" ng-model="dayexercisesmod[$index].name" value="{{exercise.name}}">
+                                            <input type="text" class="form-control m-input" id="eto" aria-describedby="Number of sets for this exercise" placeholder="No of sets for this exercise" ng-model="dayexercisesmod[$index].reps">
+                                            <input type="text" class="form-control m-input" id="eto" aria-describedby="Number of reps for this exercise" placeholder="No of reps for this exercise" ng-model="dayexercisesmod[$index].sets">
+                                            <input type="button" value="Add to Workout Day Exercise" ng-click="addExercise(exercise,$index)" class="btn btn-primary m-btn m-btn--custom m-btn--icon m-btn--air m-btn--pill">
+                                        </div>
 
                                     </div>
                                     <div class="form-group m-form__group">

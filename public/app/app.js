@@ -13,6 +13,9 @@ newmanApp.config(['$routeProvider', '$stateProvider', '$locationProvider', funct
         .when('/workout/:id', {
             templateUrl: 'views/single-workout.view.html'
         })
+        .when('/exercise', {
+            templateUrl: 'views/exercise.view.html'
+        })
         .when('/exercise/:id', {
             templateUrl: 'views/single-exercise.view.html'
         }).otherwise('/');
@@ -230,6 +233,24 @@ newmanApp.controller('workoutsController', ['$scope', '$http', function($scope, 
         }, function errorCallback(response) {
             console.log(response)
         });
+    };
+
+}]);
+
+newmanApp.controller('exercisesController', ['$scope', '$http', function($scope, $http) {
+    $scope.exercises = []
+    $scope.loadexercises = function() {
+        $http({
+            method: 'GET',
+            url: 'http://localhost:81/newmanapi/public/exercises/getexercises',
+        }).then(function successCallback(response) {
+
+            $scope.exercises = response.data;
+            console.log(response)
+        }, function errorCallback(response) {
+            console.log(response)
+        });
+
     };
 
 }]);
