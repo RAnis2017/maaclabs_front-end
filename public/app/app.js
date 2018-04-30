@@ -18,7 +18,11 @@ newmanApp.config(['$routeProvider', '$stateProvider', '$locationProvider', funct
         })
         .when('/exercise/:id', {
             templateUrl: 'views/single-exercise.view.html'
-        }).otherwise('/');
+        })
+        .when('/exercisegroup/:id', {
+            templateUrl: 'views/group-exercise.view.html'
+        })
+        .otherwise('/');
 
     // $stateProvider
     //     .state('login', {
@@ -237,8 +241,10 @@ newmanApp.controller('workoutsController', ['$scope', '$http', function($scope, 
 
 }]);
 
-newmanApp.controller('exercisesController', ['$scope', '$http', function($scope, $http) {
+newmanApp.controller('exercisesController', ['$state', '$scope', '$routeParams', '$http', '$sce', function($state, $scope, $routeParams, $http, $sce) {
     $scope.exercises = []
+    $scope.id = $routeParams.id;
+
     $scope.loadexercises = function() {
         $http({
             method: 'GET',

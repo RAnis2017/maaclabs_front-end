@@ -220,10 +220,11 @@ adminApp.controller('exerciseController', ['$scope', 'sharedProperties', 'dataSe
             level: $scope.newexercise.level,
             secondary: $scope.newexercise.secondary,
             videoUrl: $scope.newexercise.video,
-            image: $scope.newexercise.image
+            image: $scope.newexercise.image,
+            groupid: $scope.newexercise.groupid
         });
         $scope.successE = 0;
-
+        console.log($scope.newexercise.groupid);
         $http({
             method: 'POST',
             url: 'http://localhost:81/newmanapi/public/exercises/addexercise',
@@ -236,7 +237,8 @@ adminApp.controller('exerciseController', ['$scope', 'sharedProperties', 'dataSe
                 "level": $scope.newexercise.level,
                 "secondary": $scope.newexercise.secondary,
                 "description": $scope.newexercise.description,
-                "image": $scope.newexercise.image
+                "image": $scope.newexercise.image,
+                "group_id": $scope.newexercise.groupid
             }
         }).then(function successCallback(response) {
             $scope.successE = 1
@@ -265,7 +267,8 @@ adminApp.controller('exerciseController', ['$scope', 'sharedProperties', 'dataSe
                 "level": exercise.level,
                 "secondary": exercise.secondary,
                 "description": exercise.description,
-                "image": exercise.image
+                "image": exercise.image,
+                "group_id": exercise.groupid
             }
         }).then(function successCallback(response) {
             $scope.successEU = 1

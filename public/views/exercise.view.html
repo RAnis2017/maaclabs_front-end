@@ -11,8 +11,29 @@
             <h3 style="margin: 10px;">Exercises</h3>
             <div class="col-md-4" style="text-align:right;">
                 <ul>
-                    <li ng-repeat="exercise in exercises|limitTo:8">
-                        <h3><a href="#/exercise/{{exercise.id}}" id="exercise{{exercise.id}}" data-id="{{exercise.id}}">{{exercise.name}}</a></h3>
+                    <li>
+                        <h3><a href="#/exercisegroup/1" id="exercisegroup1" data-id="1">Full Body</a></h3>
+                    </li>
+                    <li>
+                        <h3><a href="#/exercisegroup/2" id="exercisegroup2" data-id="2">Neck</a></h3>
+                    </li>
+                    <li>
+                        <h3><a href="#/exercisegroup/3" id="exercisegroup3" data-id="3">Shoulders</a></h3>
+                    </li>
+                    <li>
+                        <h3><a href="#/exercisegroup/4" id="exercisegroup4" data-id="4">Chest</a></h3>
+                    </li>
+                    <li>
+                        <h3><a href="#/exercisegroup/5" id="exercisegroup5" data-id="5">Biceps</a></h3>
+                    </li>
+                    <li>
+                        <h3><a href="#/exercisegroup/6" id="exercisegroup6" data-id="6">Forearms</a></h3>
+                    </li>
+                    <li>
+                        <h3><a href="#/exercisegroup/7" id="exercisegroup7" data-id="7">Abs</a></h3>
+                    </li>
+                    <li>
+                        <h3><a href="#/exercisegroup/8" id="exercisegroup8" data-id="8">Quads</a></h3>
                     </li>
                 </ul>
             </div>
@@ -21,8 +42,29 @@
                </svg></div>
             <div class="col-md-4">
                 <ul>
-                    <li ng-repeat="exercise in exercises|limitTo:8:8">
-                        <h3><a href="#/exercise/{{exercise.id}}">{{exercise.name}}</a></h3>
+                    <li>
+                        <h3><a href="#/exercisegroup/9" id="exercisegroup9" data-id="9">Traps</a></h3>
+                    </li>
+                    <li>
+                        <h3><a href="#/exercisegroup/10" id="exercisegroup10" data-id="10">Triceps</a></h3>
+                    </li>
+                    <li>
+                        <h3><a href="#/exercisegroup/11" id="exercisegroup11" data-id="11">Lats</a></h3>
+                    </li>
+                    <li>
+                        <h3><a href="#/exercisegroup/12" id="exercisegroup12" data-id="12">Middle Back</a></h3>
+                    </li>
+                    <li>
+                        <h3><a href="#/exercisegroup/13" id="exercisegroup13" data-id="13">Lower Back</a></h3>
+                    </li>
+                    <li>
+                        <h3><a href="#/exercisegroup/14" id="exercisegroup14" data-id="14">Glutes</a></h3>
+                    </li>
+                    <li>
+                        <h3><a href="#/exercisegroup/15" id="exercisegroup15" data-id="15">Hamstrings</a></h3>
+                    </li>
+                    <li>
+                        <h3><a href="#/exercisegroup/16" id="exercisegroup16" data-id="16">Calves</a></h3>
                     </li>
                 </ul>
             </div>
@@ -39,35 +81,200 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js" type="text/javascript"></script>
     <script>
-        var all = document.querySelectorAll("path[id^='path']");
-        console.log(all);
-        for (var i = 0; i < all.length; i++) {
-            if (all[i].id.length >= 8 || all[i].id == "path695" || all[i].id == "path691" || all[i].id == "path883" || all[i].id == "path890" || all[i].id == "path612" || all[i].id == "path651") {
-                all[i].style.display = "none";
-            }
-        }
+        jQuery('#abs').css('opacity', '0');
+        jQuery('#forearms').css('opacity', '0');
+        jQuery('#chest').css('opacity', '0');
+        jQuery('#neck').css('opacity', '0');
+        jQuery('#biceps').css('opacity', '0');
+        jQuery('#triceps').css('opacity', '0');
+        jQuery('#glutes').css('opacity', '0');
+        jQuery('#low_back').css('opacity', '0');
+        jQuery('#mid_back').css('opacity', '0');
+        jQuery('#shoulders').css('opacity', '0');
+        jQuery('#lats').css('opacity', '0');
+        jQuery('#hamstring').css('opacity', '0');
+        jQuery('#calves').css('opacity', '0');
+        jQuery('#traps').css('opacity', '0');
+        jQuery('#quads').css('opacity', '0');
+        jQuery('#calves').css('opacity', '0');
 
         setInterval(function() {
-            var exercise = document.querySelectorAll("a[id^='exercise']");
-            for (var i = 0; i < exercise.length; i++) {
-                if ($(exercise[i]).data('id') === "exercise4" && $(exercise[i]).is(":hover") === true) {
-                    for (var i = 0; i < all.length; i++) {
 
-                        all[i].style.display = "block";
 
-                    }
-                } else {
-                    console.log($(exercise[i]).data('id'));
-                    for (var i = 0; i < all.length; i++) {
+            if ($("#exercisegroup1").is(":hover") === true) {
+                jQuery('#abs').css('opacity', '1');
+                jQuery('#forearms').css('opacity', '1');
+                jQuery('#chest').css('opacity', '1');
+                jQuery('#neck').css('opacity', '1');
+                jQuery('#biceps').css('opacity', '1');
+                jQuery('#triceps').css('opacity', '1');
+                jQuery('#glutes').css('opacity', '1');
+                jQuery('#low_back').css('opacity', '1');
+                jQuery('#mid_back').css('opacity', '1');
+                jQuery('#shoulders').css('opacity', '1');
+                jQuery('#lats').css('opacity', '1');
+                jQuery('#hamstring').css('opacity', '1');
+                jQuery('#calves').css('opacity', '1');
+                jQuery('#traps').css('opacity', '1');
+                jQuery('#quads').css('opacity', '1');
+                jQuery('#calves').css('opacity', '1');
+            } else if ($("#exercisegroup2").is(":hover") === true || $("#neck").is(":hover")) {
 
-                        if (all[i].id.length >= 8 || all[i].id == "path695" || all[i].id == "path691" || all[i].id == "path883" || all[i].id == "path890" || all[i].id == "path612" || all[i].id == "path651") {
-                            all[i].style.display = "none";
-                        }
+                $("#exercisegroup2").addClass("active");
+                jQuery('#neck').css('opacity', '1');
+                jQuery('#neck').click(function() {
+                    $("#exercisegroup2")[0].click();
+                })
 
-                    }
-                }
+            } else if ($("#exercisegroup3").is(":hover") === true || $("#shoulders").is(":hover")) {
+
+                $("#exercisegroup3").addClass("active");
+                jQuery('#shoulders').css('opacity', '1');
+                jQuery('#shoulders').click(function() {
+                    $("#exercisegroup3")[0].click();
+                })
+
+            } else if ($("#exercisegroup4").is(":hover") === true || $("#chest").is(":hover")) {
+
+                $("#exercisegroup4").addClass("active");
+                jQuery('#chest').css('opacity', '1');
+                jQuery('#chest').click(function() {
+                    $("#exercisegroup4")[0].click();
+                })
+
+            } else if ($("#exercisegroup5").is(":hover") === true || $("#biceps").is(":hover")) {
+
+                $("#exercisegroup5").addClass("active");
+                jQuery('#biceps').css('opacity', '1');
+                jQuery('#biceps').click(function() {
+                    $("#exercisegroup5")[0].click();
+                })
+
+            } else if ($("#exercisegroup6").is(":hover") === true || $("#forearms").is(":hover")) {
+
+                $("#exercisegroup6").addClass("active");
+                jQuery('#forearms').css('opacity', '1');
+                jQuery('#forearms').click(function() {
+                    $("#exercisegroup6")[0].click();
+                })
+
+            } else if ($("#exercisegroup7").is(":hover") === true || $("#abs").is(":hover")) {
+
+                $("#exercisegroup7").addClass("active");
+                jQuery('#abs').css('opacity', '1');
+                jQuery('#abs').click(function() {
+                    $("#exercisegroup7")[0].click();
+                })
+
+            } else if ($("#exercisegroup8").is(":hover") === true || $("#quads").is(":hover")) {
+
+                $("#exercisegroup8").addClass("active");
+                jQuery('#quads').css('opacity', '1');
+                jQuery('#quads').click(function() {
+                    $("#exercisegroup8")[0].click();
+                })
+
+            } else if ($("#exercisegroup9").is(":hover") === true || $("#traps").is(":hover")) {
+
+                $("#exercisegroup9").addClass("active");
+                jQuery('#traps').css('opacity', '1');
+                jQuery('#traps').click(function() {
+                    $("#exercisegroup9")[0].click();
+                })
+
+            } else if ($("#exercisegroup10").is(":hover") === true || $("#triceps").is(":hover")) {
+
+                $("#exercisegroup10").addClass("active");
+                jQuery('#triceps').css('opacity', '1');
+                jQuery('#triceps').click(function() {
+                    $("#exercisegroup10")[0].click();
+                })
+
+            } else if ($("#exercisegroup11").is(":hover") === true || $("#lats").is(":hover")) {
+
+                $("#exercisegroup11").addClass("active");
+                jQuery('#lats').css('opacity', '1');
+                jQuery('#lats').click(function() {
+                    $("#exercisegroup11")[0].click();
+                })
+
+            } else if ($("#exercisegroup12").is(":hover") === true || $("#mid_back").is(":hover")) {
+
+                $("#exercisegroup12").addClass("active");
+                jQuery('#mid_back').css('opacity', '1');
+                jQuery('#mid_back').click(function() {
+                    $("#exercisegroup412")[0].click();
+                })
+
+            } else if ($("#exercisegroup13").is(":hover") === true || $("#low_back").is(":hover")) {
+
+                $("#exercisegroup13").addClass("active");
+                jQuery('#low_back').css('opacity', '1');
+                jQuery('#low_back').click(function() {
+                    $("#exercisegroup13")[0].click();
+                })
+
+            } else if ($("#exercisegroup14").is(":hover") === true || $("#glutes").is(":hover")) {
+
+                $("#exercisegroup14").addClass("active");
+                jQuery('#glutes').css('opacity', '1');
+                jQuery('#glutes').click(function() {
+                    $("#exercisegroup14")[0].click();
+                })
+
+            } else if ($("#exercisegroup15").is(":hover") === true || $("#hamstring").is(":hover")) {
+
+                $("#exercisegroup15").addClass("active");
+                jQuery('#hamstring').css('opacity', '1');
+                jQuery('#hamstring').click(function() {
+                    $("#exercisegroup15")[0].click();
+                })
+
+            } else if ($("#exercisegroup16").is(":hover") === true || $("#calves").is(":hover")) {
+
+                $("#exercisegroup16").addClass("active");
+                jQuery('#calves').css('opacity', '1');
+                jQuery('#calves').click(function() {
+                    $("#exercisegroup16")[0].click();
+                })
+
+            } else {
+                $("#exercisegroup1").removeClass("active");
+                $("#exercisegroup2").removeClass("active");
+                $("#exercisegroup3").removeClass("active");
+                $("#exercisegroup4").removeClass("active");
+                $("#exercisegroup5").removeClass("active");
+                $("#exercisegroup6").removeClass("active");
+                $("#exercisegroup7").removeClass("active");
+                $("#exercisegroup8").removeClass("active");
+                $("#exercisegroup9").removeClass("active");
+                $("#exercisegroup10").removeClass("active");
+                $("#exercisegroup11").removeClass("active");
+                $("#exercisegroup12").removeClass("active");
+                $("#exercisegroup13").removeClass("active");
+                $("#exercisegroup14").removeClass("active");
+                $("#exercisegroup15").removeClass("active");
+                $("#exercisegroup16").removeClass("active");
+
+                jQuery('#abs').css('opacity', '0');
+                jQuery('#forearms').css('opacity', '0');
+                jQuery('#chest').css('opacity', '0');
+                jQuery('#neck').css('opacity', '0');
+                jQuery('#biceps').css('opacity', '0');
+                jQuery('#triceps').css('opacity', '0');
+                jQuery('#glutes').css('opacity', '0');
+                jQuery('#low_back').css('opacity', '0');
+                jQuery('#mid_back').css('opacity', '0');
+                jQuery('#shoulders').css('opacity', '0');
+                jQuery('#lats').css('opacity', '0');
+                jQuery('#hamstring').css('opacity', '0');
+                jQuery('#calves').css('opacity', '0');
+                jQuery('#traps').css('opacity', '0');
+                jQuery('#quads').css('opacity', '0');
+                jQuery('#calves').css('opacity', '0');
             }
-        }, 1000); // Wait 1000ms before running again
+
+        }, 100); // Wait 1000ms before running again
     </script>
 </div>
 </div>

@@ -26,6 +26,10 @@
     height: 100vh;
 }
 
+a.active {
+    color: #ab340c !important;
+}
+
 .heroSection a:hover .overlay {
     background-color: rgba(0, 0, 0, 0.5);
 }
