@@ -1,0 +1,324 @@
+<!-- <div class="m-grid__item m-grid__item--fluid m-grid m-grid--ver-desktop m-grid--desktop m-body"> -->
+
+<!-- BEGIN: Left Aside -->
+<button class="m-aside-left-close  m-aside-left-close--skin-dark " id="m_aside_left_close_btn"><i class="la la-close"></i></button>
+
+<div ng-include="'aside-menu.html'" id="m_aside_left" class="m-grid__item	m-aside-left  m-aside-left--skin-dark ">
+
+</div>
+<!-- END: Left Aside -->
+<div class="row">
+    <div class="col-lg-10 col-md-10 col-sm-8" style="margin: 20px 0px 0px 25px;">
+        <h3>Awesome!</h3>
+        <h6>Your Profile is {{user.percentage_completed}} Complete. Fill out the rest of the information below</h6>
+    </div>
+    <div class="col-lg-12 col-md-12 col-sm-12" style="margin: 0px 0px 0px 25px;">
+        <div class="m-portlet m-portlet--creative m-portlet--bordered-semi">
+            <div class="m-portlet__head">
+                <div class="m-portlet__head-caption">
+                    <div class="m-portlet__head-title">
+                        <span class="m-portlet__head-icon m--hide">
+                                    <i class="flaticon-statistics"></i>
+                                </span>
+                        <h3 class="m-portlet__head-text">
+                            Make sure below fields are completed to get 100% profile completion.
+                        </h3>
+                        <h2 class="m-portlet__head-label m-portlet__head-label--success">
+                            <span>Personal Details</span>
+                        </h2>
+                    </div>
+                </div>
+
+            </div>
+            <div class="m-portlet__body">
+                <div class="form-group m-form__group">
+                    <label for="name">Name</label>
+                    <input type="text" class="form-control m-input" id="name" aria-describedby="emailHelp" placeholder="Enter name" ng-model="user.name">
+                </div>
+                <hr>
+                <div class="m-form__group form-group">
+                    <label for="">Gender</label>
+                    <div class="m-radio-list">
+                        <label class="m-radio">
+                        <input type="radio" name="gender" value="1" ng-model="user.gender" ng-attr-checked="{{user.gender==1 && 'checked' || '' }}"> Male
+                        <span></span>
+                        </label>
+                        <label class="m-radio">
+                        <input type="radio" name="gender" value="2" ng-model="user.gender" ng-attr-checked="{{user.gender==2 && 'checked' || '' }}"> Female
+                        <span></span>
+                        </label>
+                    </div>
+                </div>
+                <hr>
+                <div class="form-group m-form__group">
+                    <label for="email">Email</label>
+                    <input type="email" class="form-control m-input" id="email" aria-describedby="emailHelp" placeholder="Enter email" ng-model="user.email">
+                </div>
+                <hr>
+                <div class="form-group m-form__group">
+                    <label for="phone">Phone</label>
+                    <input type="text" class="form-control m-input" id="phone" aria-describedby="emailHelp" placeholder="Enter phone" ng-model="user.phone">
+                </div>
+                <hr>
+                <div class="form-group m-form__group">
+                    <label for="dob">Date of Birth</label>
+                    <input type="date" class="form-control m-input" id="dob" aria-describedby="emailHelp" placeholder="Enter dob" ng-model="user.dob">
+                </div>
+                <hr>
+                <div class="form-group m-form__group">
+                    <label for="">Certificates</label>
+                    <div class="m-portlet m-portlet--creative m-portlet--first m-portlet--bordered-semi" ng-repeat="certificate in certificates">
+                        <div class="m-portlet__head">
+                            <div class="m-portlet__head-caption">
+                                <div class="m-portlet__head-title">
+                                    <span class="m-portlet__head-icon m--hide">
+                                            <i class="flaticon-statistics"></i>
+                                        </span>
+                                    <h3 class="m-portlet__head-text">
+                                        {{certificate.date}}
+                                    </h3>
+                                    <h2 class="m-portlet__head-label m-portlet__head-label--info">
+                                        <span>{{certificate.title}}</span>
+                                    </h2>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="m-portlet__body">
+                            {{certificate.description}}
+                        </div>
+                    </div>
+
+                    <label for="">Add Certificate</label>
+                    <br>
+                    <label for="">Certificate Title</label>
+                    <input type="text" class="form-control m-input" id="" aria-describedby="emailHelp" placeholder="Enter Title" ng-model="certificate.title">
+                    <label for="">Description</label>
+                    <input type="text" class="form-control m-input" id="" aria-describedby="emailHelp" placeholder="Enter Description" ng-model="certificate.description">
+                    <label for="">Certificate Date</label>
+                    <input type="date" class="form-control m-input" id="" aria-describedby="emailHelp" placeholder="Enter Date" ng-model="certificate.date">
+                    <div class="m-form__actions">
+                        <button type="reset" class="btn btn-primary" ng-click="addCert()" style="color:#EC4F26;">Add Certificate</button>
+                    </div>
+                </div>
+                <hr>
+                <div class="form-group m-form__group">
+                    <label for="exp">Experience</label>
+                    <ng-quill-editor ng-model="user.experience"></ng-quill-editor>
+
+                </div>
+                <hr>
+                <div class="form-group m-form__group">
+                    <label for="profile">Profile Pic</label>
+                    <div></div>
+                    <div class="custom-file">
+                        <input type="file" class="custom-file-input" id="profile" fileread="user.profile_pic">
+                        <label class="custom-file-label" for="customFile">Choose file</label>
+                    </div>
+                </div>
+                <hr>
+                <div class="form-group m-form__group">
+                    <img src="users/{{picture.picture}}" alt="" width="200" ng-repeat="picture in pictures">
+                    <br>
+                    <label for="pics">Other Pics</label>
+                    <div></div>
+                    <div class="custom-file">
+                        <input type="file" class="custom-file-input" id="pics" fileread="picture.picture">
+                        <label class="custom-file-label" for="customFile">Choose file</label>
+                    </div>
+                    <div class="m-form__actions">
+                        <button type="reset" class="btn btn-primary" ng-click="addPicture()" style="color:#EC4F26;">Add Picture to the Group</button>
+                    </div>
+                </div>
+                <hr>
+                <div class="form-group m-form__group">
+                    <label for="vids">Videos</label>
+                    <div></div>
+                    <div class="custom-file">
+                        <input type="text" class="form-control m-input" id="" aria-describedby="emailHelp" placeholder="Enter Video Link" ng-model="video.text">
+
+                    </div>
+                    <div class="m-form__actions">
+                        <button type="reset" class="btn btn-primary" ng-click="addVideo()" style="color:#EC4F26;">Add Video to the Group</button>
+                    </div>
+                </div>
+                <hr>
+                <div class="form-group m-form__group">
+                    <label for="">Transformations</label>
+                    <br>
+                    <div class="m-portlet m-portlet--creative m-portlet--first m-portlet--bordered-semi" ng-repeat="transformation in transformations">
+                        <div class="m-portlet__head">
+                            <div class="m-portlet__head-caption">
+                                <div class="m-portlet__head-title">
+                                    <span class="m-portlet__head-icon m--hide">
+                                                <i class="flaticon-statistics"></i>
+                                            </span>
+                                    <h3 class="m-portlet__head-text">
+                                        {{transformation.description}}
+                                    </h3>
+                                    <h2 class="m-portlet__head-label m-portlet__head-label--info">
+                                        <span>{{transformation.name}}</span>
+                                    </h2>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="m-portlet__body">
+                            <img src="users/{{picture.picture}}" alt="" width="200" ng-repeat="picture in transformation.pictures">
+                        </div>
+                    </div>
+                    <hr>
+                    <label for="">Add Transformation</label>
+                    <br>
+                    <label for="">Transformation Name</label>
+                    <input type="text" class="form-control m-input" id="" aria-describedby="emailHelp" placeholder="Enter Title" ng-model="transformation.name">
+                    <label for="">Description</label>
+                    <textarea class="form-control m-input" id="" maxlength="1000" aria-describedby="emailHelp" placeholder="Enter Description" ng-model="transformation.description">
+                        </textarea>
+
+                    <div class="form-group m-form__group">
+                        <label for="pics">Pics</label>
+                        <div></div>
+                        <div class="custom-file">
+                            <input type="file" class="custom-file-input" id="pics" fileread="tpicture.picture">
+                            <label class="custom-file-label" for="customFile">Choose file</label>
+                        </div>
+                        <div class="m-form__actions">
+                            <button type="reset" class="btn btn-primary" ng-click="addPictureTransformation()" style="color:#EC4F26;">Add Picture to the Transformation</button>
+                        </div>
+                    </div>
+
+                    <div class="m-form__actions">
+                        <button type="reset" class="btn btn-primary" ng-click="addTransformation()" style="color:#EC4F26;">Add Transformation</button>
+                    </div>
+                    <hr>
+                    <div class="form-group m-form__group">
+                        <label for="about">About</label>
+                        <ng-quill-editor ng-model="user.about"></ng-quill-editor>
+
+                    </div>
+                    <hr>
+                    <div class="form-group m-form__group">
+                        <label for="">Social Profiles</label>
+                        <div class="m-portlet m-portlet--creative m-portlet--first m-portlet--bordered-semi" ng-repeat="social in socials">
+                            <div class="m-portlet__head">
+                                <div class="m-portlet__head-caption">
+                                    <div class="m-portlet__head-title">
+                                        <span class="m-portlet__head-icon m--hide">
+                                                <i class="flaticon-statistics"></i>
+                                            </span>
+                                        <h3 class="m-portlet__head-text">
+                                            {{social.username}} - {{social.link}}
+                                        </h3>
+                                        <h2 class="m-portlet__head-label m-portlet__head-label--info">
+                                            <span>{{social.website}}</span>
+                                        </h2>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <label for="">Add Social</label>
+                        <br>
+                        <label for="">Social Website Name:</label>
+                        <input type="text" class="form-control m-input" id="" aria-describedby="emailHelp" placeholder="Enter Website Name" ng-model="social.website">
+                        <label for="">Social Username:</label>
+                        <input type="text" class="form-control m-input" id="" aria-describedby="emailHelp" placeholder="Enter Website Username" ng-model="social.username">
+                        <label for="">Social Link Address:</label>
+                        <input type="text" class="form-control m-input" id="" aria-describedby="emailHelp" placeholder="Enter Website Link" ng-model="social.link">
+                        <div class="m-form__actions">
+                            <button type="reset" class="btn btn-primary" ng-click="addSocial()" style="color:#EC4F26;">Add Social</button>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="form-group m-form__group">
+                        <label for="maxclient">Max Client</label>
+                        <input type="text" class="form-control m-input" id="maxclient" aria-describedby="emailHelp" placeholder="Enter Max Client" ng-model="user.max_client">
+                    </div>
+                    <hr>
+                    <div class="form-group m-form__group">
+                        <label for="">Packages</label>
+                        <div class="m-portlet m-portlet--creative m-portlet--first m-portlet--bordered-semi" ng-repeat="package in packages">
+                            <div class="m-portlet__head">
+                                <div class="m-portlet__head-caption">
+                                    <div class="m-portlet__head-title">
+                                        <span class="m-portlet__head-icon m--hide">
+                                                <i class="flaticon-statistics"></i>
+                                            </span>
+                                        <h3 class="m-portlet__head-text">
+                                            {{package.duration}} Days --
+                                            <p ng-bind-html="package.description"></p>
+                                        </h3>
+                                        <h2 class="m-portlet__head-label m-portlet__head-label--info">
+                                            <span>{{package.name}}</span>
+                                        </h2>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                        <br>
+                        <label for="">Add Packages</label>
+                        <br>
+                        <label for="">Package Name:</label>
+                        <input type="text" class="form-control m-input" id="" aria-describedby="emailHelp" placeholder="Enter Package Name" ng-model="package.name">
+                        <label for="">Package Duration:</label>
+                        <input type="text" class="form-control m-input" id="" aria-describedby="emailHelp" placeholder="Enter Package Duration" ng-model="package.duration">
+                        <label for="">Package Description:</label>
+                        <ng-quill-editor ng-model="package.description"></ng-quill-editor>
+                        <label for="">Package Support:</label>
+                        <br>
+                        <label for="">Package Support Day From:</label>
+                        <select class="form-control m-input" id="" ng-model="package.dayfrom">
+							<option value="monday">Monday</option>
+							<option value="tuesday">Tuesday</option>
+							<option value="wednesday">Wednesday</option>
+							<option value="thursday">Thursday</option>
+                            <option value="friday">Friday</option>
+                            <option value="saturday">Saturday</option>
+                            <option value="sunday">Sunday</option>
+                            
+                        </select>
+                        <label for="">Package Support Day To:</label>
+                        <select class="form-control m-input" id="" ng-model="package.dayto">
+							<option value="monday">Monday</option>
+							<option value="tuesday">Tuesday</option>
+							<option value="wednesday">Wednesday</option>
+							<option value="thursday">Thursday</option>
+                            <option value="friday">Friday</option>
+                            <option value="saturday">Saturday</option>
+                            <option value="sunday">Sunday</option>
+                            
+                        </select>
+                        <label for="">Package Support Time:</label>
+                        <input type="text" class="form-control m-input" id="" aria-describedby="emailHelp" placeholder="Enter Package Time" ng-model="package.time">
+
+                        <div class="m-form__actions">
+                            <button type="reset" class="btn btn-primary" ng-click="addPackage()" style="color:#EC4F26;">Add Package</button>
+                        </div>
+                        <br>
+                        <br>
+                        <hr>
+                        <div class="m-form__actions">
+                            <button type="reset" class="btn btn-primary" ng-click="save()" style="color:#EC4F26;">Save All</button>
+                        </div>
+                        <div class="alert alert-success alert-dismissible fade show" role="alert" ng-if="success == 1">
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            </button>
+                            <strong>Well done!</strong> You successfully updated this workout.
+                        </div>
+                        <div class="alert alert-danger alert-dismissible fade show" role="alert" ng-if="success == 0 || success == 2">
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            </button>
+                            <strong>Oh snap!</strong> Change a few things up and try submitting again.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+<!-- end:: Body -->

@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 30, 2018 at 11:22 PM
+-- Generation Time: May 18, 2018 at 10:49 PM
 -- Server version: 10.1.16-MariaDB
 -- PHP Version: 7.0.9
 
@@ -19,6 +19,20 @@ SET time_zone = "+00:00";
 --
 -- Database: `newman`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `certifications`
+--
+
+CREATE TABLE `certifications` (
+  `id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `date` date NOT NULL,
+  `title` varchar(255) NOT NULL,
+  `description` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -47,6 +61,117 @@ CREATE TABLE `exercises` (
 INSERT INTO `exercises` (`id`, `name`, `description`, `videourl`, `image`, `group1`, `type`, `equipment`, `level`, `secondary`, `group_id`) VALUES
 (4, 'Push ups', '<p>Something here!</p>', 'https://www.youtube.com/watch?v=xRr7aGPuLzw', '1b991pCo9iC79VUAgsOY.jpg', 'Shoulders', 'Strength', 'Barbells, Bench', 'Intermediate', 'Everything Else!', 0),
 (6, 'Pull Ups', '<p>Random Text</p>', 'http://www.putlockers.lc/episodes/the-walking-dead-season-8-episode-9/', 'PUEDo7IAMfc79oAiukaf.jpg', 'Muscle Building', 'Strength', 'Barbells, Rod', 'Intermediate', 'Chest and Forearms', 3);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `packages`
+--
+
+CREATE TABLE `packages` (
+  `id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `duration` varchar(255) NOT NULL,
+  `description` text NOT NULL,
+  `available` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `photos`
+--
+
+CREATE TABLE `photos` (
+  `id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `title` varchar(255) NOT NULL,
+  `path` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `social`
+--
+
+CREATE TABLE `social` (
+  `id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `website` varchar(255) NOT NULL,
+  `username` varchar(255) NOT NULL,
+  `link` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `transformations`
+--
+
+CREATE TABLE `transformations` (
+  `id` int(11) NOT NULL,
+  `pictures` text NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `description` text NOT NULL,
+  `user_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `users`
+--
+
+CREATE TABLE `users` (
+  `id` int(11) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `gender` varchar(255) DEFAULT NULL,
+  `email` varchar(255) NOT NULL,
+  `password` varchar(255) NOT NULL,
+  `type` int(11) NOT NULL DEFAULT '2',
+  `phone` varchar(255) DEFAULT NULL,
+  `dob` date DEFAULT NULL,
+  `certification` text,
+  `experience` text,
+  `profile_pic` varchar(255) DEFAULT NULL,
+  `pictures` text,
+  `videos` text,
+  `transformation` text,
+  `about` text,
+  `social` text,
+  `max_client` int(11) DEFAULT NULL,
+  `package` text,
+  `testimonial` text,
+  `price` varchar(255) DEFAULT NULL,
+  `category` int(11) DEFAULT NULL,
+  `approved` int(11) NOT NULL DEFAULT '0',
+  `percentage_completed` varchar(255) DEFAULT '30%',
+  `packagetype` varchar(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `users`
+--
+
+INSERT INTO `users` (`id`, `name`, `gender`, `email`, `password`, `type`, `phone`, `dob`, `certification`, `experience`, `profile_pic`, `pictures`, `videos`, `transformation`, `about`, `social`, `max_client`, `package`, `testimonial`, `price`, `category`, `approved`, `percentage_completed`, `packagetype`) VALUES
+(1, 'Raza Anis', '1', 'razaanis123@gmail.com', 'e99a18c428cb38d5f260853678922e03', 1, '1231231231321', '1996-03-01', '[{"title":"sadas","date":"2018-12-30T19:00:00.000Z","description":"asdas","$$hashKey":"object:13"},{"title":"123qwsd","date":"2014-11-24T19:00:00.000Z","description":"asdas123","$$hashKey":"object:15"}]', '<p>Not Much... :D</p>', '8ZGZWYqmiN9JgHUNF71n.jpg', '[{"picture":"P5E00tBopz2N7iNm3Mj4.png"},{"picture":"YJ8GkMQqeBbwvG8DuYF0.png"}]', '[]', '[{"description":"asdsads","pictures":[{"picture":"7hCPhwTw3yNYqBXWfTTG.jpg","$$hashKey":"object:19"},{"picture":"30USsjsaRrL0Oe6DlxIg.png","$$hashKey":"object:20"},{"picture":"AB5OUJhqTw0zgiFSRSGk.png","$$hashKey":"object:21"}],"$$hashKey":"object:17"}]', '<p>asdsadsadsadsadsa</p>', '[{"website":"sdsad","username":"asdasdsa","link":"asdasds","$$hashKey":"object:15"}]', 14, '[{"name":"sad","duration":"asd","description":"<p>asdasdas</p>","dayfrom":"tuesday","dayto":"monday","time":"asdsadsa","price":"","$$hashKey":"object:16"}]', NULL, '502', NULL, 0, '30%', '3'),
+(2, 'Usama', NULL, 'usama@gmail.com', 'e99a18c428cb38d5f260853678922e03', 2, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, '30%', NULL),
+(4, 'RAnis', NULL, 'admin@gmail.com', 'e99a18c428cb38d5f260853678922e03', 3, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, '30%', NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `videos`
+--
+
+CREATE TABLE `videos` (
+  `id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `title` varchar(255) NOT NULL,
+  `path` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -110,9 +235,52 @@ INSERT INTO `workouts_group` (`id`, `name`) VALUES
 --
 
 --
+-- Indexes for table `certifications`
+--
+ALTER TABLE `certifications`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `exercises`
 --
 ALTER TABLE `exercises`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `packages`
+--
+ALTER TABLE `packages`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `photos`
+--
+ALTER TABLE `photos`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `social`
+--
+ALTER TABLE `social`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `transformations`
+--
+ALTER TABLE `transformations`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `users`
+--
+ALTER TABLE `users`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `email` (`email`);
+
+--
+-- Indexes for table `videos`
+--
+ALTER TABLE `videos`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -132,10 +300,45 @@ ALTER TABLE `workouts_group`
 --
 
 --
+-- AUTO_INCREMENT for table `certifications`
+--
+ALTER TABLE `certifications`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+--
 -- AUTO_INCREMENT for table `exercises`
 --
 ALTER TABLE `exercises`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+--
+-- AUTO_INCREMENT for table `packages`
+--
+ALTER TABLE `packages`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT for table `photos`
+--
+ALTER TABLE `photos`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT for table `social`
+--
+ALTER TABLE `social`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT for table `transformations`
+--
+ALTER TABLE `transformations`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT for table `users`
+--
+ALTER TABLE `users`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+--
+-- AUTO_INCREMENT for table `videos`
+--
+ALTER TABLE `videos`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `workouts`
 --

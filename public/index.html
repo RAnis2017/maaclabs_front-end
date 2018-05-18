@@ -8,8 +8,11 @@
     <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta charset="utf-8">
+    <base href="">
     <link rel="icon" href="images/favicon.ico" type="image/x-icon">
     <!-- Stylesheets-->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
+
 
     <link href='https://fonts.googleapis.com/css?family=PT+Sans:400,700' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="https://s3-us-west-2.amazonaws.com/s.cdpn.io/148866/reset.css">
@@ -20,10 +23,17 @@
     <link rel="stylesheet" href="css/custom.css">
     <link rel="stylesheet" href="css/imagehover.min.css">
     <link rel="stylesheet" href="js/assets/owl.carousel.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/angularjs-slider/6.5.1/rzslider.min.css" />
     <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
     <script src="app/lib/angular.min.js"></script>
     <script src="app/lib/angular-route.min.js"></script>
     <script src="js/angular-sanitize.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angularjs-slider/6.5.1/rzslider.min.js"></script>
+
+    <script src="node_modules/angular-jwt/dist/angular-jwt.js"></script>
+    <script src="node_modules/angular-storage/dist/angular-storage.js"></script>
+    <script type="text/javascript" src="node_modules/auth0-js/build/auth0.js"></script>
+    <script type="text/javascript" src="node_modules/angular-auth0/dist/angular-auth0.js"></script>
     <script src="//unpkg.com/@uirouter/angularjs/release/angular-ui-router.min.js"></script>
     <script src="js/angularjs-social-login.js"></script>
     <script src="js/ng-google-signin.js"></script>
@@ -176,24 +186,31 @@
                 <form class="cd-form">
                     <p class="fieldset">
                         <label class="image-replace cd-email" for="signin-email">E-mail</label>
-                        <input class="full-width has-padding has-border" id="signin-email" type="email" placeholder="E-mail">
+                        <input class="full-width has-padding has-border" id="signin-email" ng-model="email" type="email" placeholder="E-mail">
                         <span class="cd-error-message">Error message here!</span>
                     </p>
 
                     <p class="fieldset">
                         <label class="image-replace cd-password" for="signin-password">Password</label>
-                        <input class="full-width has-padding has-border" id="signin-password" type="text" placeholder="Password">
+                        <input class="full-width has-padding has-border" id="signin-password" ng-model="password" type="text" placeholder="Password">
                         <a href="#0" class="hide-password">Hide</a>
                         <span class="cd-error-message">Error message here!</span>
                     </p>
+                    <p class="fieldset">
+                        <label for="signup-type"><h5>Select Type</h5></label>
+                        <label for="signup-type"><h6>Trainer</h6></label>
+                        <input type="radio" id="signup-type" ng-model="type" name="type" value="1" checked>
+                        <label for="signup-type"><h6>User</h6></label>
+                        <input type="radio" id="signup-type" ng-model="type" name="type" value="2">
 
+                    </p>
                     <p class="fieldset">
                         <input type="checkbox" id="remember-me" checked>
                         <label for="remember-me">Remember me</label>
                     </p>
 
                     <p class="fieldset">
-                        <input class="full-width" type="submit" value="Login">
+                        <input class="full-width" type="submit" value="Login" ng-click="loginmanual()">
                     </p>
 
                     <!-- <a id="facebook" ng-controller="authenticationCtrl" ng-click="loginfb()">Sign in with Facebook</a> -->
@@ -208,26 +225,34 @@
             </div>
             <!-- cd-login -->
 
-            <div id="cd-signup">
+            <div id="cd-signup" ng-controller="Controllersignup">
                 <!-- sign up form -->
                 <form class="cd-form">
                     <p class="fieldset">
                         <label class="image-replace cd-username" for="signup-username">Username</label>
-                        <input class="full-width has-padding has-border" id="signup-username" type="text" placeholder="Username">
+                        <input class="full-width has-padding has-border" id="signup-username" ng-model="name" type="text" placeholder="Username">
                         <span class="cd-error-message">Error message here!</span>
                     </p>
 
                     <p class="fieldset">
                         <label class="image-replace cd-email" for="signup-email">E-mail</label>
-                        <input class="full-width has-padding has-border" id="signup-email" type="email" placeholder="E-mail">
+                        <input class="full-width has-padding has-border" id="signup-email" ng-model="email" type="email" placeholder="E-mail">
                         <span class="cd-error-message">Error message here!</span>
                     </p>
 
                     <p class="fieldset">
                         <label class="image-replace cd-password" for="signup-password">Password</label>
-                        <input class="full-width has-padding has-border" id="signup-password" type="text" placeholder="Password">
+                        <input class="full-width has-padding has-border" id="signup-password" ng-model="password" type="text" placeholder="Password">
                         <a href="#0" class="hide-password">Hide</a>
                         <span class="cd-error-message">Error message here!</span>
+                    </p>
+                    <p class="fieldset">
+                        <label for="signup-type1"><h5>Select Type</h5></label>
+                        <label for="signup-type2"><h6>Trainer</h6></label>
+                        <input type="radio" id="signup-type1" name="type" ng-model="type" value="1" checked>
+                        <label for="signup-type"><h6>User</h6></label>
+                        <input type="radio" id="signup-type2" name="type" ng-model="type" value="2">
+
                     </p>
 
                     <p class="fieldset">
@@ -236,7 +261,8 @@
                     </p>
 
                     <p class="fieldset">
-                        <input class="full-width has-padding" type="submit" value="Create account">
+                        <h5 class="text_center" ng-show="success == 1" style="text-align:center;">Successfully Signed Up</h5>
+                        <input class="full-width has-padding" type="submit" ng-click="signup()" value="Create account">
                     </p>
                 </form>
 

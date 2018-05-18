@@ -7,7 +7,7 @@
         <a class="brand-name" href="index.html"><img src="images/brand.png" width="257" height="40" alt=""></a>
     </div>
 </div>
-<div class="rd-navbar-aside-right">
+<div class="rd-navbar-aside-right" ng-controller="navbar" ng-init="checkAuth()">
     <div class="rd-navbar-nav-wrap main-navnocss">
         <!-- RD Navbar Nav-->
         <ul class="rd-navbar-nav ">
@@ -36,7 +36,11 @@
                 </ul> -->
             </li>
             <li><a href="about.html">About Us</a></li>
-            <li><a class="cd-signin" href="#0">Sign in</a></li>
+            <li><a href="#trainers">Trainers</a></li>
+            <li ng-show="loggedIn == 0"><a class="cd-signin" href="#0">Sign in</a></li>
+            <li ng-show="loggedIn == 1"><a href="trainer">Profile</a></li>
+            <li ng-show="loggedIn == 2"><a href="user">Profile</a></li>
+            <li ng-show="loggedIn == 3"><a href="admin">Profile</a></li>
             <!-- <li><a class="cd-signup" href="#0">Sign up</a></li> -->
             <!-- <li><a href="site-map.html">Pages</a> -->
             <!-- RD Navbar Megamenu-->

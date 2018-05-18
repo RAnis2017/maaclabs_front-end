@@ -1,6 +1,6 @@
-var newmanApp = angular.module('newmanApp', ['ngRoute', 'google-signin', 'ui.router', 'facebook', 'ngSanitize']);
+var newmanApp = angular.module('newmanApp', ['auth0.auth0', 'angular-storage', 'angular-jwt', 'ngRoute', 'google-signin', 'ui.router', 'facebook', 'ngSanitize', 'rzModule']);
 
-newmanApp.config(['$routeProvider', '$stateProvider', '$locationProvider', function($routeProvider, $stateProvider, $locationProvider) {
+newmanApp.config(['jwtInterceptorProvider', '$httpProvider', 'angularAuth0Provider', '$provide', '$routeProvider', '$stateProvider', '$locationProvider', function(jwtInterceptorProvider, $httpProvider, angularAuth0Provider, $provide, $routeProvider, $stateProvider, $locationProvider) {
     $locationProvider.hashPrefix('');
 
     $routeProvider
@@ -19,25 +19,62 @@ newmanApp.config(['$routeProvider', '$stateProvider', '$locationProvider', funct
         .when('/exercise/:id', {
             templateUrl: 'views/single-exercise.view.html'
         })
+        .when('/trainers', {
+            templateUrl: 'views/trainers.view.html'
+        })
+        .when('/trainers/:id', {
+            templateUrl: 'views/single-trainer.view.html'
+        })
         .when('/exercisegroup/:id', {
             templateUrl: 'views/group-exercise.view.html'
         })
         .otherwise('/');
+    $stateProvider
+        .state('home', {
+            url: '/',
+            templateUrl: 'views/home.view.html'
+        })
+        .state('trainer', {
+            url: '/trainer',
+            templateUrl: 'views/exercise.view.html'
 
-    // $stateProvider
-    //     .state('login', {
-    //         url: '/login/:username',
-    //         templateUrl: 'login.html'
-    //     }).state('workoutsingle', {
-    //         url: '/workout/single/:workout',
-    //         templateUrl: 'views/single-workout.view.html',
-    //         controller: 'SingleWorkout',
-    //         params: {
-    //             paramOne: { singleworkout: "there is no workout" }, //default value
+        })
+        // $stateProvider
+        //     .state('login', {
+        //         url: '/login/:username',
+        //         templateUrl: 'login.html'
+        //     }).state('workoutsingle', {
+        //         url: '/workout/single/:workout',
+        //         templateUrl: 'views/single-workout.view.html',
+        //         controller: 'SingleWorkout',
+        //         params: {
+        //             paramOne: { singleworkout: "there is no workout" }, //default value
 
     //         }
     //     })
+    angularAuth0Provider.init({
+        clientID: 'VhwnayuYEAyzgrzb_u3BR7WKO4X_YQa3',
+        domain: 'gym-genhex.auth0.com',
+        responseType: 'token id_token',
+        audience: 'https://gym-genhex.auth0.com/userinfo',
+        redirectUri: 'http://localhost:81/newman/public/user/',
+        scope: 'openid'
+    });
 }]);
+newmanApp.service('authService', authService);
+
+authService.$inject = ['$state', 'angularAuth0', '$timeout'];
+
+function authService($state, angularAuth0, $timeout) {
+
+    function login() {
+        angularAuth0.authorize();
+    }
+
+    return {
+        login: login
+    }
+}
 
 newmanApp.controller("vm", function($scope, $element) {
 
@@ -52,8 +89,8 @@ newmanApp.config(['GoogleSigninProvider', function(GoogleSigninProvider) {
         client_id: '466493020051-3kp7ja1o86oteptsrp8hvavc17mdr484.apps.googleusercontent.com',
     });
 }]);
-newmanApp.controller('AuthCtrl', ['$scope', "$state", 'GoogleSignin', function($scope, $state,
-    GoogleSignin) {
+newmanApp.controller('AuthCtrl', ['$scope', "$state", 'GoogleSignin', '$http', '$window', function($scope, $state,
+    GoogleSignin, $http, $window) {
     $scope.user = "";
     $scope.login = function() {
         GoogleSignin.signIn().then(function(user) {
@@ -64,6 +101,33 @@ newmanApp.controller('AuthCtrl', ['$scope', "$state", 'GoogleSignin', function($
         }, function(err) {
             console.log(err);
         });
+    };
+    $scope.type = 3;
+    $scope.success = 0;
+    $scope.loginmanual = function() {
+        $http({
+            method: 'POST',
+            url: 'http://localhost:81/newmanapi/public/users/login',
+            data: {
+                "email": $scope.email,
+                "password": $scope.password,
+                "type": $scope.type
+            }
+        }).then(function successCallback(response) {
+
+            console.log(response)
+            localStorage.setItem('access_token', response.data.token);
+
+
+            $scope.success = 1;
+            $scope.email = "";
+            $scope.password = "";
+            $scope.type = "";
+            $window.location.reload();
+        }, function errorCallback(response) {
+            console.log(response)
+        });
+
     };
 }]);
 newmanApp.controller('secondCtrl', ["$scope", "$state", "$stateParams", function($scope, $state, $stateParams) {
@@ -212,6 +276,8 @@ newmanApp.controller('CoachController', ['$scope', function($scope) {
     }];
 }])
 
+
+
 newmanApp.controller('workoutsController', ['$scope', '$http', function($scope, $http) {
     $scope.workouts = []
     $scope.workoutg = []
@@ -241,6 +307,26 @@ newmanApp.controller('workoutsController', ['$scope', '$http', function($scope, 
 
 }]);
 
+newmanApp.controller('trainersController', ['$scope', '$http', function($scope, $http) {
+    $scope.trainers = []
+    $scope.priceSlider1 = 0;
+    $scope.priceSlider2 = 7500;
+    $scope.search = {};
+    $scope.loadtrainers = function() {
+        $http({
+            method: 'GET',
+            url: 'http://localhost:81/newmanapi/public/trainers/getAll',
+        }).then(function successCallback(response) {
+
+            $scope.trainers = response.data.user;
+            console.log(response)
+        }, function errorCallback(response) {
+            console.log(response)
+        });
+    };
+
+}]);
+
 newmanApp.controller('exercisesController', ['$state', '$scope', '$routeParams', '$http', '$sce', function($state, $scope, $routeParams, $http, $sce) {
     $scope.exercises = []
     $scope.id = $routeParams.id;
@@ -258,6 +344,72 @@ newmanApp.controller('exercisesController', ['$state', '$scope', '$routeParams',
         });
 
     };
+
+}]);
+
+newmanApp.controller('Controllersignup', ['$state', '$scope', '$routeParams', '$http', '$sce', '$window', function($state, $scope, $routeParams, $http, $sce, $window) {
+
+    $scope.success = 0;
+    $scope.signup = function() {
+        $http({
+            method: 'POST',
+            url: 'http://localhost:81/newmanapi/public/users/signup',
+            data: {
+                "name": $scope.name,
+                "email": $scope.email,
+                "password": $scope.password,
+                "type": $scope.type
+            }
+        }).then(function successCallback(response) {
+
+            console.log(response)
+            localStorage.setItem('access_token', response.data.token);
+            $scope.success = 1;
+            $scope.name = "";
+            $scope.email = "";
+            $scope.password = "";
+            $scope.type = "";
+            $window.location.reload();
+        }, function errorCallback(response) {
+            console.log(response)
+        });
+
+    };
+
+}]);
+
+newmanApp.controller('navbar', ['$state', '$scope', '$routeParams', '$http', '$sce', function($state, $scope, $routeParams, $http, $sce) {
+
+    $scope.loggedIn = 0;
+
+
+    $scope.checkAuth = function() {
+        $http({
+            method: 'POST',
+            url: 'http://localhost:81/newmanapi/public/users/authenticate',
+            data: {
+                "token": localStorage.getItem('access_token')
+            }
+        }).then(function successCallback(response) {
+
+            console.log(response)
+            if (response.data.user[0].type == 1) {
+                $scope.loggedIn = 1;
+            } else if (response.data.user[0].type == 2) {
+                $scope.loggedIn = 2;
+            } else if (response.data.user[0].type == 3) {
+                $scope.loggedIn = 3;
+            } else {
+                $scope.loggedIn = 0;
+            }
+        }, function errorCallback(response) {
+            console.log(response)
+            $scope.loggedIn = 0;
+        });
+
+    };
+
+
 
 }]);
 
@@ -285,6 +437,98 @@ newmanApp.controller('SingleWorkout', ['$state', '$scope', '$routeParams', '$htt
     }
 
 }]);
+
+
+newmanApp.controller('SingleTrainer', ['$state', '$scope', '$routeParams', '$http', '$sce', function($state, $scope, $routeParams, $http, $sce) {
+
+    // $scope.paramOne = $stateParams.paramOne;
+    // console.log($stateParams.workout);
+    $scope.trainer = []
+    $scope.packages = []
+    $scope.transformations = []
+    $scope.pictures = []
+    $scope.certificates = []
+    $scope.socials = []
+    $scope.success = 0;
+    $scope.id = $routeParams.id;
+    $scope.loadtrainers = function() {
+        $http({
+            method: 'POST',
+            url: 'http://localhost:81/newmanapi/public/users/authenticate',
+            data: {
+                "token": localStorage.getItem('access_token')
+            }
+        }).then(function successCallback(response) {
+
+            console.log(response)
+            if (response.data.user[0].type == 1) {
+                $scope.loggedIn = 1;
+            } else if (response.data.user[0].type == 2) {
+                $scope.loggedIn = 2;
+            } else if (response.data.user[0].type == 3) {
+                $scope.loggedIn = 3;
+            } else {
+                $scope.loggedIn = 0;
+            }
+        }, function errorCallback(response) {
+            console.log(response)
+            $scope.loggedIn = 0;
+        });
+        $http({
+            method: 'GET',
+            url: 'http://localhost:81/newmanapi/public/trainers/getAllWhere/' + $scope.id,
+        }).then(function successCallback(response) {
+
+
+
+            $scope.trainer = response.data.user[0];
+            $scope.packages = JSON.parse(response.data.user[0].package);
+            $scope.transformations = JSON.parse(response.data.user[0].transformation);
+            $scope.pictures = JSON.parse(response.data.user[0].pictures);
+            $scope.certificates = JSON.parse(response.data.user[0].certification);
+            $scope.socials = JSON.parse(response.data.user[0].social);
+            console.log(response)
+        }, function errorCallback(response) {
+            console.log(response)
+        });
+        $scope.deliberatelyTrustDangerousSnippet = function() {
+            return $sce.trustAsHtml($scope.trainer.experience);
+        };
+        $scope.deliberatelyTrustDangerousSnippet1 = function() {
+            return $sce.trustAsHtml($scope.trainer.about);
+        };
+
+    }
+    $scope.loggedIn = 0;
+
+    $scope.trainerApprove = function(i) {
+        $scope.trainer.approved = i;
+    }
+    $scope.updateTrainer = function() {
+        $http({
+            method: 'POST',
+            url: 'http://localhost:81/newmanapi/public/users/trainer/adminUpdate',
+            data: {
+                "token": localStorage.getItem('access_token'),
+                "price": $scope.trainer.price,
+                "packagetype": $scope.trainer.packagetype,
+                "approved": $scope.trainer.approved,
+                "id": $scope.trainer.id
+            }
+        }).then(function successCallback(response) {
+            if (response.data.success == 1) {
+                $scope.success = 1;
+            }
+            console.log(response)
+
+        }, function errorCallback(response) {
+            console.log(response)
+
+        });
+
+    };
+}]);
+
 
 newmanApp.controller('SingleExercise', ['$state', '$scope', '$routeParams', '$http', '$sce', function($state, $scope, $routeParams, $http, $sce) {
 

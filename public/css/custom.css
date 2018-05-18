@@ -60,6 +60,7 @@ a.active {
     background: #FFFFFF;
     padding: 10px;
     position: relative;
+    max-width: 400px;
 }
 
 .coach .info {
@@ -80,6 +81,76 @@ a.active {
     transition-duration: 1s;
     transition-property: all;
     transition-timing-function: ease-in-out;
+}
+
+@media only screen and (min-width: 1680px) {
+    .trainers .coach img {
+        position: absolute;
+        left: 10%;
+    }
+}
+
+@media only screen and (max-width: 1680px) {
+    .trainers .coach img {
+        position: absolute;
+        left: 3%;
+    }
+}
+
+@media only screen and (max-width: 1280px) {
+    .trainers .coach img {
+        position: absolute;
+        left: 0%;
+    }
+}
+
+@media only screen and (max-width: 1366px) {
+    .trainers .coach img {
+        position: absolute;
+        left: 0%;
+    }
+}
+
+@media only screen and (max-width: 1024px) {
+    .trainers .coach img {
+        position: absolute;
+        left: 0%;
+    }
+}
+
+@media only screen and (max-width: 768px) {
+    .trainers .coach img {
+        position: absolute;
+        left: 0%;
+    }
+}
+
+@media only screen and (max-width: 800px) {
+    .trainers .coach img {
+        position: absolute;
+        left: 0%;
+    }
+}
+
+@media only screen and (max-width: 640px) {
+    .trainers .coach img {
+        position: absolute;
+        left: 0%;
+    }
+}
+
+@media only screen and (max-width: 480px) {
+    .trainers .coach img {
+        position: absolute;
+        left: 0%;
+    }
+}
+
+@media only screen and (max-width: 320px) {
+    .trainers .coach img {
+        position: absolute;
+        left: 0%;
+    }
 }
 
 @media only screen and (max-width: 1680px) {

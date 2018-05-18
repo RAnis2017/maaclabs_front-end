@@ -1,0 +1,269 @@
+body {
+    font-size: 100%;
+    font-family: "PT Sans", sans-serif;
+    color: #505260;
+    background-color: #fff;
+}
+
+.exerciseSelect {
+    padding: 10px 15px;
+    background-color: rgb(189, 199, 199);
+    color: rgb(70, 35, 43);
+}
+
+.exerciseSelect:hover {
+    background-color: rgb(248, 255, 255);
+    color: rgb(70, 35, 43);
+}
+
+.remover {
+    background-color: rgb(218, 99, 99);
+    padding: 4px 5px;
+    margin: 3px 4px;
+    color: white !important;
+    float: right;
+}
+
+.adder {
+    background-color: rgb(218, 99, 99);
+    padding: 4px 5px;
+    margin: 3px 4px;
+    color: white !important;
+    float: right;
+}
+
+.angular-time-picker-float--right {
+    float: right
+}
+
+.angular-time-picker-push--top {
+    margin-top: 10px
+}
+
+.angular-time-picker-push-half--left {
+    margin-left: 5px
+}
+
+.angular-time-picker-theme {
+    padding: 10px;
+    width: 225px
+}
+
+.angular-time-picker-dark {
+    background: #777;
+    color: #fff;
+    border: 1px solid #444
+}
+
+.angular-time-picker-light {
+    background: #fff;
+    border: 1px solid #777;
+    color: #777
+}
+
+.angular-time-picker-dropdown__menu {
+    position: absolute;
+    z-index: 10000000
+}
+
+.angular-time-picker-caret {
+    width: 0;
+    height: 0;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    position: absolute;
+    margin-top: 13px;
+    margin-left: 5px;
+    border-top: 5px solid #000
+}
+
+.angular-time-picker-caret.angular-time-picker-dark {
+    border-top: 5px solid #fff
+}
+
+.angular-time-picker-caret.angular-time-picker-light {
+    border-top: 5px solid #777
+}
+
+.angular-time-picker-button {
+    line-height: 30px;
+    padding: 5px 20px 5px 5px;
+    position: relative;
+    cursor: pointer
+}
+
+.fileBox {
+    display: block;
+    padding: 10px 15px;
+    font-size: 1.2em;
+}
+
+a.fileBox:hover {
+    background: rgba(48, 46, 46, 0.227);
+}
+
+
+/* OVERRIDING CSS STYLES  */
+
+.m-aside-left.m-aside-left--skin-dark {
+    background-color: #282727;
+}
+
+.m-aside-menu.m-aside-menu--skin-dark .m-menu__nav>.m-menu__item.m-menu__item--active>.m-menu__heading .m-menu__link-text,
+.m-aside-menu.m-aside-menu--skin-dark .m-menu__nav>.m-menu__item.m-menu__item--active>.m-menu__link .m-menu__link-text {
+    color: #ED4E21;
+}
+
+.m-aside-menu.m-aside-menu--skin-dark .m-menu__nav>.m-menu__item.m-menu__item--active>.m-menu__heading .m-menu__link-icon,
+.m-aside-menu.m-aside-menu--skin-dark .m-menu__nav>.m-menu__item.m-menu__item--active>.m-menu__link .m-menu__link-icon {
+    color: #ED4E21;
+}
+
+.btn.m-btn--gradient-from-brand.m-btn--gradient-to-info {
+    display: inline-block;
+    position: relative;
+    font-family: Montserrat, "Times New Roman", Times, serif;
+    padding: 13px 22px;
+    font-size: 14px;
+    line-height: 20px;
+    border: 2px solid #ef4c14 !important;
+    border-radius: 0;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    text-transform: uppercase;
+    text-align: center;
+    letter-spacing: 0.15em;
+    cursor: pointer;
+    vertical-align: middle;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    transition: 250ms all ease-in-out;
+    color: #ef4c14 !important;
+    background: transparent;
+}
+
+.btn.m-btn--gradient-from-brand.m-btn--gradient-to-info:hover {
+    color: #ffffff !important;
+    background: #ef4c14;
+}
+
+.m--bg-brand {
+    background-color: #282727 !important;
+}
+
+.m-portlet.m-portlet--creative .m-portlet__head .m-portlet__head-caption .m-portlet__head-label.m-portlet__head-label--success {
+    background: #ED4E21;
+    color: #ffffff;
+}
+
+.m-list-search .m-list-search__results .m-list-search__result-category {
+    color: #ED4E21;
+}
+
+.btn-primary {
+    display: inline-block;
+    position: relative;
+    font-family: Montserrat, "Times New Roman", Times, serif;
+    padding: 13px 22px;
+    font-size: 14px;
+    line-height: 20px;
+    border: 2px solid #ef4c14 !important;
+    border-radius: 0;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    text-transform: uppercase;
+    text-align: center;
+    letter-spacing: 0.15em;
+    cursor: pointer;
+    vertical-align: middle;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    transition: 250ms all ease-in-out;
+    color: #ef4c14 !important;
+    background: transparent;
+}
+
+.btn-primary:hover {
+    color: #ffffff !important;
+    background: #ef4c14;
+}
+
+.m-brand.m-brand--skin-dark {
+    background: rgb(63, 62, 62);
+}
+
+.m-menu__link-text,
+.m-menu__section-text,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-family: Montserrat, "Times New Roman", Times, serif !important;
+}
+
+h1 {
+    font-size: 1.6rem !important;
+}
+
+h2 {
+    font-size: 1.5rem !important;
+}
+
+h3 {
+    font-size: 1.4rem !important;
+}
+
+h4 {
+    font-size: 1.3rem !important;
+}
+
+h5 {
+    font-size: 1.2rem !important;
+}
+
+h6 {
+    font-size: 1.1rem !important;
+}
+
+label {
+    font-size: 1.3rem !important;
+}
+
+.m-list-search__result-category {
+    font-size: 1.4rem !important;
+}
+
+.m-list-search__result-item-text {
+    font-size: 1.3rem !important;
+}
+
+.stats {
+    margin: -360px 0px 40px 25px;
+}
+
+@media only screen and (max-width: 1024px) {
+    .stats {
+        margin: 20px 0px 40px 25px;
+    }
+}
+
+.angular-time-picker-dark {
+    background: #ef4c14;
+    color: #fff;
+    border: 1px solid #444;
+}
+
+.m-radio>input:checked~span {
+    border: 1px solid #ef4c14;
+}
+
+.m-radio>span:after {
+    border: solid #ef4c14;
+    background: #ef4c14;
+}

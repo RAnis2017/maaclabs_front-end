@@ -22,7 +22,40 @@ userApp.config(['$routeProvider', '$locationProvider', function($routeProvider, 
             redirectTo: '/dashboard'
         });
 }]);
+userApp.controller('UserAuth', ['$window', '$scope', '$routeParams', '$http', '$sce', function($window, $scope, $routeParams, $http, $sce) {
+    $scope.loggedIn = 0;
 
+    $scope.checkAuth = function() {
+        $http({
+            method: 'POST',
+            url: 'http://localhost:81/newmanapi/public/users/authenticate',
+            data: {
+                "token": localStorage.getItem('access_token')
+            }
+        }).then(function successCallback(response) {
+
+
+            try {
+                if (response.data.user[0].type == 2) {
+                    console.log(response)
+                    $scope.loggedIn = 1;
+                } else {
+                    $window.location.href = 'http://localhost:81/newman/public/'; //You should have http here.
+                }
+            } catch (err) {
+                $window.location.href = 'http://localhost:81/newman/public/'; //You should have http here.
+            }
+        }, function errorCallback(response) {
+            console.log(response)
+            $window.location.href = 'http://localhost:81/newman/public/'; //You should have http here.
+        });
+
+    };
+    $scope.logout = function() {
+        // Remove tokens and expiry time from localStorage
+        localStorage.removeItem('access_token');
+    }
+}])
 userApp.controller('profile', ['$scope', function($scope) {
     // Set initial time range to be 05:30 - 10:10
     $scope.settings = {
