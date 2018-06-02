@@ -604,11 +604,10 @@ adminApp.controller('workoutController', ['$scope', 'sharedProperties', 'dataSer
 
 }]);
 
-adminApp.controller('recipesController', ['$scope', 'sharedProperties', function($scope, shared) {
+adminApp.controller('recipesController', ['$scope', 'sharedProperties', 'dataService', '$rootScope', '$http', function($scope, shared, dataService, $rootScope, $http) {
 
     $scope.ingredients = [];
     $scope.directions = [];
-
     $scope.removeRecipe = function(recipe) {
         var removedRecipe = $scope.recipes.indexOf(recipe);
         $scope.recipes.splice(removedRecipe, 1);
@@ -631,65 +630,81 @@ adminApp.controller('recipesController', ['$scope', 'sharedProperties', function
         $scope.directions.splice(removedDes, 1);
     };
 
-    $scope.addDescription = function(name) {
+    $scope.addDescription = function(name, image) {
         $scope.directions.push({
-            direction: name
+            direction: name,
+            image: image
 
         });
     };
-    $scope.recipes = [{
-            id: 0,
-            name: "Smoothie",
-            ingredients: [{
-                name: "Whatever Ingredient",
-                quantity: 9
-            }, {
-                name: "Another Whatever Ingredient",
-                quantity: 12
-            }],
-            directions: [{
-                direction: "Whatever Directions",
+    $scope.removeRecipe = function(id) {
+        $http({
+            method: 'DELETE',
+            url: 'http://localhost:81/newmanapi/public/recipes/deleterecipe/' + id,
+        }).then(function successCallback(response) {
+            $scope.successRD = 1
+            console.log(response)
 
-            }, {
-                direction: "Another Whatever Directions",
+        }, function errorCallback(response) {
+            $scope.successRD = 2
+            console.log(response);
+        });
+    };
 
-            }],
-            carbs: 42,
-            proteins: 142,
-            fat: 42,
-            servings: 8
 
-        },
-        {
-            id: 1,
-            name: "Diet Cake",
-            ingredients: [{
-                name: "Whatever Ingredient",
-                quantity: 9
-            }, {
-                name: "Another Whatever Ingredient",
-                quantity: 12
-            }],
-            directions: [{
-                direction: "Whatever Directions",
+    $scope.recipes = [];
+    $scope.loadrecipes = function() {
+        $http({
+            method: 'GET',
+            url: 'http://localhost:81/newmanapi/public/recipes/getrecipes',
+        }).then(function successCallback(response) {
+            for (i = 0; i < response.data.length; i++) {
+                response.data[i].ingredients = $.parseJSON(response.data[i].ingredients);
+                response.data[i].directions = $.parseJSON(response.data[i].directions);
+            }
+            $scope.recipes = response.data;
+            console.log(response)
+        }, function errorCallback(response) {
+            console.log(response)
+        });
 
-            }, {
-                direction: "Another Whatever Directions",
+    };
+    $scope.updateRecipe = function(id, rd) {
+        $http({
+            method: 'PUT',
+            url: 'http://localhost:81/newmanapi/public/recipes/updaterecipe',
+            data: {
+                "id": rd.id,
+                "name": rd.name,
+                "short": rd.short,
+                "description": rd.description,
+                "image": rd.image,
+                "time": rd.time,
+                "ingredients": JSON.stringify(rd.ingredients),
+                "directions": JSON.stringify(rd.directions),
+                "carbs": rd.carbs,
+                "proteins": rd.proteins,
+                "fat": rd.fats,
+                "servings": rd.servings
+            }
+        }).then(function successCallback(response) {
+            $scope.successRU = 1
+            console.log(response)
 
-            }],
-            carbs: 42,
-            proteins: 142,
-            fat: 42,
-            servings: 8
-
-        }
-    ];
-
+        }, function errorCallback(response) {
+            $scope.successRU = 2
+            console.log(response)
+        });
+    };
     $scope.addRecipe = function() {
 
         $scope.recipes.push({
             id: $scope.recipes.length + 1,
             name: $scope.recipe.name,
+            short: $scope.recipe.short,
+            description: $scope.recipe.description,
+            image: $scope.recipe.image,
+            time: $scope.recipe.time,
             ingredients: $scope.ingredients,
             directions: $scope.directions,
             carbs: $scope.recipe.carb,
@@ -698,13 +713,44 @@ adminApp.controller('recipesController', ['$scope', 'sharedProperties', function
             servings: $scope.recipe.serv
 
         });
-        $scope.recipe.name = "";
-        $scope.ingredients = [];
-        $scope.directions = [];
-        $scope.recipe.carb = "";
-        $scope.recipe.prot = "";
-        $scope.recipe.fat = "";
-        $scope.recipe.serv = "";
+        $scope.successR = 0;
+
+        $http({
+            method: 'POST',
+            url: 'http://localhost:81/newmanapi/public/recipes/addrecipe',
+            data: {
+                "name": $scope.recipe.name,
+                "short": $scope.recipe.short,
+                "description": $scope.recipe.description,
+                "image": $scope.recipe.image,
+                "time": $scope.recipe.time,
+                "ingredients": JSON.stringify($scope.ingredients),
+                "directions": JSON.stringify($scope.directions),
+                "carbs": $scope.recipe.carb,
+                "proteins": $scope.recipe.prot,
+                "fat": $scope.recipe.fat,
+                "servings": $scope.recipe.serv
+            }
+        }).then(function successCallback(response) {
+            $scope.successR = 1
+            console.log(response)
+            $scope.recipe.name = "";
+            $scope.recipe.short = "";
+            $scope.recipe.time = "";
+            $scope.recipe.image = "";
+            $scope.ingredients = [];
+            $scope.directions = [];
+            $scope.recipe.description = "";
+            $scope.recipe.carb = "";
+            $scope.recipe.prot = "";
+            $scope.recipe.fat = "";
+            $scope.recipe.serv = "";
+        }, function errorCallback(response) {
+            $scope.successR = 2
+            console.log(response);
+        });
+
+
     };
 
 

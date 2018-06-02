@@ -28,6 +28,12 @@ newmanApp.config(['jwtInterceptorProvider', '$httpProvider', 'angularAuth0Provid
         .when('/exercisegroup/:id', {
             templateUrl: 'views/group-exercise.view.html'
         })
+        .when('/recipes', {
+            templateUrl: 'views/recipes.view.html'
+        })
+        .when('/recipe/:id', {
+            templateUrl: 'views/single-recipe.view.html'
+        })
         .otherwise('/');
     $stateProvider
         .state('home', {
@@ -307,6 +313,27 @@ newmanApp.controller('workoutsController', ['$scope', '$http', function($scope, 
 
 }]);
 
+newmanApp.controller('recipesController', ['$scope', '$http', function($scope, $http) {
+    $scope.recipes = [];
+    $scope.loadrecipes = function() {
+        $http({
+            method: 'GET',
+            url: 'http://localhost:81/newmanapi/public/recipes/getrecipes',
+        }).then(function successCallback(response) {
+            for (i = 0; i < response.data.length; i++) {
+                response.data[i].ingredients = $.parseJSON(response.data[i].ingredients);
+                response.data[i].directions = $.parseJSON(response.data[i].directions);
+            }
+            $scope.recipes = response.data;
+            console.log(response)
+        }, function errorCallback(response) {
+            console.log(response)
+        });
+
+    };
+
+}]);
+
 newmanApp.controller('trainersController', ['$scope', '$http', function($scope, $http) {
     $scope.trainers = []
     $scope.priceSlider1 = 0;
@@ -378,7 +405,7 @@ newmanApp.controller('Controllersignup', ['$state', '$scope', '$routeParams', '$
 
 }]);
 
-newmanApp.controller('navbar', ['$state', '$scope', '$routeParams', '$http', '$sce', function($state, $scope, $routeParams, $http, $sce) {
+newmanApp.controller('navbar', ['$state', '$scope', '$routeParams', '$http', '$sce', '$window', function($state, $scope, $routeParams, $http, $sce, $window) {
 
     $scope.loggedIn = 0;
 
@@ -409,7 +436,10 @@ newmanApp.controller('navbar', ['$state', '$scope', '$routeParams', '$http', '$s
 
     };
 
-
+    $scope.logout = function() {
+        localStorage.removeItem('access_token');
+        $window.location.reload();
+    }
 
 }]);
 
@@ -433,6 +463,34 @@ newmanApp.controller('SingleWorkout', ['$state', '$scope', '$routeParams', '$htt
         });
         $scope.deliberatelyTrustDangerousSnippet = function() {
             return $sce.trustAsHtml($scope.fulldescription);
+        };
+    }
+
+}]);
+
+newmanApp.controller('SingleRecipe', ['$state', '$scope', '$routeParams', '$http', '$sce', function($state, $scope, $routeParams, $http, $sce) {
+
+    // $scope.paramOne = $stateParams.paramOne;
+    // console.log($stateParams.workout);
+    $scope.id = $routeParams.id;
+
+    $scope.loadrecipe = function() {
+        $http({
+            method: 'GET',
+            url: 'http://localhost:81/newmanapi/public/recipes/getrecipe/' + $scope.id,
+        }).then(function successCallback(response) {
+            console.log(response)
+            response.data.recipe[0].ingredients = $.parseJSON(response.data.recipe[0].ingredients);
+            response.data.recipe[0].directions = $.parseJSON(response.data.recipe[0].directions);
+            $scope.recipe = response.data.recipe[0];
+            $scope.description = $sce.trustAsHtml($scope.recipe.description);
+
+
+        }, function errorCallback(response) {
+            console.log(response)
+        });
+        $scope.deliberatelyTrustDangerousSnippet = function() {
+            return $sce.trustAsHtml($scope.description);
         };
     }
 

@@ -12,7 +12,7 @@
         <h3>Manage Recipes</h3>
         <h6>Add/Delete/Update Recipes</h6>
     </div>
-    <div class="m-content" ng-controller="recipesController">
+    <div class="m-content" ng-controller="recipesController" ng-init="loadrecipes()">
 
 
         <div class="m-portlet m-portlet--mobile">
@@ -40,14 +40,33 @@
                             <input type="text" class="form-control m-input" id="ename" aria-describedby="Diet Name" placeholder="Enter recipe name" ng-model="recipe.name">
 
                         </div>
+                        <div class="form-group m-form__group">
+                            <label for="emin">Recipe Time (in Minutes):</label>
+                            <input type="text" class="form-control m-input" id="emin" aria-describedby="Diet Name" placeholder="Enter recipe time" ng-model="recipe.time">
+
+                        </div>
+                        <div class="form-group m-form__group">
+                            <label for="edes">Recipe Short Description:</label>
+                            <input type="text" class="form-control m-input" id="edes" aria-describedby="Diet Name" placeholder="Enter recipe short desciption" ng-model="recipe.short">
+
+                        </div>
+                        <div class="form-group m-form__group">
+                            <label for="edescription">Description</label>
+                            <ng-quill-editor ng-model="recipe.description"></ng-quill-editor>
+                        </div>
+                        <div class="form-group m-form__group">
+                            <label for="epdf">Recipe Main Image:</label>
+                            <input type="file" class="form-control m-input" id="epdf" aria-describedby="Recipe Image" fileread="recipe.image">
+                        </div>
                         <div class="form-group m-form__group col-lg-12">
                             <div></div>
                             <label for="ingname">Recipe Ingredient Name</label>
                             <input type="text" class="form-control m-input m-input--air m-input--pill" id="ingname" aria-describedby="Ingredient Name" placeholder="Enter name" ng-model="ingre.name">
                         </div>
+
                         <div class="form-group m-form__group col-lg-12">
                             <label for="ingquantity">Recipe Ingredient Quantity</label>
-                            <input type="number" class="form-control m-input m-input--air m-input--pill" id="ingquantity" aria-describedby="Ingredient Quantity" placeholder="Enter quantity" ng-model="ingre.qty">
+                            <input type="text" class="form-control m-input m-input--air m-input--pill" id="ingquantity" aria-describedby="Ingredient Quantity" placeholder="Enter quantity" ng-model="ingre.qty">
                         </div>
                         <div class="form-group m-form__group">
                             <a class="btn btn-primary m-btn m-btn--custom m-btn--icon m-btn--air m-btn--pill" style="color:aliceblue;" ng-click="addIngre(ingre.name,ingre.qty)">Add Ingredient</a>
@@ -62,7 +81,11 @@
                             <input type="text" class="form-control m-input m-input--air m-input--pill" id="desname" aria-describedby="Description Name" placeholder="Enter name" ng-model="description.name">
                         </div>
                         <div class="form-group m-form__group">
-                            <a class="btn btn-primary m-btn m-btn--custom m-btn--icon m-btn--air m-btn--pill" style="color:aliceblue;" ng-click="addDescription(description.name)">Add Direction</a>
+                            <label for="dpdf">Recipe Direction Image:</label>
+                            <input type="file" class="form-control m-input" id="dpdf" aria-describedby="Recipe Direction Image" fileread="description.image">
+                        </div>
+                        <div class="form-group m-form__group">
+                            <a class="btn btn-primary m-btn m-btn--custom m-btn--icon m-btn--air m-btn--pill" style="color:aliceblue;" ng-click="addDescription(description.name,description.image)">Add Direction</a>
                         </div>
                         <div class="form-group m-form__group" style="margin-top: 20px;">
                             <h4 ng-repeat="description in directions" ng-click="removeDescription(description)" class="exerciseSelect">{{description.name}} Added <small>(click to remove)</small></h4>
@@ -87,6 +110,16 @@
 
                         <div class="form-group m-form__group">
                             <input type="submit" value="Add new Recipe" class="btn btn-primary m-btn m-btn--custom m-btn--icon m-btn--air m-btn--pill">
+                        </div>
+                        <div class="alert alert-success alert-dismissible fade show" role="alert" ng-if="successR == 1">
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                </button>
+                            <strong>Well done!</strong> You successfully added new recipe.
+                        </div>
+                        <div class="alert alert-danger alert-dismissible fade show" role="alert" ng-if="successR == 2">
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                </button>
+                            <strong>Oh snap!</strong> Change a few things up and try submitting again.
                         </div>
                     </form>
                 </div>
@@ -192,11 +225,11 @@
                                         </ul>
                                     </span>
                                 </td>
-                                <td data-field="cals" class="m-datatable__cell"><span style="width: 110px;">Carbs : {{recipe.carbs}} - Proteins : {{recipe.proteins}} - Fat : {{recipe.fat}}</span></td>
+                                <td data-field="cals" class="m-datatable__cell"><span style="width: 110px;">Carbs : {{recipe.carbs}} - Proteins : {{recipe.proteins}} - Fat : {{recipe.fats}}</span></td>
                                 <td data-field="servs" class="m-datatable__cell">
                                     <span style="width: 60px;">{{recipe.servings}}</span></td>
 
-                                <td data-field="Actions" class="m-datatable__cell"><span style="overflow: visible; width: 110px;">											<a href="#/manageexercise" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill" title="Edit details">							<i class="la la-edit"></i>						</a>						<a ng-click="removeRecipe(recipe)" class="m-portlet__nav-link btn m-btn m-btn--hover-danger m-btn--icon m-btn--icon-only m-btn--pill" title="Delete">							<i class="la la-trash"></i>						</a>					</span></td>
+                                <td data-field="Actions" class="m-datatable__cell"><span style="overflow: visible; width: 110px;">										<button type="button" data-toggle="modal" data-target="#m_modal_{{$index}}" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill" title="Edit details">					<i class="la la-edit"></i>						</button>					<a ng-click="removeRecipe(recipe.id)" class="m-portlet__nav-link btn m-btn m-btn--hover-danger m-btn--icon m-btn--icon-only m-btn--pill" title="Delete">							<i class="la la-trash"></i>						</a>					</span></td>
                             </tr>
                         </tbody>
                     </table>
@@ -232,6 +265,100 @@
                     </div>
                 </div>
                 <!--end: Datatable -->
+            </div>
+            <div class="modal fade" id="m_modal_{{$index}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" style="display: none;" ng-repeat="recipe in recipes">
+                <div class="modal-dialog modal-lg" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Edit {{recipe.name}}</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">×</span>
+          </button>
+                        </div>
+                        <div class="modal-body">
+                            <form>
+                                <div class="form-group m-form__group">
+                                    <label for="ename">Recipe Name:</label>
+                                    <input type="text" class="form-control m-input" id="ename" aria-describedby="Diet Name" placeholder="Enter recipe name" ng-model="recipe.name">
+                                    <input type="hidden" class="form-control m-input" id="ename" value="{{recipe.id}}" ng-model="recipe.id">
+
+                                </div>
+                                <div class="form-group m-form__group">
+                                    <label for="emin">Recipe Time (in Minutes):</label>
+                                    <input type="text" class="form-control m-input" id="emin" aria-describedby="Diet Name" placeholder="Enter recipe time" ng-model="recipe.time">
+
+                                </div>
+                                <div class="form-group m-form__group">
+                                    <label for="edes">Recipe Short Description:</label>
+                                    <input type="text" class="form-control m-input" id="edes" aria-describedby="Diet Name" placeholder="Enter recipe short desciption" ng-model="recipe.short">
+
+                                </div>
+                                <div class="form-group m-form__group">
+                                    <label for="edescription">Description</label>
+                                    <ng-quill-editor ng-model="recipe.description"></ng-quill-editor>
+                                </div>
+                                <div class="form-group m-form__group">
+                                    <label for="epdf">Recipe Main Image:</label>
+                                    <input type="file" class="form-control m-input" id="epdf" aria-describedby="Recipe Image" fileread="recipe.image">
+                                </div>
+                                <div ng-repeat="ingre in recipe.ingredients">
+                                    <div class="form-group m-form__group col-lg-12">
+                                        <div></div>
+                                        <label for="ingname">Recipe Ingredient Name</label>
+                                        <input type="text" class="form-control m-input m-input--air m-input--pill" aria-describedby="Ingredient Name" placeholder="Enter name" ng-model="ingre.name">
+                                    </div>
+
+                                    <div class="form-group m-form__group col-lg-12">
+                                        <label for="ingquantity">Recipe Ingredient Quantity</label>
+                                        <input type="text" class="form-control m-input m-input--air m-input--pill" aria-describedby="Ingredient Quantity" placeholder="Enter quantity" ng-model="ingre.quantity">
+                                    </div>
+                                </div>
+                                <div ng-repeat="description in recipe.directions">
+                                    <div class="form-group m-form__group col-lg-12">
+                                        <div></div>
+                                        <label for="desname">Recipe Direction</label>
+                                        <input type="text" class="form-control m-input m-input--air m-input--pill" id="desname" aria-describedby="Description Name" placeholder="Enter name" ng-model="description.direction">
+                                    </div>
+                                    <div class="form-group m-form__group">
+                                        <label for="dpdf">Recipe Direction Image:</label>
+                                        <input type="file" class="form-control m-input" id="dpdf" aria-describedby="Recipe Direction Image" fileread="description.image">
+                                    </div>
+                                </div>
+                                <div class="form-group m-form__group">
+                                    <label for="ecarb">Carbs</label>
+                                    <input type="text" class="form-control m-input" id="ecarb" rows="3" ng-model="recipe.carbs">
+                                </div>
+                                <div class="form-group m-form__group">
+                                    <label for="eprots">Proteins</label>
+                                    <input type="text" class="form-control m-input" id="eprots" rows="3" ng-model="recipe.proteins">
+                                </div>
+                                <div class="form-group m-form__group">
+                                    <label for="efat">Fats</label>
+                                    <input type="text" class="form-control m-input" id="efat" rows="3" ng-model="recipe.fats">
+                                </div>
+                                <div class="form-group m-form__group">
+                                    <label for="eservs">Servings</label>
+                                    <input type="text" class="form-control m-input" id="eservs" rows="3" ng-model="recipe.servings">
+                                </div>
+
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-primary" ng-click="updateRecipe(recipe.id,recipe)">Update</button>
+                            <div class="alert alert-success alert-dismissible fade show" role="alert" ng-if="successRU == 1">
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                </button>
+                                <strong>Well done!</strong> You successfully updated this recipe.
+                            </div>
+                            <div class="alert alert-danger alert-dismissible fade show" role="alert" ng-if="successRU == 2">
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                </button>
+                                <strong>Oh snap!</strong> Change a few things up and try submitting again.
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

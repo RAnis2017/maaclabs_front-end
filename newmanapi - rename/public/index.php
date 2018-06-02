@@ -190,6 +190,57 @@ $app->post('/exercises/addexercise', function (Request $request, Response $respo
 
     return $response;
 });
+$app->post('/recipes/addrecipe', function (Request $request, Response $response, array $args) {
+    $name = $request->getParam('name');
+    $short = $request->getParam('short');
+    $description = $request->getParam('description');
+    $time = $request->getParam('time');
+    $carbs = $request->getParam('carbs');
+    $proteins = $request->getParam('proteins');
+    $fats = $request->getParam('fat');
+    $servings = $request->getParam('servings');
+    $ingredients = $request->getParam('ingredients');
+    $directions = $request->getParam('directions');
+
+    $image = $request->getParam('image');
+    $image = save_base64_image($image, randomKey(20), '../../newman/public/recipes/');
+    $directionspics = json_decode($directions, true);
+        for($idx = 0; $idx < count($directionspics); $idx++){
+            $objtpictures = (Array)$directionspics[$idx]['image'];
+            
+            if (strlen($directionspics[$idx]['image'])>26) {
+                $directionspics[$idx]['image'] = save_base64_image($directionspics[$idx]['image'], randomKey(20), '../../newman/public/recipes/');
+            }
+        }
+        $directionspics = json_encode($directionspics);
+
+    $sql = "INSERT INTO recipes (`name`,`short`,`description`,`time`,`carbs`,`proteins`,`fats`,`servings`,`ingredients`,`directions`,`image`) VALUES 
+    (:name,:short,:description,:time,:carbs,:proteins,:fats,:servings,:ingredients,:directions,:image)";
+    try {
+        $db = new db();
+        $db = $db->connect();
+        $stmt = $db->prepare($sql);
+        $stmt->bindParam(':name', $name);
+        $stmt->bindParam(':short', $short);
+        $stmt->bindParam(':description', $description);
+        $stmt->bindParam(':time', $time);
+        $stmt->bindParam(':carbs', $carbs);
+        $stmt->bindParam(':proteins', $proteins);
+        $stmt->bindParam(':fats', $fats);
+        $stmt->bindParam(':servings', $servings);
+        $stmt->bindParam(':ingredients', $ingredients);
+        $stmt->bindParam(':directions', $directionspics);
+        $stmt->bindParam(':image', $image);
+
+        $stmt->execute();
+        $db = null;
+        echo '{"notice": {"text": "Recipe Added"}}';
+    } catch (PDOException $e) {
+        echo '{"error":{"text": ' . $e->getMessage() . '}}';
+    }
+
+    return $response;
+});
 $app->post('/users/signup', function (Request $request, Response $response, array $args) {
     $name = $request->getParam('name');
     $email = $request->getParam('email');
@@ -277,6 +328,24 @@ $app->get('/trainers/getAllWhere/{id}', function (Request $request, Response $re
         $db = null;
         $data = json_encode($user);
         echo '{"notice": {"text": "Trainers Retrieved"}, "success": "1", "user": ' . $data . '}';
+
+    } catch (PDOException $e) {
+        echo '{"error":{"text": ' . $e->getMessage() . '}}';
+    }
+
+    return $response;
+});
+$app->get('/recipes/getrecipe/{id}', function (Request $request, Response $response, array $args) {
+    $id = $request->getAttribute('id');
+    $sql = "SELECT * FROM recipes WHERE id=$id";
+    try {
+        $db = new db();
+        $db = $db->connect();
+        $stmt = $db->query($sql);
+        $rec = $stmt->fetchAll(PDO::FETCH_OBJ);
+        $db = null;
+        $data = json_encode($rec);
+        echo '{"notice": {"text": "Recipe Retrieved"}, "success": "1", "recipe": ' . $data . '}';
 
     } catch (PDOException $e) {
         echo '{"error":{"text": ' . $e->getMessage() . '}}';
@@ -454,6 +523,22 @@ $app->get('/exercises/getexercises', function (Request $request, Response $respo
 
     return $response;
 });
+$app->get('/recipes/getrecipes', function (Request $request, Response $response, array $args) {
+    $sql = "SELECT * FROM recipes";
+    try {
+        $db = new db();
+        $db = $db->connect();
+        $stmt = $db->query($sql);
+        $recipes = $stmt->fetchAll(PDO::FETCH_OBJ);
+        $db = null;
+
+        echo json_encode($recipes);
+    } catch (PDOException $e) {
+        echo '{"error":{"text": ' . $e->getMessage() . '}}';
+    }
+
+    return $response;
+});
 $app->delete('/exercises/deleteexercise/{id}', function (Request $request, Response $response, array $args) {
     $id = $request->getAttribute('id');
     $sql = "DELETE FROM exercises
@@ -466,6 +551,92 @@ $app->delete('/exercises/deleteexercise/{id}', function (Request $request, Respo
         $db = null;
 
         echo '{"notice": {"text": "Exercise Deleted"}}';
+    } catch (PDOException $e) {
+        echo '{"error":{"text": ' . $e->getMessage() . '}}';
+    }
+
+    return $response;
+});
+$app->delete('/recipes/deleterecipe/{id}', function (Request $request, Response $response, array $args) {
+    $id = $request->getAttribute('id');
+    $sql = "DELETE FROM recipes
+            WHERE id = $id";
+    try {
+        $db = new db();
+        $db = $db->connect();
+        $stmt = $db->query($sql);
+        $workoutsg = $stmt->fetchAll(PDO::FETCH_OBJ);
+        $db = null;
+
+        echo '{"notice": {"text": "Recipe Deleted"}}';
+    } catch (PDOException $e) {
+        echo '{"error":{"text": ' . $e->getMessage() . '}}';
+    }
+
+    return $response;
+});
+$app->put('/recipes/updaterecipe', function (Request $request, Response $response, array $args) {
+    $id = $request->getParam('id');
+    $name = $request->getParam('name');
+    $short = $request->getParam('short');
+    $description = $request->getParam('description');
+    $time = $request->getParam('time');
+    $carbs = $request->getParam('carbs');
+    $proteins = $request->getParam('proteins');
+    $fats = $request->getParam('fat');
+    $servings = $request->getParam('servings');
+    $ingredients = $request->getParam('ingredients');
+    $directions = $request->getParam('directions');
+
+    $image = $request->getParam('image');
+    if (strlen($image)>26) {
+    $image = save_base64_image($image, randomKey(20), '../../newman/public/recipes/');
+    }
+    $directionspics = json_decode($directions, true);
+        for($idx = 0; $idx < count($directionspics); $idx++){
+            $objtpictures = (Array)$directionspics[$idx]['image'];
+            
+            if (strlen($directionspics[$idx]['image'])>26) {
+                $directionspics[$idx]['image'] = save_base64_image($directionspics[$idx]['image'], randomKey(20), '../../newman/public/recipes/');
+            }
+        }
+        $directionspics = json_encode($directionspics);
+
+    $sql = "INSERT INTO recipes (`name`,`short`,`description`,`time`,`carbs`,`proteins`,`fats`,`servings`,`ingredients`,`directions`,`image`) VALUES 
+    (:name,:short,:description,:time,:carbs,:proteins,:fats,:servings,:ingredients,:directions,:image)";
+    $sql = "UPDATE recipes SET
+    `name` = :name,
+    `short` = :short,
+    `description` = :description,
+    `time` = :time,
+    `carbs` = :carbs,
+    `proteins` = :proteins,
+    `fats` = :fats,
+    `servings` = :servings,
+    `ingredients` = :ingredients,
+    `directions` = :directions,
+    `image` = :image
+WHERE id = $id";
+
+    try {
+        $db = new db();
+        $db = $db->connect();
+        $stmt = $db->prepare($sql);
+        $stmt->bindParam(':name', $name);
+        $stmt->bindParam(':short', $short);
+        $stmt->bindParam(':description', $description);
+        $stmt->bindParam(':time', $time);
+        $stmt->bindParam(':carbs', $carbs);
+        $stmt->bindParam(':proteins', $proteins);
+        $stmt->bindParam(':fats', $fats);
+        $stmt->bindParam(':servings', $servings);
+        $stmt->bindParam(':ingredients', $ingredients);
+        $stmt->bindParam(':directions', $directionspics);
+        $stmt->bindParam(':image', $image);
+
+        $stmt->execute();
+        $db = null;
+        echo '{"notice": {"text": "Recipe Updated"}}';
     } catch (PDOException $e) {
         echo '{"error":{"text": ' . $e->getMessage() . '}}';
     }
