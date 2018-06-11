@@ -28,11 +28,20 @@ newmanApp.config(['jwtInterceptorProvider', '$httpProvider', 'angularAuth0Provid
         .when('/exercisegroup/:id', {
             templateUrl: 'views/group-exercise.view.html'
         })
-        .when('/recipes', {
+        .when('/diet', {
             templateUrl: 'views/recipes.view.html'
         })
         .when('/recipe/:id', {
             templateUrl: 'views/single-recipe.view.html'
+        })
+        .when('/contactus', {
+            templateUrl: 'views/contact.view.html'
+        })
+        .when('/about', {
+            templateUrl: 'views/about.view.html'
+        })
+        .when('/privacypolicy', {
+            templateUrl: 'views/privacypolicy.view.html'
         })
         .otherwise('/');
     $stateProvider
