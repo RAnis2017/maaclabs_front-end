@@ -16,13 +16,15 @@ $app->get('/hello/{name}', function (Request $request, Response $response, array
 });
 $app->post('/workouts/addworkoutgroup', function (Request $request, Response $response, array $args) {
     $name = $request->getParam('name');
-    $sql = "INSERT INTO workouts_group (`name`) VALUES (:name)";
+    $position = $request->getParam('position');
+
+    $sql = "INSERT INTO workouts_group (`name`,`position`) VALUES (:name,:position)";
     try {
         $db = new db();
         $db = $db->connect();
         $stmt = $db->prepare($sql);
         $stmt->bindParam(':name', $name);
-
+        $stmt->bindParam(':position', $position);
         $stmt->execute();
         $db = null;
         echo '{"notice": {"text": "Workout Group Added"}}';
@@ -119,6 +121,7 @@ $app->post('/workouts/addworkout', function (Request $request, Response $respons
     $workoutdays = json_encode($request->getParam('workoutdays'));
     $image = save_base64_image($image, randomKey(20), '../../newman/public/images/workouts/');
     $pdf = save_base64_image($pdf, randomKey(20), '../../newman/public/images/workouts/');
+    
     $sql = "INSERT INTO workouts (`name`,`videourl`,`description`,`group_id`,`position`,`fulldescription`,`result`,`type`,`level`,`duration`,`daysperworkout`,`timeperworkout`,`equipment`,`targetgender`,`supplements`,`author`,`pdf`,`image`,`workoutdays`) VALUES (:name,:videourl,:description,:group_id,:position,:fulldescription,:result,:type,:level,:duration,:daysperworkout,:timeperworkout,:equipment,:targetgender,:supplements,:author,:pdf,:image,:workoutdays)";
     try {
         $db = new db();
@@ -656,8 +659,10 @@ $app->put('/exercises/updateexercise/{id}', function (Request $request, Response
     $level = $request->getParam('level');
     $secondary = $request->getParam('secondary');
     $group_id = $request->getParam('group_id');
+    if (strlen($image)>36) {
+        $image = save_base64_image($image, randomKey(20), '../../newman/public/images/exercises/');
+        }
 
-    $image = save_base64_image($image, randomKey(20), '../../newman/public/images/exercises/');
     $sql = "UPDATE exercises SET
             `name` = :name,
             `videourl` = :videourl,
@@ -734,99 +739,34 @@ $app->put('/workouts/updateworkout/{id}', function (Request $request, Response $
     $pdf = $request->getParam('pdf', "");
     $image = $request->getParam('image', "");
     $workoutdays = json_encode($request->getParam('workoutdays'));
-
-    if ($pdf == "" && $image != "") {
+    if (strlen($image)>36) {
         $image = save_base64_image($image, randomKey(20), '../../newman/public/images/workouts/');
-        $sql = "UPDATE workouts SET
-                `name` = :name,
-                `videourl` = :videourl,
-                `description` = :description,
-                `group_id` = :group_id,
-                `position` = :position,
-                `fulldescription` = :fulldescription,
-                `result` = :result,
-                `type` = :type,
-                `level` = :level,
-                `duration` = :duration,
-                `daysperworkout` = :daysperworkout,
-                `timeperworkout` = :timeperworkout,
-                `equipment` = :equipment,
-                `targetgender` = :targetgender,
-                `supplements` = :supplements,
-                `author` = :author,
-
-                `image` = :image,
-                `workoutdays` = :workoutdays
-            WHERE id = $id";
-    } else if ($image == "" && $pdf != "") {
-        $pdf = save_base64_image($pdf, randomKey(20), '../../newman/public/images/workouts/');
-        $sql = "UPDATE workouts SET
-                `name` = :name,
-                `videourl` = :videourl,
-                `description` = :description,
-                `group_id` = :group_id,
-                `position` = :position,
-                `fulldescription` = :fulldescription,
-                `result` = :result,
-                `type` = :type,
-                `level` = :level,
-                `duration` = :duration,
-                `daysperworkout` = :daysperworkout,
-                `timeperworkout` = :timeperworkout,
-                `equipment` = :equipment,
-                `targetgender` = :targetgender,
-                `supplements` = :supplements,
-                `author` = :author,
-                `pdf` = :pdf,
-
-                `workoutdays` = :workoutdays
-            WHERE id = $id";
-    } else if ($image == "" && $pdf == "") {
-        $sql = "UPDATE workouts SET
-                `name` = :name,
-                `videourl` = :videourl,
-                `description` = :description,
-                `group_id` = :group_id,
-                `position` = :position,
-                `fulldescription` = :fulldescription,
-                `result` = :result,
-                `type` = :type,
-                `level` = :level,
-                `duration` = :duration,
-                `daysperworkout` = :daysperworkout,
-                `timeperworkout` = :timeperworkout,
-                `equipment` = :equipment,
-                `targetgender` = :targetgender,
-                `supplements` = :supplements,
-                `author` = :author,
-
-                `workoutdays` = :workoutdays
-            WHERE id = $id";
-    } else {
-        $image = save_base64_image($image, randomKey(20), '../../newman/public/images/workouts/');
-        $pdf = save_base64_image($pdf, randomKey(20), '../../newman/public/images/workouts/');
-        $sql = "UPDATE workouts SET
-                `name` = :name,
-                `videourl` = :videourl,
-                `description` = :description,
-                `group_id` = :group_id,
-                `position` = :position,
-                `fulldescription` = :fulldescription,
-                `result` = :result,
-                `type` = :type,
-                `level` = :level,
-                `duration` = :duration,
-                `daysperworkout` = :daysperworkout,
-                `timeperworkout` = :timeperworkout,
-                `equipment` = :equipment,
-                `targetgender` = :targetgender,
-                `supplements` = :supplements,
-                `author` = :author,
-                `pdf` = :pdf,
-                `image` = :image,
-                `workoutdays` = :workoutdays
-            WHERE id = $id";
     }
+    if (strlen($pdf)>36) {
+        $pdf = save_base64_image($pdf, randomKey(20), '../../newman/public/images/workouts/');
+    }
+        $sql = "UPDATE workouts SET
+                `name` = :name,
+                `videourl` = :videourl,
+                `description` = :description,
+                `group_id` = :group_id,
+                `position` = :position,
+                `fulldescription` = :fulldescription,
+                `result` = :result,
+                `type` = :type,
+                `level` = :level,
+                `duration` = :duration,
+                `daysperworkout` = :daysperworkout,
+                `timeperworkout` = :timeperworkout,
+                `equipment` = :equipment,
+                `targetgender` = :targetgender,
+                `supplements` = :supplements,
+                `author` = :author,
+                `pdf` = :pdf,
+                `image` = :image,
+                `workoutdays` = :workoutdays
+            WHERE id = $id";
+    
     try {
         $db = new db();
         $db = $db->connect();

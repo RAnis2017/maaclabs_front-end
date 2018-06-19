@@ -178,7 +178,7 @@ adminApp.controller('workoutdayController', ['$scope', 'sharedProperties', 'data
     }
 }])
 adminApp.controller('exerciseController', ['$scope', 'sharedProperties', 'dataService', '$rootScope', '$http', function($scope, shared, dataService, $rootScope, $http) {
-
+    $scope.exegroups = ['Full Body', 'Neck', 'Shoulders', 'Chest', 'Biceps', 'Forearms', 'Abs', 'Quads', 'Traps', 'Triceps', 'Lats', 'Middle Back', 'Lower Back', 'Glutes', 'Hamstrings', 'Calves']
     $scope.removeExercise = function(exercise) {
         var removedExercise = $scope.exercises.indexOf(exercise);
         $scope.exercises.splice(removedExercise, 1);
@@ -268,7 +268,7 @@ adminApp.controller('exerciseController', ['$scope', 'sharedProperties', 'dataSe
                 "secondary": exercise.secondary,
                 "description": exercise.description,
                 "image": exercise.image,
-                "group_id": exercise.groupid
+                "group_id": exercise.group_id
             }
         }).then(function successCallback(response) {
             $scope.successEU = 1
@@ -359,7 +359,7 @@ adminApp.controller('workoutController', ['$scope', 'sharedProperties', 'dataSer
                 "name": wd.name,
                 "videourl": wd.videourl,
                 "description": wd.description,
-                "group": wd.group,
+                "group": wd.group_id,
                 "position": wd.position,
                 "fulldescription": wd.fulldesc,
                 "result": wd.result,
@@ -498,18 +498,23 @@ adminApp.controller('workoutController', ['$scope', 'sharedProperties', 'dataSer
         id: 0,
         name: "Fat Loss Exercises"
     }];
-
+    $scope.newworkoutgroup = {};
+    $scope.showw = false;
     $scope.success = 0;
     $scope.addWorkoutGroup = function() {
         $scope.workoutg.push({
             id: $scope.workoutg.length + 1,
-            name: $scope.newworkoutgroup.gname
+            name: $scope.newworkoutgroup.gname,
+            position: $scope.newworkoutgroup.gposition
         });
 
         $http({
             method: 'POST',
             url: 'http://localhost:81/newmanapi/public/workouts/addworkoutgroup',
-            data: { "name": $scope.newworkoutgroup.gname }
+            data: {
+                "name": $scope.newworkoutgroup.gname,
+                "position": $scope.newworkoutgroup.gposition
+            }
         }).then(function successCallback(response) {
             $scope.success = 1
             console.log(response)

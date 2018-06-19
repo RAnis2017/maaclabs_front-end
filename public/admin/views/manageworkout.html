@@ -29,7 +29,9 @@
                 <div class="m-portlet__body ">
                     <!--begin: Search Form -->
                     <div class="m-portlet__body">
-                        <form ng-submit="addWorkoutGroup()">
+                        <input type="button" value="Show Workout Group Form" class="btn btn-danger m-btn m-btn--custom m-btn--icon m-btn--air m-btn--pill" ng-click="showw = !showw">
+                        <hr>
+                        <form ng-submit="addWorkoutGroup()" class="well" ng-if="showw == true">
                             <div class="form-group m-form__group m--margin-top-10">
                                 <div class="alert m-alert m-alert--default" role="alert">
                                     Add New Workouts Group
@@ -38,6 +40,8 @@
                             <div class="form-group m-form__group">
                                 <label for="egname">Workout Group Name:</label>
                                 <input type="text" class="form-control m-input" id="egname" aria-describedby="Workout Group Name" placeholder="Enter workout group name" ng-model="newworkoutgroup.gname">
+                                <label for="ewposition">Group Position:</label>
+                                <input type="number" class="form-control m-input" id="ewposition" aria-describedby="Workout Group Position" placeholder="Enter workout group Position" ng-model="newworkoutgroup.gposition">
 
                             </div>
                             <div class="form-group m-form__group">
@@ -54,7 +58,7 @@
                                 <strong>Oh snap!</strong> Change a few things up and try submitting again.
                             </div>
                         </form>
-
+                        <hr>
                         <form ng-submit="addWorkout()">
                             <div class="form-group m-form__group m--margin-top-10">
                                 <div class="alert m-alert m-alert--default" role="alert">
@@ -80,8 +84,9 @@
                             <div class="form-group m-form__group">
                                 <label for="exampleSelect1">Workout Group:</label>
                                 <select class="form-control m-input" id="exampleSelect1" ng-model="newworkout.group">
-                                    <option ng-repeat="g in workoutg" value="{{$index}}">{{g.name}}</option>
+                                    <option ng-repeat="g in workoutg" value="{{$index+1}}">{{g.name}}</option>
                             </select>
+
                             </div>
                             <div class="form-group m-form__group">
                                 <label for="eposition">Group Position:</label>
@@ -326,11 +331,12 @@
                                     <input type="text" class="form-control m-input" id="edescription" aria-describedby="Workout Description" placeholder="Enter workout short description" ng-model="workout.description">
 
                                 </div>
-                                <div class="form-group m-form__group">
+                                <div class="form-group m-form__group well">
                                     <label for="exampleSelect1">Workout Group:</label>
-                                    <select class="form-control m-input" id="exampleSelect1" ng-model="workout.group">
-                                        <option ng-repeat="g in workoutg" value="{{$index}}">{{g.name}}</option>
-                                </select>
+                                    <select class="form-control m-input" id="exampleSelect1" ng-model="workout.group_id">
+                                        <option ng-repeat="g in workoutg" value="{{$index+1}}">{{g.name}}</option>
+                                    </select>
+
                                 </div>
                                 <div class="form-group m-form__group">
                                     <label for="eposition">Position:</label>
