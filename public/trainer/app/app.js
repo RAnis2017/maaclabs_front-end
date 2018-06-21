@@ -159,9 +159,8 @@ userApp.controller('UserAuth', ['$window', '$scope', '$routeParams', '$http', '$
             }
         }).then(function successCallback(response) {
 
-
-            try {
-                if (response.data.user[0].type == 1) {
+            if (response.data.hasOwnProperty("user")) {
+                if (response.data.user[0].type == "1") {
                     console.log(response)
                     $scope.loggedIn = 1;
                     $scope.user = response.data.user[0];
@@ -172,10 +171,8 @@ userApp.controller('UserAuth', ['$window', '$scope', '$routeParams', '$http', '$
                     $scope.socials = JSON.parse($scope.user.social);
                     $scope.packages = JSON.parse($scope.user.package);
                     $scope.user.dob = new Date($scope.user.dob.split('T')[0]);
-                } else {
-                    $window.location.href = $scope.redirect; //You should have http here.
                 }
-            } catch (err) {
+            } else {
                 $window.location.href = $scope.redirect; //You should have http here.
             }
         }, function errorCallback(response) {
