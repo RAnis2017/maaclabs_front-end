@@ -1,0 +1,241 @@
+<style>
+    .cd-user-modal {
+        display: none;
+    }
+    .calc-menu > ul > li {
+      margin-top: 25px;
+      margin-bottom: 15px;
+    }
+</style>
+<div class="container" ng-controller="calculatorsController">
+  <div class="calc-menu">
+    <ul>
+      <li><a class="button button-primary arrow arrow-down" href="" ng-click="calculator = 1">Body Fat Percentage Calculator</a></li>
+      <li><a class="button button-primary arrow arrow-down" href="" ng-click="calculator = 2">Body Mass Index Calculator</a></li>
+      <li><a class="button button-primary arrow arrow-down" href="" ng-click="calculator = 3">Total Daily Energy Expenditure Calculator</a></li>
+      <li><a class="button button-primary arrow arrow-down" href="" ng-click="calculator = 4">Fat Mass</a></li>
+      <li><a class="button button-primary arrow arrow-down" href="" ng-click="calculator = 5">Lean Body Mass Calculator</a></li>
+      <li><a class="button button-primary arrow arrow-down" href="" ng-click="calculator = 6">Resting Metabolic Rate</a></li>
+      <li><a class="button button-primary arrow arrow-down" href="" ng-click="calculator = 7">Basal Metabolic Rate</a></li>
+      <li><a class="button button-primary arrow arrow-down" href="" ng-click="calculator = 8">Waist to hip ratio</a></li>
+    </ul>
+  </div>
+  <div class="bfpc" ng-show="calculator == 1">
+    <h3 class="text-center">Body Fat Percentage Calculator</h3>
+    <div class="col-md-6">
+      <a class="button button-primary arrow arrow-down" href="" ng-click="bpf = 1">Female</a>
+    </div>
+    <div class="col-md-6">
+      <a class="button button-primary arrow arrow-down" href="" ng-click="bpf = 2">Male</a>
+    </div>
+    <!-- FEMALE BODY FAT CALCULATOR -->
+    <div class="col-md-12 well" ng-show="bpf == 1" style="font-size: 1.4em;">
+      <form class="" ng-submit="bpfcalc()" method="post">
+        <div class="form-group m-form__group">
+            <label for="w">Total Body Weight (kg):</label>
+            <input type="text" class="form-control m-input" id="w" aria-describedby="Total Body Weight" placeholder="Total Body Weight" ng-model="bpfF.bweight" ng-required>
+        </div>
+        <div class="form-group m-form__group">
+            <label for="wm">Wrist measurement at fullest point (inches):</label>
+            <input type="text" class="form-control m-input" id="wm" aria-describedby="Wrist measurement at fullest point (inches)" placeholder="Wrist measurement at fullest point (inches)" ng-model="bpfF.wrist" ng-required>
+        </div>
+        <div class="form-group m-form__group">
+            <label for="wam">Waist measurement at naval (inches):</label>
+            <input type="text" class="form-control m-input" id="wam" aria-describedby="Waist measurement" placeholder="Waist measurement" ng-model="bpfF.waist" ng-required>
+        </div>
+        <div class="form-group m-form__group">
+            <label for="hip">Hip measurement at fullest point (inches):</label>
+            <input type="text" class="form-control m-input" id="hip" aria-describedby="Hip measurement at fullest point " placeholder="Hip measurement at fullest point " ng-model="bpfF.hip" ng-required>
+        </div>
+        <div class="form-group m-form__group">
+            <label for="fore">Forearm measurement at fullest point (inches):</label>
+            <input type="text" class="form-control m-input" id="fore" aria-describedby="Forearm measurement at fullest point " placeholder="Forearm measurement at fullest point " ng-model="bpfF.forearm" ng-required>
+        </div>
+        <button type="submit" class="btn btn-info" name="button">Calculate</button>
+      </form>
+      <div class="answers" ng-show="solved == 1">
+        <h2 class="text-center" style="color: green;">Your Body Fat Percentage</h2>
+        <h4>Lean Body Mass</h4> <span style="font-size: 1.5em">{{bpfF.lean}}</span>
+        <h4>Body Fat Weight</h4> <span style="font-size: 1.5em">{{bpfF.fat}}</span>
+        <h4>Body Fat Percentage</h4> <span style="font-size: 1.5em">{{bpfF.fatpercentage}}</span>
+      </div>
+    </div>
+    <!-- END FEMALE BODY FAT CALCULATOR -->
+    <!-- MALE BODY FAT CALCULATOR -->
+    <div class="col-md-12 well" ng-show="bpf == 2" style="font-size: 1.4em;">
+      <form class="" ng-submit="bpfcalcMale()" method="post">
+        <div class="form-group m-form__group">
+            <label for="w">Total Body Weight (kg):</label>
+            <input type="text" class="form-control m-input" id="w" aria-describedby="Total Body Weight" placeholder="Total Body Weight" ng-model="bpfM.bweight" ng-required>
+        </div>
+        <div class="form-group m-form__group">
+            <label for="wam">Waist measurement (inches):</label>
+            <input type="text" class="form-control m-input" id="wam" aria-describedby="Waist measurement" placeholder="Waist measurement" ng-model="bpfM.waist" ng-required>
+        </div>
+        <button type="submit" class="btn btn-info" name="button">Calculate</button>
+      </form>
+      <div class="answers" ng-show="solvedM == 1">
+        <h2 class="text-center" style="color: green;">Your Body Fat Percentage</h2>
+        <h4>Lean Body Mass</h4> <span style="font-size: 1.5em">{{bpfM.lean}}</span>
+        <h4>Body Fat Weight</h4> <span style="font-size: 1.5em">{{bpfM.fat}}</span>
+        <h4>Body Fat Percentage</h4> <span style="font-size: 1.5em">{{bpfM.fatpercentage}}</span>
+      </div>
+    </div>
+    <!-- MALE BODY FAT CALCULATOR -->
+
+  </div>
+  <div class="bmi" ng-show="calculator == 2">
+    <div class="col-md-12 well" style="font-size: 1.4em;">
+      <form class="" ng-submit="bmicalc()" method="post">
+        <div class="form-group m-form__group">
+            <label for="w">Weight (lb if height in inches) or (kg if height in meters):</label>
+            <input type="text" class="form-control m-input" id="w" aria-describedby="Total Body Weight" placeholder="Total Body Weight" ng-model="bmi.weight" ng-required>
+        </div>
+        <div class="form-group m-form__group">
+            <label for="h">Height (inches if weight in lb) or (meters if weight in kg):</label>
+            <input type="text" class="form-control m-input" id="h" aria-describedby="Total Body Weight" placeholder="Total Body Weight" ng-model="bmi.height" ng-required>
+        </div>
+        <button type="submit" class="btn btn-info" name="button">Calculate</button>
+      </form>
+      <div class="answers" ng-show="solvedBMI == 1">
+        <h2 class="text-center" style="color: green;">Your Body Mass Index is</h2>
+        <h4>BMI</h4> <span style="font-size: 1.5em">{{bmi.calc}}</span>
+      </div>
+    </div>
+  </div>
+  <div class="tde" ng-show="calculator == 3">
+    <div class="col-md-12 well" style="font-size: 1.4em;">
+      <form class="" ng-submit="tdecalc()" method="post">
+        <div class="form-group m-form__group">
+            <label for="rmr">RMR:</label>
+            <input type="text" class="form-control m-input" id="rmr" aria-describedby="RMR" placeholder="RMR" ng-model="tde.rmr" ng-required>
+        </div>
+        <div class="form-group m-form__group">
+            <label for="af">Activity Factor:</label>
+            <input type="text" class="form-control m-input" id="af" aria-describedby="Activity Factor" placeholder="Activity Factor" ng-model="tde.af" ng-required>
+        </div>
+        <button type="submit" class="btn btn-info" name="button">Calculate</button>
+      </form>
+      <div class="text-center">
+        <img src="images/activityfactor.jpg" class="img-responsive" style="margin: 0 auto;" alt="">
+      </div>
+
+      <div class="answers" ng-show="solvedTDE == 1">
+        <h2 class="text-center" style="color: green;">Your Total Daily Energy Expenditure is</h2>
+        <h4>Total Daily Energy Expenditure</h4> <span style="font-size: 1.5em">{{tde.calc}}</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="fatmass" ng-show="calculator == 4">
+    <div class="col-md-12 well" style="font-size: 1.4em;">
+      <form class="" ng-submit="fatmass()" method="post">
+        <div class="form-group m-form__group">
+            <label for="bfp">Body fat Percentage:</label>
+            <input type="text" class="form-control m-input" id="bfp" aria-describedby="Body fat Percentage" placeholder="Body fat Percentage" ng-model="bodyfatmass.fatpercentage" ng-required>
+        </div>
+        <div class="form-group m-form__group">
+            <label for="sw">Scale Weight Pounds:</label>
+            <input type="text" class="form-control m-input" id="sw" aria-describedby="Scale Weight" placeholder="Scale Weight" ng-model="bodyfatmass.weight" ng-required>
+        </div>
+        <button type="submit" class="btn btn-info" name="button">Calculate</button>
+      </form>
+
+      <div class="answers" ng-show="solvedBFM == 1">
+        <h2 class="text-center" style="color: green;">Your Body Fat Mass</h2>
+        <h4>Body Fat Mass</h4> <span style="font-size: 1.5em">{{bodyfatmass.calc}}</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="leanmass" ng-show="calculator == 5">
+    <div class="col-md-12 well" style="font-size: 1.4em;">
+      <form class="" ng-submit="leanmass()" method="post">
+        <div class="form-group m-form__group">
+            <label for="bfp">Fat Mass:</label>
+            <input type="text" class="form-control m-input" id="bfp" aria-describedby="Fat Mass" placeholder="Fat Mass" ng-model="lean.fatmass" ng-required>
+        </div>
+        <div class="form-group m-form__group">
+            <label for="sw">Scale Weight Pounds:</label>
+            <input type="text" class="form-control m-input" id="sw" aria-describedby="Scale Weight" placeholder="Scale Weight" ng-model="lean.weight" ng-required>
+        </div>
+        <button type="submit" class="btn btn-info" name="button">Calculate</button>
+      </form>
+
+      <div class="answers" ng-show="solvedLEAN == 1">
+        <h2 class="text-center" style="color: green;">Your Lean Body Mass</h2>
+        <h4>Lean Body Mass</h4> <span style="font-size: 1.5em">{{lean.calc}}</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="rmr" ng-show="calculator == 6">
+    <div class="col-md-12 well" style="font-size: 1.4em;">
+      <form class="" ng-submit="rmr()" method="post">
+        <div class="form-group m-form__group">
+            <label for="sw">Scale Weight Pounds:</label>
+            <input type="text" class="form-control m-input" id="sw" aria-describedby="Scale Weight" placeholder="Scale Weight" ng-model="rmr.weight" ng-required>
+        </div>
+        <button type="submit" class="btn btn-info" name="button">Calculate</button>
+      </form>
+
+      <div class="answers" ng-show="solvedRMR == 1">
+        <h2 class="text-center" style="color: green;">Your Resting Metabolic Rate is</h2>
+        <h4>Resting Metabolic Rate (RMR)</h4> <span style="font-size: 1.5em">{{rmr.calc}}</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="bmr" ng-show="calculator == 7">
+    <div class="col-md-12 well" style="font-size: 1.4em;">
+      <form class="" ng-submit="bmr()" method="post">
+        <div class="form-group m-form__group">
+            <label for="sw">Scale Weight Pounds:</label>
+            <input type="text" class="form-control m-input" id="sw" aria-describedby="Scale Weight" placeholder="Scale Weight" ng-model="bmr.weight" ng-required>
+        </div>
+        <div class="form-group m-form__group">
+            <label for="height">Scale Height Inches:</label>
+            <input type="text" class="form-control m-input" id="height" aria-describedby="Scale Height" placeholder="Scale Height" ng-model="bmr.height" ng-required>
+        </div>
+        <div class="form-group m-form__group">
+            <label for="age">Age in Years:</label>
+            <input type="text" class="form-control m-input" id="age" aria-describedby="Age" placeholder="Age" ng-model="bmr.age" ng-required>
+        </div>
+        <button type="submit" class="btn btn-info" name="button">Calculate</button>
+      </form>
+
+      <div class="answers" ng-show="solvedBMR == 1">
+        <h2 class="text-center" style="color: green;">Your Basal Metabolic Rate is</h2>
+        <h4>MALE Basal Metabolic Rate (BMR)</h4> <span style="font-size: 1.5em">{{bmr.calcM}}</span>
+        <h4>FEMALE Basal Metabolic Rate (BMR)</h4> <span style="font-size: 1.5em">{{bmr.calcF}}</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="wth" ng-show="calculator == 8">
+    <div class="col-md-12 well" style="font-size: 1.4em;">
+      <form class="" ng-submit="wth()" method="post">
+        <div class="form-group m-form__group">
+            <label for="sw">Waist Inches:</label>
+            <input type="text" class="form-control m-input" id="sw" aria-describedby="Waist" placeholder="Waist Inches" ng-model="wth.waist" ng-required>
+        </div>
+        <div class="form-group m-form__group">
+            <label for="hip">Hip Inches:</label>
+            <input type="text" class="form-control m-input" id="hip" aria-describedby="Hip" placeholder="Hip Inches" ng-model="wth.hip" ng-required>
+        </div>
+        <button type="submit" class="btn btn-info" name="button">Calculate</button>
+      </form>
+
+      <div class="answers" ng-show="solvedWTH == 1">
+        <h2 class="text-center" style="color: green;">Your Waste to hip ratio is</h2>
+        <h4>Waste to hip ratio</h4> <span style="font-size: 1.5em">{{wth.calc}}</span>
+      </div>
+    </div>
+  </div>
+</div>
+<div ng-controller="vm">
+    <script src="js/core.min.js"></script>
+    <script src="js/script.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js" type="text/javascript"></script>
+</div>
