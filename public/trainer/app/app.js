@@ -164,12 +164,24 @@ userApp.controller('UserAuth', ['$window', '$scope', '$routeParams', '$http', '$
                     console.log(response)
                     $scope.loggedIn = 1;
                     $scope.user = response.data.user[0];
-                    $scope.certificates = JSON.parse($scope.user.certification);
-                    $scope.pictures = JSON.parse($scope.user.pictures);
-                    $scope.videos = JSON.parse($scope.user.videos);
-                    $scope.transformations = JSON.parse($scope.user.transformation);
-                    $scope.socials = JSON.parse($scope.user.social);
-                    $scope.packages = JSON.parse($scope.user.package);
+                    if ($scope.user.certification != null) {
+                        $scope.certificates = JSON.parse($scope.user.certification);
+                    }
+                    if ($scope.user.pictures != null) {
+                        $scope.pictures = JSON.parse($scope.user.pictures);
+                    }
+                    if ($scope.user.videos != null) {
+                        $scope.videos = JSON.parse($scope.user.videos);
+                    }
+                    if ($scope.user.transformation != null) {
+                        $scope.transformations = JSON.parse($scope.user.transformation);
+                    }
+                    if ($scope.user.social != null) {
+                        $scope.socials = JSON.parse($scope.user.social);
+                    }
+                    if ($scope.user.package != null) {
+                        $scope.packages = JSON.parse($scope.user.package);
+                    }
                     $scope.user.dob = new Date($scope.user.dob.split('T')[0]);
                 }
             } else {
