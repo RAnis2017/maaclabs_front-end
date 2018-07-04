@@ -118,7 +118,7 @@
                 </div>
                 <hr>
                 <div class="form-group m-form__group">
-                    <img src="users/{{picture.picture}}" alt="" width="200" ng-repeat="picture in pictures">
+                    <img src="users/{{picture.picture}}" alt="" width="200" ng-repeat="picture in pictures track by $index">
                     <br>
                     <label for="pics">Other Pics</label>
                     <div></div>

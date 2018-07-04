@@ -380,7 +380,7 @@ $app->post('/users/trainer/update', function (Request $request, Response $respon
         $pictures = json_decode($pictures, true);
         for($idx = 0; $idx < count($pictures); $idx++){
             $obj = (Array)$pictures[$idx];
-            if (strlen($pictures[$idx]['picture'])>26) {
+            if (@strlen($pictures[$idx]['picture'])>26) {
                 $pictures[$idx]['picture'] = save_base64_image($pictures[$idx]['picture'], randomKey(20), '../../newman/public/trainer/users/');
             }
         }
@@ -389,7 +389,7 @@ $app->post('/users/trainer/update', function (Request $request, Response $respon
             $objtpictures = (Array)$tpictures[$idx]['pictures'];
             for($idxj = 0; $idxj < count($objtpictures); $idxj++){
             $obj = (Array)$objtpictures[$idxj]['picture'];
-            if (strlen($objtpictures[$idxj]['picture'])>26) {
+            if (@strlen($objtpictures[$idxj]['picture'])>26) {
                 $tpictures[$idx]['pictures'][$idxj]['picture'] = save_base64_image($objtpictures[$idxj]['picture'], randomKey(20), '../../newman/public/trainer/users/');
             }
             }
