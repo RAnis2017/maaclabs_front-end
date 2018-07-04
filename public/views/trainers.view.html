@@ -76,7 +76,7 @@
             <div class="col-lg-8 col-sm-12 col-md-8 trainers">
 
                 <div class="owl-carousel" style="margin: 0px 0px 10px 0px;">
-                    <div class="coach text-center" ng-repeat="coach in trainers | filter : {name: search.name }" ng-if="coach.price > priceSlider1 && coach.price < priceSlider2">
+                    <div class="coach text-center" ng-repeat="coach in trainers | filter : {name: search.name }" ng-if="coach.price > priceSlider1 && coach.price < priceSlider2 || coach.price == null">
                         <div class="card-container">
                             <div class="card">
                                 <div class="side">
