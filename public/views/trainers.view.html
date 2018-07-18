@@ -17,15 +17,28 @@
         border-top: 2px solid rgb(130, 124, 124);
         width: 100px;
     }
+    
+    .hidingoverflow {
+        max-height: 430px;
+        overflow-y: hidden;
+    }
+    
+    .owl-prev {
+        top: 70%;
+    }
+    
+    .owl-next {
+        top: 70%;
+    }
 </style>
 <div class="container-fluid">
     <section class="workoutSection" style="text-align:left; padding: 20px;" ng-controller="trainersController" ng-init="loadtrainers()">
         <div class="row">
 
 
-            <h3 style="margin: 10px;">MEET OUR TRAINERS</h3>
+            <h3 style="margin: 10px; color:#EE4D1B !important;" class="text-center">MEET OUR TRAINERS</h3>
             <div class="col-lg-3 col-sm-12 col-md-3" style="font-size: 2.1em;">
-                <div class="filters" style="background:#8C8B97; padding: 15px; color: white;">
+                <div class="filters" style="background:#8C8B97; padding: 15px; color: white; width:80%;">
                     <div class="form-group m-form__group">
                         <label for="ename">Trainer Name:</label>
                         <input type="text" class="form-control m-input" id="ename" aria-describedby="Trainer Name" placeholder="Enter trainer name" ng-model="search.name">
@@ -75,9 +88,9 @@
             </div>
             <div class="col-lg-8 col-sm-12 col-md-8 trainers">
 
-                <div class="owl-carousel" style="margin: 0px 0px 10px 0px;">
+                <div class="owl-carousel hidingoverflow" style="margin: 0px 0px 10px 0px;">
                     <div class="coach text-center" ng-repeat="coach in trainers | filter : {name: search.name }" ng-if="coach.price > priceSlider1 && coach.price < priceSlider2 || coach.price == null">
-                        <div class="card-container">
+                        <div class="card-container" style="margin: 0px 10px 0px 10px; width: 350px; position:relative; z-index: 2001;">
                             <div class="card">
                                 <div class="side">
 

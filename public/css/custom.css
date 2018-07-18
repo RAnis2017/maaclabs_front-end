@@ -1126,3 +1126,9 @@ form.cd-form a:active {
         margin-bottom: -50px;
     }
 }
+
+.page-footer {
+    position: fixed;
+    bottom: 0px;
+    width: 100%;
+}
