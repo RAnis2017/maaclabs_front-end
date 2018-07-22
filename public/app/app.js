@@ -1,4 +1,4 @@
-var newmanApp = angular.module('newmanApp', ['auth0.auth0', 'angular-storage', 'angular-jwt', 'ngRoute', 'google-signin', 'ui.router', 'facebook', 'ngSanitize', 'rzModule']);
+var newmanApp = angular.module('newmanApp', ['auth0.auth0', 'angular-storage', 'angular-jwt', 'ngRoute', 'google-signin', 'ui.router', 'facebook', 'ngSanitize', 'rzModule', 'ezfb']);
 
 newmanApp.config(['jwtInterceptorProvider', '$httpProvider', 'angularAuth0Provider', '$provide', '$routeProvider', '$stateProvider', '$locationProvider', function(jwtInterceptorProvider, $httpProvider, angularAuth0Provider, $provide, $routeProvider, $stateProvider, $locationProvider) {
     $locationProvider.hashPrefix('');
@@ -107,8 +107,70 @@ newmanApp.config(['GoogleSigninProvider', function(GoogleSigninProvider) {
         client_id: '466493020051-3kp7ja1o86oteptsrp8hvavc17mdr484.apps.googleusercontent.com',
     });
 }]);
-newmanApp.controller('AuthCtrl', ['$scope', "$state", 'GoogleSignin', '$http', '$window', function($scope, $state,
-    GoogleSignin, $http, $window) {
+newmanApp.config(function(FacebookProvider) {
+    // Set your appId through the setAppId method or
+    // use the shortcut in the initialize method directly.
+    FacebookProvider.init('433847516707016');
+})
+
+.controller('authenticationCtrl', function($scope, Facebook) {
+
+    $scope.login = function() {
+        // From now on you can use the Facebook service just as Facebook api says
+        Facebook.login(function(response) {
+            // Do something with response.
+        });
+    };
+
+    $scope.getLoginStatus = function() {
+        Facebook.getLoginStatus(function(response) {
+            if (response.status === 'connected') {
+                $scope.loggedIn = true;
+            } else {
+                $scope.loggedIn = false;
+            }
+        });
+    };
+
+    $scope.me = function() {
+        Facebook.api('/me', function(response) {
+            $scope.user = response;
+        });
+    };
+});
+newmanApp.controller('AuthCtrl', ['$scope', "$state", 'GoogleSignin', '$http', '$window', 'Facebook', function($scope, $state,
+
+    GoogleSignin, $http, $window, Facebook) {
+
+    $scope.loginStatus = 'disconnected';
+    $scope.facebookIsReady = false;
+    $scope.user = null;
+    $scope.loginFB = function() {
+        Facebook.login(function(response) {
+            $scope.loginStatus = response.status;
+        });
+    };
+    $scope.removeAuth = function() {
+        Facebook.api({
+            method: 'Auth.revokeAuthorization'
+        }, function(response) {
+            Facebook.getLoginStatus(function(response) {
+                $scope.loginStatus = response.status;
+            });
+        });
+    };
+    $scope.api = function() {
+        Facebook.api('/me', function(response) {
+            $scope.user = response;
+        });
+    };
+    $scope.$watch(function() {
+        return Facebook.isReady();
+    }, function(newVal) {
+        if (newVal) {
+            $scope.facebookIsReady = true;
+        }
+    });
     $scope.user = "";
     $scope.login = function() {
         GoogleSignin.signIn().then(function(user) {
@@ -296,7 +358,7 @@ newmanApp.controller('CoachController', ['$scope', function($scope) {
 
 
 
-newmanApp.controller('workoutsController', ['$scope', '$http', function($scope, $http) {
+newmanApp.controller('workoutsController', ['$scope', '$http', '$window', function($scope, $http, $window) {
     $scope.workouts = []
     $scope.workoutg = []
     $scope.loadworkouts = function() {
@@ -321,6 +383,12 @@ newmanApp.controller('workoutsController', ['$scope', '$http', function($scope, 
         }, function errorCallback(response) {
             console.log(response)
         });
+
+        if ($window.location.href.indexOf('#loaded') == -1) {
+            $window.location = window.location + '#loaded';
+            $window.location.reload();
+        }
+
     };
 
 }]);
@@ -367,56 +435,56 @@ newmanApp.controller('calculatorsController', ['$scope', '$http', function($scop
     $scope.bmr = {};
     $scope.wth = {};
     $scope.bodyfatmass = {};
-    $scope.bpfcalc = function(){
-      $scope.bpfF.bweight = ($scope.bpfF.bweight*0.732)+8.987
-      $scope.bpfF.wrist = ($scope.bpfF.wrist/3.140)
-      $scope.bpfF.waist = ($scope.bpfF.waist*0.157)
-      $scope.bpfF.hip = ($scope.bpfF.hip*0.249)
-      $scope.bpfF.forearm = ($scope.bpfF.forearm*0.434)
-      $scope.bpfF.lean = ($scope.bpfF.bweight + $scope.bpfF.wrist - $scope.bpfF.waist - $scope.bpfF.hip + $scope.bpfF.forearm)
-      $scope.bpfF.fat = $scope.bpfF.bweight - $scope.bpfF.lean
-      $scope.bpfF.fatpercentage = ($scope.bpfF.fat*100)/$scope.bpfF.bweight
-      $scope.solved = 1;
+    $scope.bpfcalc = function() {
+        $scope.bpfF.bweight = ($scope.bpfF.bweight * 0.732) + 8.987
+        $scope.bpfF.wrist = ($scope.bpfF.wrist / 3.140)
+        $scope.bpfF.waist = ($scope.bpfF.waist * 0.157)
+        $scope.bpfF.hip = ($scope.bpfF.hip * 0.249)
+        $scope.bpfF.forearm = ($scope.bpfF.forearm * 0.434)
+        $scope.bpfF.lean = ($scope.bpfF.bweight + $scope.bpfF.wrist - $scope.bpfF.waist - $scope.bpfF.hip + $scope.bpfF.forearm)
+        $scope.bpfF.fat = $scope.bpfF.bweight - $scope.bpfF.lean
+        $scope.bpfF.fatpercentage = ($scope.bpfF.fat * 100) / $scope.bpfF.bweight
+        $scope.solved = 1;
     }
-    $scope.bpfcalcMale = function(){
-      $scope.bpfM.bweight = ($scope.bpfM.bweight*1.082)+94.42
-      $scope.bpfM.waist = ($scope.bpfM.waist*4.15)
-      $scope.bpfM.lean = ($scope.bpfM.bweight - $scope.bpfM.waist)
-      $scope.bpfM.fat = $scope.bpfM.bweight - $scope.bpfM.lean
-      $scope.bpfM.fatpercentage = ($scope.bpfM.fat*100)/$scope.bpfM.bweight
-      $scope.solvedM = 1;
+    $scope.bpfcalcMale = function() {
+        $scope.bpfM.bweight = ($scope.bpfM.bweight * 1.082) + 94.42
+        $scope.bpfM.waist = ($scope.bpfM.waist * 4.15)
+        $scope.bpfM.lean = ($scope.bpfM.bweight - $scope.bpfM.waist)
+        $scope.bpfM.fat = $scope.bpfM.bweight - $scope.bpfM.lean
+        $scope.bpfM.fatpercentage = ($scope.bpfM.fat * 100) / $scope.bpfM.bweight
+        $scope.solvedM = 1;
     }
-    $scope.bmicalc = function(){
-      $scope.bmi.calc = ($scope.bmi.weight/Math.pow($scope.bmi.height, 2));
-      $scope.solvedBMI = 1;
+    $scope.bmicalc = function() {
+        $scope.bmi.calc = ($scope.bmi.weight / Math.pow($scope.bmi.height, 2));
+        $scope.solvedBMI = 1;
     }
-    $scope.tdecalc = function(){
-      $scope.tde.calc = ($scope.tde.rmr*$scope.tde.af);
-      $scope.solvedTDE = 1;
+    $scope.tdecalc = function() {
+        $scope.tde.calc = ($scope.tde.rmr * $scope.tde.af);
+        $scope.solvedTDE = 1;
     }
-    $scope.fatmass = function(){
-      $scope.bodyfatmass.calc = ($scope.bodyfatmass.fatpercentage*$scope.bodyfatmass.weight);
-      $scope.solvedBFM = 1;
+    $scope.fatmass = function() {
+        $scope.bodyfatmass.calc = ($scope.bodyfatmass.fatpercentage * $scope.bodyfatmass.weight);
+        $scope.solvedBFM = 1;
     }
-    $scope.leanmass = function(){
-      $scope.lean.calc = ($scope.lean.weight-$scope.lean.fatmass);
-      $scope.solvedLEAN = 1;
+    $scope.leanmass = function() {
+        $scope.lean.calc = ($scope.lean.weight - $scope.lean.fatmass);
+        $scope.solvedLEAN = 1;
     }
-    $scope.rmr = function(){
-      $scope.rmr.calc = ($scope.rmr.weight*10);
-      $scope.solvedRMR = 1;
+    $scope.rmr = function() {
+        $scope.rmr.calc = ($scope.rmr.weight * 10);
+        $scope.solvedRMR = 1;
     }
 
-    $scope.bmr = function(){
-      $scope.bmr.calcF = 655+(4.35 * $scope.bmr.weight) + (4.7 * $scope.bmr.height) - (4.7 * $scope.bmr.age);
-      $scope.bmr.calcM = 66 + (6.23 * $scope.bmr.weight) + (12.7 * $scope.bmr.height) - (6.8 * $scope.bmr.age);
-      $scope.solvedBMR = 1;
+    $scope.bmr = function() {
+        $scope.bmr.calcF = 655 + (4.35 * $scope.bmr.weight) + (4.7 * $scope.bmr.height) - (4.7 * $scope.bmr.age);
+        $scope.bmr.calcM = 66 + (6.23 * $scope.bmr.weight) + (12.7 * $scope.bmr.height) - (6.8 * $scope.bmr.age);
+        $scope.solvedBMR = 1;
     }
-    $scope.wth = function(){
-      $scope.wth.calc = ($scope.wth.waist/$scope.wth.hip);
-      $scope.solvedWTH = 1;
+    $scope.wth = function() {
+        $scope.wth.calc = ($scope.wth.waist / $scope.wth.hip);
+        $scope.solvedWTH = 1;
     }
-  }]);
+}]);
 
 newmanApp.controller('trainersController', ['$scope', '$http', function($scope, $http) {
     $scope.trainers = []

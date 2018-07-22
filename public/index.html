@@ -38,6 +38,8 @@
     <script src="js/angularjs-social-login.js"></script>
     <script src="js/ng-google-signin.js"></script>
     <script src="js/angular-facebook.js"></script>
+    <script src="js/angular-smooth-scroll.js"></script>
+    <script src="http://pc035860.github.io/angular-easyfb/angular-easyfb.min.js"></script>
 
     <script src="app/app.js"></script>
     <!-- <script src="app/auth.controller.js"></script> -->
@@ -172,13 +174,13 @@
         </div>
     </div>
     <!-- Javascript-->
-    <div class="cd-user-modal" style="font-size: 1.8em;">
+    <div class="cd-user-modal" style="font-size: 2.0em;">
         <!-- this is the entire modal form, including the background -->
-        <div class="cd-user-modal-container">
+        <div class="cd-user-modal-container" style=" max-height: 700px;">
             <!-- this is the container wrapper -->
             <ul class="cd-switcher">
                 <li><a href="#0">Sign in</a></li>
-                <li><a href="#0">New account</a></li>
+                <li><a href="#0">Sign up</a></li>
             </ul>
 
             <div id="cd-login" ng-controller="AuthCtrl">
@@ -210,14 +212,17 @@
                     </p>
 
                     <p class="fieldset">
-                        <input class="full-width" type="submit" value="Login" ng-click="loginmanual()">
+                        <input class="full-width" type="submit" value="Login" ng-click="loginmanual()" style="font-size: 1.0em;">
                     </p>
 
                     <!-- <a id="facebook" ng-controller="authenticationCtrl" ng-click="loginfb()">Sign in with Facebook</a> -->
-
-                    <a id="googleplus" ng-click="login()">Sign in with Google</a>
-
-
+                    <div class="col-md-6">
+                        <a id="googleplus" ng-click="login()">Sign in with Google</a>
+                    </div>
+                    <div class="col-md-6">
+                        <button type="button" id="fblogin" ng-click="loginFB()" style="border-color: rgb(14, 10, 233);
+                    background-color: rgba(49, 72, 205, 0.803);
+                    text-shadow: #333 -1px -1px 0; color: white;">Sign Up with Facebook</button></div>
                 </form>
 
                 <p class="cd-form-bottom-message"><a href="#0">Forgot your password?</a></p>
@@ -304,7 +309,6 @@
 
     <script>
         $(document).ready(function() {
-
             var $form_modal = $('.cd-user-modal'),
                 $form_login = $form_modal.find('#cd-login'),
                 $form_signup = $form_modal.find('#cd-signup'),

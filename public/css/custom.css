@@ -73,7 +73,7 @@ a.active {
 }
 
 .coach img {
-    width: 300px !important;
+    width: 100% !important;
     position: absolute;
     left: 23%;
     border-radius: 235px;
@@ -93,7 +93,7 @@ a.active {
 @media only screen and (max-width: 1680px) {
     .trainers .coach img {
         position: absolute;
-        left: 3%;
+        left: 10%;
     }
 }
 
@@ -107,49 +107,49 @@ a.active {
 @media only screen and (max-width: 1366px) {
     .trainers .coach img {
         position: absolute;
-        left: 0%;
+        left: 10%;
     }
 }
 
 @media only screen and (max-width: 1024px) {
     .trainers .coach img {
         position: absolute;
-        left: 0%;
+        left: 10%;
     }
 }
 
 @media only screen and (max-width: 768px) {
     .trainers .coach img {
         position: absolute;
-        left: 0%;
+        left: 10%;
     }
 }
 
 @media only screen and (max-width: 800px) {
     .trainers .coach img {
         position: absolute;
-        left: 0%;
+        left: 10%;
     }
 }
 
 @media only screen and (max-width: 640px) {
     .trainers .coach img {
         position: absolute;
-        left: 0%;
+        left: 10%;
     }
 }
 
 @media only screen and (max-width: 480px) {
     .trainers .coach img {
         position: absolute;
-        left: 0%;
+        left: 10%;
     }
 }
 
 @media only screen and (max-width: 320px) {
     .trainers .coach img {
         position: absolute;
-        left: 0%;
+        left: 10%;
     }
 }
 
@@ -758,7 +758,7 @@ header[role=banner]::after {
         padding: 2em;
     }
     .cd-form .fieldset {
-        margin: 2em 0;
+        margin: 0.3em 0;
     }
     .cd-form .fieldset:first-child {
         margin-top: 0;
@@ -1128,7 +1128,8 @@ form.cd-form a:active {
 }
 
 .page-footer {
-    position: fixed;
+    position: absolute;
     bottom: 0px;
     width: 100%;
+    z-index: 3000;
 }

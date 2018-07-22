@@ -46,14 +46,20 @@
                     </div>
                     <hr>
                     <div class="form-group m-form__group">
-                        <label for="slot">Available:
-                                <input type="radio" class="form-control m-input" id="slot" name="slot" aria-describedby="Trainer Slot" value="1" ng-model="search.slot">
+                        <div class="col-sm-12 col-md-12">
+                            <label for="slot">Available:
+                               
 
                         </label>
-                        <label for="slot">Not Available:
-                                <input type="radio" class="form-control m-input" id="slot" name="slot" aria-describedby="Trainer Slot" value="2" ng-model="search.slot">
-                        </label>
+                            <input type="radio" class="form-control m-input" id="slot" name="slot" aria-describedby="Trainer Slot" value="1" ng-model="search.slot">
+                        </div>
+                        <div class="col-sm-12 col-md-12">
 
+                            <label for="slot1">Not Available:
+                               
+                        </label>
+                            <input type="radio" class="form-control m-input" id="slot1" name="slot" aria-describedby="Trainer Slot" value="2" ng-model="search.slot">
+                        </div>
                     </div>
                     <hr>
                     <div class="form-group m-form__group">
@@ -71,16 +77,16 @@
                     <div>
                         <label for="rate">Ratings:</label>
                         <br>
-                        <a style="background: #EE4D1B; padding: 8px; border-radius: 14px; color: white;">
+                        <a style="background: #EE4D1B; padding: 8px; border-radius: 14px; color: white; font-size: .6em;">
                             2 <i class="fas fa-star" style="color: rgb(255, 230, 0);"></i>
                         </a>
-                        <a style="background: #EE4D1B; padding: 8px; border-radius: 14px; color: white; margin-left: 5px;">
+                        <a style="background: #EE4D1B; padding: 8px; border-radius: 14px; color: white; margin-left: 5px; font-size: .6em;">
                                 3 <i class="fas fa-star" style="color: rgb(255, 230, 0);"></i>
                             </a>
-                        <a style="background: #EE4D1B; padding: 8px; border-radius: 14px; color: white; margin-left: 5px;">
+                        <a style="background: #EE4D1B; padding: 8px; border-radius: 14px; color: white; margin-left: 5px; font-size: .6em;">
                                     4 <i class="fas fa-star" style="color: rgb(255, 230, 0);"></i>
                                 </a>
-                        <a style="background: #EE4D1B; padding: 8px; border-radius: 14px; color: white; margin-left: 5px;">
+                        <a style="background: #EE4D1B; padding: 8px; border-radius: 14px; color: white; margin-left: 5px; font-size: .6em;">
                                         5 <i class="fas fa-star" style="color: rgb(255, 230, 0);"></i>
                                     </a>
                     </div>
@@ -90,7 +96,7 @@
 
                 <div class="owl-carousel hidingoverflow" style="margin: 0px 0px 10px 0px;">
                     <div class="coach text-center" ng-repeat="coach in trainers | filter : {name: search.name }" ng-if="coach.price > priceSlider1 && coach.price < priceSlider2 || coach.price == null">
-                        <div class="card-container" style="margin: 0px 10px 0px 10px; width: 350px; position:relative; z-index: 2001;">
+                        <div class="card-container" style="margin: 0px 10px 0px 10px; width: 100%; position:relative; z-index: 2001;">
                             <div class="card">
                                 <div class="side">
 
@@ -98,7 +104,7 @@
                                     <h5 style="line-height: 20px; margin-top: 10px; color: #8C8B97;">{{coach.name}}</h5>
                                     <h6 style="line-height: 20px; margin-bottom: 10px; color: #8C8B97; font-family: 'Droid Serif', serif; font-style: italic;">Trainer</h6>
                                     <hr class="trainerline">
-                                    <img src="trainer/users/{{coach.profile_pic}}" alt="">
+                                    <img src="trainer/users/{{coach.profile_pic}}" alt="" style="width: 80% !important;">
                                 </div>
                                 <div class="side back">
 
