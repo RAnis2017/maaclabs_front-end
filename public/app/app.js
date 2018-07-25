@@ -359,39 +359,69 @@ newmanApp.controller('CoachController', ['$scope', function($scope) {
 
 
 newmanApp.controller('workoutsController', ['$scope', '$http', '$window', function($scope, $http, $window) {
-    $scope.workouts = []
-    $scope.workoutg = []
-    $scope.loadworkouts = function() {
-        $http({
-            method: 'GET',
-            url: 'http://localhost:81/newmanapi/public/workouts/getworkouts',
-        }).then(function successCallback(response) {
-            for (i = 0; i < response.data.length; i++) {
-                response.data[i].workoutdays = $.parseJSON(response.data[i].workoutdays);
+        $scope.workouts = []
+        $scope.workoutg = []
+        $scope.loadworkouts = function() {
+            $http({
+                method: 'GET',
+                url: 'http://localhost:81/newmanapi/public/workouts/getworkouts',
+            }).then(function successCallback(response) {
+                for (i = 0; i < response.data.length; i++) {
+                    response.data[i].workoutdays = $.parseJSON(response.data[i].workoutdays);
+                }
+                $scope.workouts = response.data;
+                console.log(response)
+            }, function errorCallback(response) {
+                console.log(response)
+            });
+            $http({
+                method: 'GET',
+                url: 'http://localhost:81/newmanapi/public/workouts/getworkoutgroups',
+            }).then(function successCallback(response) {
+                $scope.workoutg = response.data;
+                console.log(response)
+            }, function errorCallback(response) {
+                console.log(response)
+            });
+
+            // if ($window.location.href.indexOf('#loaded') == -1) {
+            //     $window.location = window.location + '#loaded';
+            //     $window.location.reload();
+            // }
+
+        };
+
+    }]).directive("owlCarousel", function() {
+        return {
+            restrict: 'E',
+            transclude: false,
+            link: function(scope) {
+                scope.initCarousel = function(element) {
+                    // provide any default options you want
+                    var defaultOptions = {};
+                    var customOptions = scope.$eval($(element).attr('data-options'));
+                    // combine the two options objects
+                    for (var key in customOptions) {
+                        defaultOptions[key] = customOptions[key];
+                    }
+                    // init carousel
+                    $(element).owlCarousel(defaultOptions);
+                };
             }
-            $scope.workouts = response.data;
-            console.log(response)
-        }, function errorCallback(response) {
-            console.log(response)
-        });
-        $http({
-            method: 'GET',
-            url: 'http://localhost:81/newmanapi/public/workouts/getworkoutgroups',
-        }).then(function successCallback(response) {
-            $scope.workoutg = response.data;
-            console.log(response)
-        }, function errorCallback(response) {
-            console.log(response)
-        });
-
-        if ($window.location.href.indexOf('#loaded') == -1) {
-            $window.location = window.location + '#loaded';
-            $window.location.reload();
-        }
-
-    };
-
-}]);
+        };
+    })
+    .directive('owlCarouselItem', [function() {
+        return {
+            restrict: 'A',
+            transclude: false,
+            link: function(scope, element) {
+                // wait for the last item in the ng-repeat then call init
+                if (scope.$last) {
+                    scope.initCarousel(element.parent());
+                }
+            }
+        };
+    }]);
 
 newmanApp.controller('recipesController', ['$scope', '$http', function($scope, $http) {
     $scope.recipes = [];
