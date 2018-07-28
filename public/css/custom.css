@@ -1133,3 +1133,7 @@ form.cd-form a:active {
     width: 100%;
     z-index: 3000;
 }
+
+.trainerSection {
+    margin-bottom: 150px !important;
+}
