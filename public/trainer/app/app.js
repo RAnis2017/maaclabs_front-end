@@ -18,7 +18,14 @@ userApp.config(['$routeProvider', '$locationProvider', function($routeProvider, 
         })
         .when('/settings', {
             templateUrl: 'views/settings.html'
-        }).otherwise({
+        })
+        .when('/clients', {
+            templateUrl: 'views/clients.html'
+        })
+        .when('/financials', {
+            templateUrl: 'views/financials.html'
+        })
+        .otherwise({
             redirectTo: '/dashboard'
         });
 }]);
@@ -39,6 +46,19 @@ userApp.directive("fileread", [function() {
             });
         }
     }
+}]);
+userApp.controller('financialsController', ['$window', '$scope', '$routeParams', '$http', '$sce', function($window, $scope, $routeParams, $http, $sce) {
+    $scope.financials = {};
+    $scope.accounts = [];
+    $scope.addAccount = function() {
+        $scope.accounts.push({
+            account: $scope.financials.accountno,
+            ifsc: $scope.financials.ifsc
+        })
+    };
+    $scope.deleteAccount = function(index) {
+        $scope.accounts.splice(index, 1);
+    };
 }]);
 userApp.controller('UserAuth', ['$window', '$scope', '$routeParams', '$http', '$sce', function($window, $scope, $routeParams, $http, $sce) {
     $scope.loggedIn = 0;

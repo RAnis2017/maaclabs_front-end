@@ -1,0 +1,147 @@
+<!-- <div class="m-grid__item m-grid__item--fluid m-grid m-grid--ver-desktop m-grid--desktop m-body"> -->
+
+<!-- BEGIN: Left Aside -->
+<button class="m-aside-left-close  m-aside-left-close--skin-dark " id="m_aside_left_close_btn"><i class="la la-close"></i></button>
+
+<div ng-include="'aside-menu.html'" id="m_aside_left" class="m-grid__item	m-aside-left  m-aside-left--skin-dark ">
+
+</div>
+<!-- END: Left Aside -->
+<div class="row" ng-controller="financialsController">
+
+    <div class="col-lg-12">
+        <div class="m-portlet">
+            <div class="m-portlet__head">
+                <div class="m-portlet__head-caption">
+                    <div class="m-portlet__head-title">
+                        <h3 class="m-portlet__head-text">
+                            Add/Edit Account
+                        </h3>
+                    </div>
+                </div>
+            </div>
+            <div class="m-portlet__body">
+                <div class="form-group m-form__group">
+                    <label for="accno">Account No:</label>
+                    <input type="text" class="form-control m-input" id="accno" aria-describedby="Account No" placeholder="Enter Account No" ng-model="financials.accountno">
+                </div>
+                <div class="form-group m-form__group">
+                    <label for="accifsc">IFSC Code:</label>
+                    <input type="text" class="form-control m-input" id="accifsc" aria-describedby="IFSC Code" placeholder="Enter IFSC Code" ng-model="financials.ifsc">
+                </div>
+                <div class="m-form__actions">
+                    <button type="reset" class="btn btn-primary" ng-click="addAccount()" style="color:#EC4F26;">Add Account</button>
+                </div>
+
+
+
+
+            </div>
+        </div>
+        <div class="m-portlet ">
+            <div class="m-portlet__head">
+                <div class="m-portlet__head-caption">
+                    <div class="m-portlet__head-title">
+                        <h3 class="m-portlet__head-text">
+                            Bank Accounts:
+                        </h3>
+                    </div>
+                </div>
+            </div>
+            <div class="m-portlet__body table-responsive">
+                <div ng-repeat="account in accounts track by $index">
+                    <p><span style="color: black; font-size: 1.4em; font-weight: bold;">Account No:</span> {{account.account}} <span style="color: black; font-size: 1.1em; font-weight: bold; margin-left: 10px; padding: 5px; border-left: 1px solid black;"><a href="">Edit</a></span>
+                        <span style="color: red; font-size: 1.1em; font-weight: bold; margin-left: 10px; padding: 5px;"><a href="" ng-click="deleteAccount($index)">Delete</a></span>
+                    </p>
+                    <p><span style="color: black; font-size: 1.4em; font-weight: bold;">IFSC Code:</span> {{account.ifsc}}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="m-portlet m-portlet--creative m-portlet--first m-portlet--bordered-semi">
+            <div class="m-portlet__head">
+                <div class="m-portlet__head-caption">
+                    <div class="m-portlet__head-title">
+                        <span class="m-portlet__head-icon m--hide">
+                                    <i class="flaticon-statistics"></i>
+                                </span>
+                        <h3 class="m-portlet__head-text">
+                            Total amount of money earned since beginning
+                        </h3>
+                        <h2 class="m-portlet__head-label m-portlet__head-label--danger">
+                            <span>Total Money Earned</span>
+                        </h2>
+                    </div>
+                </div>
+            </div>
+            <div class="m-portlet__body">
+                <h1 style="text-align:center; color: green;">$2130</h1>
+            </div>
+        </div>
+
+    </div>
+    <div class="col-md-6">
+        <div class="m-portlet m-portlet--creative m-portlet--first m-portlet--bordered-semi">
+            <div class="m-portlet__head">
+                <div class="m-portlet__head-caption">
+                    <div class="m-portlet__head-title">
+                        <span class="m-portlet__head-icon m--hide">
+                                    <i class="flaticon-statistics"></i>
+                                </span>
+                        <h3 class="m-portlet__head-text">
+                            Money Available for Crediting
+                        </h3>
+                        <h2 class="m-portlet__head-label m-portlet__head-label--danger">
+                            <span>Available Amount</span>
+                        </h2>
+                    </div>
+                </div>
+            </div>
+            <div class="m-portlet__body">
+                <h1 style="text-align:center; color: green;">$130</h1>
+            </div>
+        </div>
+
+    </div>
+    <div class="col-lg-12">
+        <div class="m-portlet">
+            <div class="m-portlet__head">
+                <div class="m-portlet__head-caption">
+                    <div class="m-portlet__head-title">
+                        <h3 class="m-portlet__head-text">
+                            Withdraw Money
+                        </h3>
+                    </div>
+                </div>
+            </div>
+            <div class="m-portlet__body">
+                <div class="m-form__group form-group">
+                    <label>Select Account:</label>
+                    <div class="m-radio-list">
+                        <div ng-repeat="account in accounts track by $index">
+                            <label class="m-radio m-radio--state-success">
+                        <input type="radio" name="accounts" value="{{$index}}"> {{account.account}}
+                        <span></span>
+                        </label>
+                        </div>
+
+                    </div>
+                    <span class="m-form__help">Select the account you want to withdraw to:</span>
+                </div>
+                <div class="form-group m-form__group">
+                    <label for="withdraw">Withdraw Amount:</label>
+                    <input type="text" class="form-control m-input" id="withdraw" aria-describedby="withdraw" placeholder="Enter withdraw amount">
+                </div>
+                <div class="m-form__actions">
+                    <button type="reset" class="btn btn-primary" style="color:#EC4F26;">Withdraw</button>
+                </div>
+
+
+
+
+            </div>
+        </div>
+    </div>
+</div>
+<!-- end:: Body -->
