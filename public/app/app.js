@@ -574,10 +574,6 @@ newmanApp.controller('Controllersignup', ['$state', '$scope', '$routeParams', '$
             console.log(response)
             localStorage.setItem('access_token', response.data.token);
             $scope.success = 1;
-            $scope.name = "";
-            $scope.email = "";
-            $scope.password = "";
-            $scope.type = "";
             $window.location.reload();
         }, function errorCallback(response) {
             console.log(response)

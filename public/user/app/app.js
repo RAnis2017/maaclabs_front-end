@@ -16,12 +16,87 @@ userApp.config(['$routeProvider', '$locationProvider', function($routeProvider, 
         .when('/myprogress', {
             templateUrl: 'views/myprogress.html'
         })
+        .when('/calculators', {
+            templateUrl: 'views/calculators.html'
+        })
         .when('/settings', {
             templateUrl: 'views/settings.html'
         }).otherwise({
             redirectTo: '/dashboard'
         });
 }]);
+userApp.controller('calculatorsController', ['$scope', '$http', function($scope, $http) {
+    $scope.calculator = 0;
+    $scope.bpf = 0;
+    $scope.bpfF = {};
+    $scope.bpfM = {};
+    $scope.solved = 0;
+    $scope.solvedM = 0;
+    $scope.solvedBMI = 0;
+    $scope.solvedTDE = 0;
+    $scope.solvedBFM = 0;
+    $scope.solvedLEAN = 0;
+    $scope.solvedRMR = 0;
+    $scope.solvedBMR = 0;
+    $scope.solvedWTH = 0;
+    $scope.bmi = {};
+    $scope.tde = {};
+    $scope.lean = {};
+    $scope.rmr = {};
+    $scope.bmr = {};
+    $scope.wth = {};
+    $scope.bodyfatmass = {};
+    $scope.bpfcalc = function() {
+        $scope.bpfF.bweight = ($scope.bpfF.bweight * 0.732) + 8.987
+        $scope.bpfF.wrist = ($scope.bpfF.wrist / 3.140)
+        $scope.bpfF.waist = ($scope.bpfF.waist * 0.157)
+        $scope.bpfF.hip = ($scope.bpfF.hip * 0.249)
+        $scope.bpfF.forearm = ($scope.bpfF.forearm * 0.434)
+        $scope.bpfF.lean = ($scope.bpfF.bweight + $scope.bpfF.wrist - $scope.bpfF.waist - $scope.bpfF.hip + $scope.bpfF.forearm)
+        $scope.bpfF.fat = $scope.bpfF.bweight - $scope.bpfF.lean
+        $scope.bpfF.fatpercentage = ($scope.bpfF.fat * 100) / $scope.bpfF.bweight
+        $scope.solved = 1;
+    }
+    $scope.bpfcalcMale = function() {
+        $scope.bpfM.bweight = ($scope.bpfM.bweight * 1.082) + 94.42
+        $scope.bpfM.waist = ($scope.bpfM.waist * 4.15)
+        $scope.bpfM.lean = ($scope.bpfM.bweight - $scope.bpfM.waist)
+        $scope.bpfM.fat = $scope.bpfM.bweight - $scope.bpfM.lean
+        $scope.bpfM.fatpercentage = ($scope.bpfM.fat * 100) / $scope.bpfM.bweight
+        $scope.solvedM = 1;
+    }
+    $scope.bmicalc = function() {
+        $scope.bmi.calc = ($scope.bmi.weight / Math.pow($scope.bmi.height, 2));
+        $scope.solvedBMI = 1;
+    }
+    $scope.tdecalc = function() {
+        $scope.tde.calc = ($scope.tde.rmr * $scope.tde.af);
+        $scope.solvedTDE = 1;
+    }
+    $scope.fatmass = function() {
+        $scope.bodyfatmass.calc = ($scope.bodyfatmass.fatpercentage * $scope.bodyfatmass.weight);
+        $scope.solvedBFM = 1;
+    }
+    $scope.leanmass = function() {
+        $scope.lean.calc = ($scope.lean.weight - $scope.lean.fatmass);
+        $scope.solvedLEAN = 1;
+    }
+    $scope.rmr = function() {
+        $scope.rmr.calc = ($scope.rmr.weight * 10);
+        $scope.solvedRMR = 1;
+    }
+
+    $scope.bmr = function() {
+        $scope.bmr.calcF = 655 + (4.35 * $scope.bmr.weight) + (4.7 * $scope.bmr.height) - (4.7 * $scope.bmr.age);
+        $scope.bmr.calcM = 66 + (6.23 * $scope.bmr.weight) + (12.7 * $scope.bmr.height) - (6.8 * $scope.bmr.age);
+        $scope.solvedBMR = 1;
+    }
+    $scope.wth = function() {
+        $scope.wth.calc = ($scope.wth.waist / $scope.wth.hip);
+        $scope.solvedWTH = 1;
+    }
+}]);
+
 userApp.controller('UserAuth', ['$window', '$scope', '$routeParams', '$http', '$sce', function($window, $scope, $routeParams, $http, $sce) {
     $scope.loggedIn = 0;
 

@@ -5,10 +5,10 @@ userApp.config(['$routeProvider', '$locationProvider', function($routeProvider, 
 
     $routeProvider
         .when('/dashboard', {
-            templateUrl: 'views/dashboard.html'
+            templateUrl: 'views/index.html'
         })
         .when('/profile', {
-            templateUrl: 'views/profile.html'
+            templateUrl: 'views/dashboard.html'
         })
         .when('/mycoach', {
             templateUrl: 'views/mycoach.html'
