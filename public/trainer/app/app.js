@@ -258,7 +258,7 @@ userApp.controller('UserAuth', ['$window', '$scope', '$routeParams', '$http', '$
     $scope.save = function() {
         $http({
             method: 'POST',
-            url: 'http://localhost:81/newmanapi/public/users/trainer/update',
+            url: '/newmanapi/public/users/trainer/update',
             data: {
                 "token": localStorage.getItem('access_token'),
                 "id": $scope.user.id,
@@ -298,11 +298,11 @@ userApp.controller('UserAuth', ['$window', '$scope', '$routeParams', '$http', '$
         });
     }
     $scope.user;
-    $scope.redirect = 'http://localhost:81/newman/public/';
+    $scope.redirect = '/newman/public/';
     $scope.checkAuth = function() {
         $http({
             method: 'POST',
-            url: 'http://localhost:81/newmanapi/public/users/authenticate',
+            url: '/newmanapi/public/users/authenticate',
             data: {
                 "token": localStorage.getItem('access_token')
             }

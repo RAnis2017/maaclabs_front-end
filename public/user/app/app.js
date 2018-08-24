@@ -103,7 +103,7 @@ userApp.controller('UserAuth', ['$window', '$scope', '$routeParams', '$http', '$
     $scope.checkAuth = function() {
         $http({
             method: 'POST',
-            url: 'http://localhost:81/newmanapi/public/users/authenticate',
+            url: '/newmanapi/public/users/authenticate',
             data: {
                 "token": localStorage.getItem('access_token')
             }
@@ -115,14 +115,14 @@ userApp.controller('UserAuth', ['$window', '$scope', '$routeParams', '$http', '$
                     console.log(response)
                     $scope.loggedIn = 1;
                 } else {
-                    $window.location.href = 'http://localhost:81/newman/public/'; //You should have http here.
+                    $window.location.href = '/newman/public/'; //You should have http here.
                 }
             } catch (err) {
-                $window.location.href = 'http://localhost:81/newman/public/'; //You should have http here.
+                $window.location.href = '/newman/public/'; //You should have http here.
             }
         }, function errorCallback(response) {
             console.log(response)
-            $window.location.href = 'http://localhost:81/newman/public/'; //You should have http here.
+            $window.location.href = '/newman/public/'; //You should have http here.
         });
 
     };

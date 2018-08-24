@@ -130,7 +130,7 @@ adminApp.controller('workoutdayController', ['$scope', 'sharedProperties', 'data
     $scope.loadexercises = function() {
         $http({
             method: 'GET',
-            url: 'http://localhost:81/newmanapi/public/exercises/getexercises',
+            url: '/newmanapi/public/exercises/getexercises',
         }).then(function successCallback(response) {
 
             $scope.exercises = response.data;
@@ -227,7 +227,7 @@ adminApp.controller('exerciseController', ['$scope', 'sharedProperties', 'dataSe
         console.log($scope.newexercise.groupid);
         $http({
             method: 'POST',
-            url: 'http://localhost:81/newmanapi/public/exercises/addexercise',
+            url: '/newmanapi/public/exercises/addexercise',
             data: {
                 "name": $scope.newexercise.name,
                 "videourl": $scope.newexercise.video,
@@ -257,7 +257,7 @@ adminApp.controller('exerciseController', ['$scope', 'sharedProperties', 'dataSe
         $scope.successEU = 0
         $http({
             method: 'PUT',
-            url: 'http://localhost:81/newmanapi/public/exercises/updateexercise/' + id,
+            url: '/newmanapi/public/exercises/updateexercise/' + id,
             data: {
                 "name": exercise.name,
                 "videourl": exercise.videourl,
@@ -284,7 +284,7 @@ adminApp.controller('exerciseController', ['$scope', 'sharedProperties', 'dataSe
 
         $http({
             method: 'DELETE',
-            url: 'http://localhost:81/newmanapi/public/exercises/deleteexercise/' + id,
+            url: '/newmanapi/public/exercises/deleteexercise/' + id,
         }).then(function successCallback(response) {
             $scope.successED = 1
             console.log(response)
@@ -297,7 +297,7 @@ adminApp.controller('exerciseController', ['$scope', 'sharedProperties', 'dataSe
     $scope.loadexercises = function() {
         $http({
             method: 'GET',
-            url: 'http://localhost:81/newmanapi/public/exercises/getexercises',
+            url: '/newmanapi/public/exercises/getexercises',
         }).then(function successCallback(response) {
 
             $scope.exercises = response.data;
@@ -354,7 +354,7 @@ adminApp.controller('workoutController', ['$scope', 'sharedProperties', 'dataSer
     $scope.updateWorkout = function(id, wd) {
         $http({
             method: 'PUT',
-            url: 'http://localhost:81/newmanapi/public/workouts/updateworkout/' + id,
+            url: '/newmanapi/public/workouts/updateworkout/' + id,
             data: {
                 "name": wd.name,
                 "videourl": wd.videourl,
@@ -389,7 +389,7 @@ adminApp.controller('workoutController', ['$scope', 'sharedProperties', 'dataSer
     $scope.deleteWorkout = function(id) {
         $http({
             method: 'DELETE',
-            url: 'http://localhost:81/newmanapi/public/workouts/deleteworkout/' + id,
+            url: '/newmanapi/public/workouts/deleteworkout/' + id,
         }).then(function successCallback(response) {
             $scope.successWOD = 1
             console.log(response)
@@ -403,7 +403,7 @@ adminApp.controller('workoutController', ['$scope', 'sharedProperties', 'dataSer
     $scope.loadworkouts = function() {
         $http({
             method: 'GET',
-            url: 'http://localhost:81/newmanapi/public/workouts/getworkouts',
+            url: '/newmanapi/public/workouts/getworkouts',
         }).then(function successCallback(response) {
             for (i = 0; i < response.data.length; i++) {
                 response.data[i].workoutdays = $.parseJSON(response.data[i].workoutdays);
@@ -415,7 +415,7 @@ adminApp.controller('workoutController', ['$scope', 'sharedProperties', 'dataSer
         });
         $http({
             method: 'GET',
-            url: 'http://localhost:81/newmanapi/public/workouts/getworkoutgroups',
+            url: '/newmanapi/public/workouts/getworkoutgroups',
         }).then(function successCallback(response) {
             $scope.workoutg = response.data;
             console.log(response)
@@ -510,7 +510,7 @@ adminApp.controller('workoutController', ['$scope', 'sharedProperties', 'dataSer
 
         $http({
             method: 'POST',
-            url: 'http://localhost:81/newmanapi/public/workouts/addworkoutgroup',
+            url: '/newmanapi/public/workouts/addworkoutgroup',
             data: {
                 "name": $scope.newworkoutgroup.gname,
                 "position": $scope.newworkoutgroup.gposition
@@ -554,7 +554,7 @@ adminApp.controller('workoutController', ['$scope', 'sharedProperties', 'dataSer
 
         $http({
             method: 'POST',
-            url: 'http://localhost:81/newmanapi/public/workouts/addworkout',
+            url: '/newmanapi/public/workouts/addworkout',
             data: {
                 "name": $scope.newworkout.name,
                 "videourl": $scope.newworkout.videourl,
@@ -645,7 +645,7 @@ adminApp.controller('recipesController', ['$scope', 'sharedProperties', 'dataSer
     $scope.removeRecipe = function(id) {
         $http({
             method: 'DELETE',
-            url: 'http://localhost:81/newmanapi/public/recipes/deleterecipe/' + id,
+            url: '/newmanapi/public/recipes/deleterecipe/' + id,
         }).then(function successCallback(response) {
             $scope.successRD = 1
             console.log(response)
@@ -661,7 +661,7 @@ adminApp.controller('recipesController', ['$scope', 'sharedProperties', 'dataSer
     $scope.loadrecipes = function() {
         $http({
             method: 'GET',
-            url: 'http://localhost:81/newmanapi/public/recipes/getrecipes',
+            url: '/newmanapi/public/recipes/getrecipes',
         }).then(function successCallback(response) {
             for (i = 0; i < response.data.length; i++) {
                 response.data[i].ingredients = $.parseJSON(response.data[i].ingredients);
@@ -677,7 +677,7 @@ adminApp.controller('recipesController', ['$scope', 'sharedProperties', 'dataSer
     $scope.updateRecipe = function(id, rd) {
         $http({
             method: 'PUT',
-            url: 'http://localhost:81/newmanapi/public/recipes/updaterecipe',
+            url: '/newmanapi/public/recipes/updaterecipe',
             data: {
                 "id": rd.id,
                 "name": rd.name,
@@ -722,7 +722,7 @@ adminApp.controller('recipesController', ['$scope', 'sharedProperties', 'dataSer
 
         $http({
             method: 'POST',
-            url: 'http://localhost:81/newmanapi/public/recipes/addrecipe',
+            url: '/newmanapi/public/recipes/addrecipe',
             data: {
                 "name": $scope.recipe.name,
                 "short": $scope.recipe.short,
