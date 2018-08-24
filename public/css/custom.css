@@ -1026,11 +1026,15 @@ form.cd-form a:active {
 }
 
 .trainersSection .owl-next {
-    left: 97%;
+    left: 103%;
+    z-index: 3000;
+    overflow: visible;
 }
 
 .trainersSection .owl-prev {
     width: 46px;
+    left: -3%;
+    z-index: 3000;
     overflow: hidden;
 }
 

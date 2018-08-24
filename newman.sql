@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 21, 2018 at 10:43 PM
+-- Generation Time: Aug 24, 2018 at 09:48 PM
 -- Server version: 10.1.16-MariaDB
 -- PHP Version: 7.0.9
 
@@ -61,6 +61,27 @@ CREATE TABLE `exercises` (
 INSERT INTO `exercises` (`id`, `name`, `description`, `videourl`, `image`, `group1`, `type`, `equipment`, `level`, `secondary`, `group_id`) VALUES
 (4, 'Push ups', '<p>Something here!</p>', 'https://www.youtube.com/watch?v=xRr7aGPuLzw', 'xlO9j4bFtjfhWfUHWBcx.jpg', 'Shoulders', 'Strength', 'Barbells, Bench', 'Intermediate', 'Everything Else!', 4),
 (6, 'Pull Ups', '<p>Random Text</p>', 'http://www.putlockers.lc/episodes/the-walking-dead-season-8-episode-9/', '', 'Muscle Building', 'Strength', 'Barbells, Rod', 'Intermediate', 'Chest and Forearms', 4);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `opt_ins`
+--
+
+CREATE TABLE `opt_ins` (
+  `id` int(11) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `email` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `opt_ins`
+--
+
+INSERT INTO `opt_ins` (`id`, `name`, `email`) VALUES
+(1, 'Raza Anis', 'horror.greetings@yahoo.com'),
+(2, 'Raza Anis', 'razaanis123@gmail.com'),
+(3, 'Raza Anis', 'razaanis123@gmail.com');
 
 -- --------------------------------------------------------
 
@@ -184,9 +205,16 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `name`, `gender`, `email`, `password`, `type`, `phone`, `dob`, `certification`, `experience`, `profile_pic`, `pictures`, `videos`, `transformation`, `about`, `social`, `max_client`, `package`, `testimonial`, `price`, `category`, `approved`, `percentage_completed`, `packagetype`) VALUES
-(1, 'Raza Anis', '1', 'razaanis123@gmail.com', 'e99a18c428cb38d5f260853678922e03', 1, '1231231231321', '1996-03-01', '[{"title":"sadas","date":"2018-12-30T19:00:00.000Z","description":"asdas","$$hashKey":"object:13"},{"title":"123qwsd","date":"2014-11-24T19:00:00.000Z","description":"asdas123","$$hashKey":"object:15"}]', '<p>Not Much... :D</p>', '8ZGZWYqmiN9JgHUNF71n.jpg', '[{"picture":"P5E00tBopz2N7iNm3Mj4.png"},{"picture":"YJ8GkMQqeBbwvG8DuYF0.png"}]', '[]', '[{"description":"asdsads","pictures":[{"picture":"7hCPhwTw3yNYqBXWfTTG.jpg","$$hashKey":"object:19"},{"picture":"30USsjsaRrL0Oe6DlxIg.png","$$hashKey":"object:20"},{"picture":"AB5OUJhqTw0zgiFSRSGk.png","$$hashKey":"object:21"}],"$$hashKey":"object:17"}]', '<p>asdsadsadsadsadsa</p>', '[{"website":"sdsad","username":"asdasdsa","link":"asdasds","$$hashKey":"object:15"}]', 14, '[{"name":"sad","duration":"asd","description":"<p>asdasdas</p>","dayfrom":"tuesday","dayto":"monday","time":"asdsadsa","price":"","$$hashKey":"object:16"}]', NULL, '502', NULL, 0, '30%', '3'),
+(1, 'Raza Anis', '1', 'razaanis123@gmail.com', 'e99a18c428cb38d5f260853678922e03', 1, '1231231231321', '1996-03-01', '[{"title":"sadas","date":"2018-12-30T19:00:00.000Z","description":"asdas","$$hashKey":"object:13"},{"title":"123qwsd","date":"2014-11-24T19:00:00.000Z","description":"asdas123","$$hashKey":"object:15"},{"title":"New Certificate","date":"2018-01-01T19:00:00.000Z","description":"Very Important Certificate","$$hashKey":"object:25"},{"title":"asd","description":"asd","$$hashKey":"object:24"}]', '<p>Not Much... :D</p>', 'A0C9PiBdXPbGThaa3Iap.jpg', '[{"picture":"P5E00tBopz2N7iNm3Mj4.png","$$hashKey":"object:14"},{"picture":"YJ8GkMQqeBbwvG8DuYF0.png","$$hashKey":"object:15"},{"picture":"ZQ2zm4EAoOm5YMCHUU4u.jpg","$$hashKey":"object:25"},{"picture":"MTbp6GKqyzv77Ivobt0V.jpg","$$hashKey":"object:27"}]', '[{"video":"https://learnappmaking.com/develop-ios-apps-on-windows-pc/"}]', '[{"description":"asdsads","pictures":[{"picture":"7hCPhwTw3yNYqBXWfTTG.jpg","$$hashKey":"object:19"},{"picture":"30USsjsaRrL0Oe6DlxIg.png","$$hashKey":"object:20"},{"picture":"AB5OUJhqTw0zgiFSRSGk.png","$$hashKey":"object:21"}],"$$hashKey":"object:17"},{"name":"Abc123","description":"abc","pictures":[{"picture":"OQn0vEg6SSxx1sE2iQb6.jpg","$$hashKey":"object:29"}],"$$hashKey":"object:27"}]', '<p>asdsadsadsadsadsa</p>', '[{"website":"sdsad","username":"asdasdsa","link":"asdasds","$$hashKey":"object:15"}]', 14, '[{"name":"sad","duration":"asd","description":"<p>asdasdas</p>","dayfrom":"tuesday","dayto":"monday","time":"asdsadsa","price":"","$$hashKey":"object:16"}]', NULL, '502', NULL, 0, '30%', '3'),
 (2, 'Usama', NULL, 'usama@gmail.com', 'e99a18c428cb38d5f260853678922e03', 2, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, '30%', NULL),
-(4, 'RAnis', NULL, 'admin@gmail.com', 'e99a18c428cb38d5f260853678922e03', 3, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, '30%', NULL);
+(4, 'RAnis', NULL, 'admin@gmail.com', 'e99a18c428cb38d5f260853678922e03', 3, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, '30%', NULL),
+(5, 'xyz', NULL, 'xyz@gmail.com', 'e99a18c428cb38d5f260853678922e03', 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, '30%', NULL),
+(6, 'trainer@gmail.com', '1', 'abc@gmail.com', 'e99a18c428cb38d5f260853678922e03', 1, NULL, NULL, '[{"title":"asd","date":"2020-01-31T19:00:00.000Z","description":"asd","$$hashKey":"object:13"},{"title":"ads","description":"asd","$$hashKey":"object:22"}]', NULL, 'wabUFqSt0R04UFnSuikq.jpg', '[{"$$hashKey":"object:14"},{"picture":"p37GKkKIKEowtkyBxv4N.jpg","$$hashKey":"object:16"},{"picture":"62khSfvqThEXKnPreDjp.jpg","$$hashKey":"object:18"},{"picture":"L5sSJVWZWNg8uUweMk6K.jpg","$$hashKey":"object:20"},{"picture":"MR0ZjcaDW3OIgzTgYkwm.jpg","$$hashKey":"object:22"},{"picture":"yf2OR6qphpji0t4zBEXa.jpg","$$hashKey":"object:19"},{"picture":"tZXAEx5Ne3enu2w270CJ.png","$$hashKey":"object:21"},{"picture":"tfcMhp51QjGNSLvENHVP.jpg","$$hashKey":"object:21"}]', '[]', '[]', NULL, '[]', NULL, '[]', NULL, NULL, NULL, 0, '30%', NULL),
+(7, 'new@gmail.com', NULL, 'new@gmail.com', 'e99a18c428cb38d5f260853678922e03', 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, '30%', NULL),
+(8, 'new1@gmail.com', NULL, 'new1@gmail.com', 'e99a18c428cb38d5f260853678922e03', 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, '30%', NULL),
+(9, 'new2', NULL, 'new2@gmail.com', 'e99a18c428cb38d5f260853678922e03', 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, '30%', NULL),
+(10, 'new3', NULL, 'new3@gmail.com', 'e99a18c428cb38d5f260853678922e03', 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, '30%', NULL),
+(11, 'user', NULL, 'user@gmail.com', 'e99a18c428cb38d5f260853678922e03', 2, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, '30%', NULL);
 
 -- --------------------------------------------------------
 
@@ -236,7 +264,7 @@ CREATE TABLE `workouts` (
 --
 
 INSERT INTO `workouts` (`id`, `name`, `videourl`, `description`, `group_id`, `position`, `fulldescription`, `result`, `type`, `level`, `duration`, `daysperworkout`, `timeperworkout`, `equipment`, `targetgender`, `supplements`, `author`, `pdf`, `image`, `workoutdays`, `date`) VALUES
-(4, '17 Days Extreme Workout', 'https://www.youtube.com/watch?v=SphTGtDlhHw&list=RDsyhBqULC99I&index=27', 'This is valid syntax', 1, 2, '<p>Something Cool</p>', 'Get Slim', 'Fat Loss', 'Master', '3 Weeks', '4 days', '4 hours', 'Dumbells, Rod, Bench', 'Male, Female', 'All', 'Raza Anis', '0Xekh7qKplxJ3UpmJD1C.png', 'bg-10.jpg', '[{"id":1,"name":"Day 1","description":"Get Buffed!","exercises":[{"id":1,"name":"Dumbells","reps":"1,2,1","sets":"23,23,23"},{"id":2,"name":"Pullups","reps":"2,3,3","sets":"12,23,12"}]}]', '2018-04-10 00:21:05'),
+(4, '17 Days Extreme Workout', 'https://www.youtube.com/watch?v=SphTGtDlhHw&list=RDsyhBqULC99I&index=27', 'This is valid syntax', 1, 2, '', 'Get Slim', 'Fat Loss', 'Master', '3 Weeks', '4 days', '4 hours', 'Dumbells, Rod, Bench', 'Male, Female', 'All', 'Raza Anis', '0Xekh7qKplxJ3UpmJD1C.png', 'JRjjYyJv7TLVv97qwjXP.jpg', '[{"id":1,"name":"Day 1","description":"Get Buffed!","exercises":[{"id":1,"name":"Dumbells","reps":"1,2,1","sets":"23,23,23"},{"id":2,"name":"Pullups","reps":"2,3,3","sets":"12,23,12"}]}]', '2018-07-22 21:24:45'),
 (5, 'Shoulder Building Exercise', 'https://www.youtube.com/watch?v=SphTGtDlhHw&list=RDsyhBqULC99I&index=27', 'Best Exercise Out There', 2, 1, '<h3>Task 2: Classification with localization</h3><p><span style="color: rgb(31, 31, 31);">In this task, an algorithm will produce 5 class labels&nbsp;l</span></p><p><span style="color: rgb(31, 31, 31);">j</span></p><p><span style="color: rgb(31, 31, 31);">,j=1,...,5</span></p><p><span style="color: rgb(31, 31, 31);">lj,j=1,...,5&nbsp;and 5 bounding boxes&nbsp;b</span></p><p><span style="color: rgb(31, 31, 31);">j</span></p><p><span style="color: rgb(31, 31, 31);">,j=1,...5</span></p><p><span style="color: rgb(31, 31, 31);">bj,j=1,...5, one for each class label. The ground truth labels for the image are&nbsp;g</span></p><p><span style="color: rgb(31, 31, 31);">k</span></p><p><span style="color: rgb(31, 31, 31);">,k=1,...,n</span></p><p><span style="color: rgb(31, 31, 31);">gk,k=1,...,n&nbsp;with n classes labels. For each ground truth class label&nbsp;g</span></p><p><span style="color: rgb(31, 31, 31);">k</span></p><p><span style="color: rgb(31, 31, 31);">gk, the ground truth bounding boxes are&nbsp;z</span></p><p><span style="color: rgb(31, 31, 31);">km</span></p><p><span style="color: rgb(31, 31, 31);">,m=1,...M</span></p><p><span style="color: rgb(31, 31, 31);">k</span></p><p><span style="color: rgb(31, 31, 31);">,</span></p><p><span style="color: rgb(31, 31, 31);">zkm,m=1,...Mk,&nbsp;where&nbsp;M</span></p><p><span style="color: rgb(31, 31, 31);">k</span></p><p><span style="color: rgb(31, 31, 31);">Mk&nbsp;is the number of instances of the&nbsp;k</span></p><p><span style="color: rgb(31, 31, 31);">th</span></p><p><span style="color: rgb(31, 31, 31);">kth&nbsp;object in the current image. The error of the algorithm for that image would be</span></p><p class="ql-align-center">e=1</p><p class="ql-align-center">n</p><p class="ql-align-center"><br></p><p class="ql-align-center">â‹…âˆ‘</p><p class="ql-align-center">k</p><p class="ql-align-center">min</p><p class="ql-align-center">j</p><p class="ql-align-center">min</p><p class="ql-align-center">M</p><p class="ql-align-center">k</p><p class="ql-align-center">m</p><p class="ql-align-center">max{d(l</p><p class="ql-align-center">j</p><p class="ql-align-center">,g</p><p class="ql-align-center">k</p><p class="ql-align-center">),f(b</p><p class="ql-align-center">j</p><p class="ql-align-center">,z</p><p class="ql-align-center">km</p><p class="ql-align-center">)}</p><p class="ql-align-center">e=1nâ‹…âˆ‘kminjminmMkmax{d(lj,gk),f(bj,zkm)}</p><p><span style="color: rgb(31, 31, 31);">where&nbsp;f(b</span></p><p><span style="color: rgb(31, 31, 31);">j</span></p><p><span style="color: rgb(31, 31, 31);">,z</span></p><p><span style="color: rgb(31, 31, 31);">k</span></p><p><span style="color: rgb(31, 31, 31);">)=0</span></p><p><span style="color: rgb(31, 31, 31);">f(bj,zk)=0&nbsp;if&nbsp;b</span></p><p><span style="color: rgb(31, 31, 31);">j</span></p><p><span style="color: rgb(31, 31, 31);">bj&nbsp;and&nbsp;z</span></p><p><span style="color: rgb(31, 31, 31);">mk</span></p><p><span style="color: rgb(31, 31, 31);">zmk&nbsp;has over 50% overlap, and&nbsp;f(b</span></p><p><span style="color: rgb(31, 31, 31);">j</span></p><p><span style="color: rgb(31, 31, 31);">,z</span></p><p><span style="color: rgb(31, 31, 31);">mk</span></p><p><span style="color: rgb(31, 31, 31);">)=1</span></p><p><span style="color: rgb(31, 31, 31);">f(bj,zmk)=1&nbsp;otherwise. In other words, the error will be the same as defined in task 1 if the localization is correct(i.e. the predicted bounding box overlaps over 50% with the ground truth bounding box, or in the case of multiple instances of the same class, with any of the ground truth bounding boxes). otherwise the error is 1(maximum).</span></p><h3>Task 3: Fine-grained classification</h3><h2><span style="color: rgb(31, 31, 31);">This year we introduce a third task: fine-grained classification on 100+ dog categories. For each of the dog categories predict if a specified dog (indicated by their bounding box) in a test image is of a particular category. The output from your system should be a real-valued confidence that the dog is of a particular category so that a precision/recall curve can be drawn. The fine-grained classification task will be judged by the precision/recall curve. The principal quantitative measure used will be the average precision (AP) on individual categories and the mean average precision (mAP) across all categories.</span><span style="color: rgb(31, 31, 31); background-color: rgb(255, 255, 255);">Tentative Timetable</span></h2><ul><li>June 15 2012: Development kit (training and validation data plus evaluation software) to be made available.</li><li>Early July, 2012: Test data to be released.</li><li>September 30, 2012 (Sunday, 23:00 GMT): Deadline for submission of results (no more extension).</li><li>October 12, 2012: Pascal Challenge Workshop in association with&nbsp;<a href="http://eccv2012.unifi.it/" target="_blank" style="color: rgb(51, 51, 51);">ECCV 2012</a>, Florence, Italy.</li></ul><p><br></p>', 'Build Muscle!', 'Muscle Building', 'Expert', '23 weeks', '4 days', '4 hours', 'Dumbells, Rod, Bench', 'Male', 'Chicken, Protein Bars, Smoothies', 'Raza Anis', 'lJmvUnSGJ1thypbvthd8.png', 'Wd3TVde1F43mkqfZB9IE.jpg', '[{"id":1,"name":"Day 1","description":"First do to do things","exercises":[{"id":1,"name":"Dumbells","reps":"2,3,2","sets":"21,23,12"},{"id":2,"name":"Pullups","reps":"4,2,4","sets":"23,23,23"}]},{"id":2,"name":"Day 2","description":"You are ready!","exercises":[{"id":1,"name":"Pushups","reps":"2,2,2","sets":"23,32,23"},{"id":2,"name":"Squats","reps":"3,4,2","sets":"23,23,12"}]}]', '2018-04-09 21:21:31'),
 (6, 'Very simple', 'https://www.youtube.com/watch?v=SphTGtDlhHw&list=RDsyhBqULC99I&index=27', 'This is valid syntax', 3, 4, '', 'Build Muscle!', 'Muscle Building', 'Expert', '23 weeks', '4 days', '4 hours', 'Dumbells, Rod, Bench', 'Male', 'Chicken, Protein Bars, Smoothies', 'Raza Anis', 'HCcfY94N15VigMBqDz7l.jpg', 'dVH776LI4RRChtPq1ajs.jpg', '[{"id":1,"name":"sadsadasdasa","description":"adasdassa","exercises":[{"id":1,"name":"Push ups","reps":"43,232,1,23","sets":"12,23,12,33"}]}]', '2018-06-19 17:18:09');
 
@@ -275,6 +303,12 @@ ALTER TABLE `certifications`
 -- Indexes for table `exercises`
 --
 ALTER TABLE `exercises`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `opt_ins`
+--
+ALTER TABLE `opt_ins`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -348,6 +382,11 @@ ALTER TABLE `certifications`
 ALTER TABLE `exercises`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 --
+-- AUTO_INCREMENT for table `opt_ins`
+--
+ALTER TABLE `opt_ins`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+--
 -- AUTO_INCREMENT for table `packages`
 --
 ALTER TABLE `packages`
@@ -376,7 +415,7 @@ ALTER TABLE `transformations`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 --
 -- AUTO_INCREMENT for table `videos`
 --

@@ -24,7 +24,7 @@
         </div>
         <h3 class="text-center" style="margin: 50px 0px 30px 0px;">Our Trainers</h3>
 
-        <div class="col-lg-12 col-sm-12 col-md-12" ng-controller="CoachController">
+        <div class="col-lg-12 col-sm-12 col-md-12" ng-controller="CoachController" style="padding: 0px 60px;">
 
             <div class="owl-carousel" style="margin: 0px 0px 10px 0px;">
                 <div class="coach text-center" ng-repeat="coach in coaches">
@@ -65,7 +65,7 @@
 
                 <div class="cell-xs-12 cell-md-6">
                     <a href="junior.html">
-                        <div class="img-box box-arrow box-arrow-left"><img src="images/home-1-1-640x533.jpg" width="640" height="533" alt=""></div>
+                        <div class="img-box "><img src="images/home-1-1-640x533.jpg" width="640" height="533" alt=""></div>
                     </a>
                 </div>
                 <div class="cell-xs-12 cell-md-6 thumbnail-type-2">
@@ -93,7 +93,7 @@
             <div class="range range-condensed range-center range-md-reverse range-top-0">
                 <div class="cell-xs-12 cell-md-6">
                     <a href="adult.html">
-                        <div class="img-box box-arrow box-arrow-right"><img class="im" src="images/home-1-2-640x533.jpg" width="641" height="534" alt=""></div>
+                        <div class="img-box "><img class="im" src="images/home-1-2-640x533.jpg" width="641" height="534" alt=""></div>
                     </a>
                 </div>
                 <div class="cell-xs-12 cell-md-6 thumbnail-type-2">
@@ -121,7 +121,7 @@
         <div class="cell-xl-4 range range-condensed range-center">
             <div class="cell-xs-12 cell-md-6 cell-xl-12">
                 <a href="workshops.html">
-                    <div class="img-box box-arrow box-arrow-top"><img src="images/home-3-1-641x534.jpg" width="640" height="533" alt=""></div>
+                    <div class="img-box "><img src="images/home-3-1-641x534.jpg" width="640" height="533" alt=""></div>
                 </a>
             </div>
             <div class="cell-xs-12 cell-md-6 cell-xl-12 thumbnail-type-2 thumb-flex-none">
@@ -331,9 +331,9 @@
                             </div>
                             <div class="cell-sm-6">
                                 <!-- RD Mailform-->
-                                <form class="rd-mailform text-left" data-form-output="form-output-global" data-form-type="contact" method="post" action="bat/rd-mailform.php">
+                                <form class="rd-mailform text-left" data-form-output="form-output-global" data-form-type="contact" method="post" id="newsLetterForm">
                                     <div class="form-wrap-2">
-                                        <label class="form-label text-white" for="contact-name2">First name</label>
+                                        <label class="form-label text-white" for="contact-name2">Name</label>
                                         <input class="form-input form-input-3" id="contact-name2" type="text" name="name" data-constraints="@Required">
                                     </div>
                                     <div class="form-wrap-2"><span class="icon icon-sm thin-icon-email"></span>
@@ -342,7 +342,7 @@
                                     </div>
                                     <div class="form-wrap-2">
                                         <div class="form-button text-center text-lg-left">
-                                            <button class="button button-block button-white-2 button-md text-bold" type="submit">Sign up</button>
+                                            <button class="button button-block button-white-2 button-md text-bold" type="submit" id="newsletterButton">Sign up</button>
                                         </div>
                                     </div>
                                 </form>
@@ -358,6 +358,29 @@
 <div ng-controller="vm">
     <script src="js/core.min.js"></script>
     <script src="js/script.js"></script>
+    <script>
+        $('#newsLetterForm').on('submit', function(e) {
+            e.preventDefault();
+            // setup some local variables
+            var $form = $(this);
 
+            // Let's select and cache all the fields
+            var $inputs = $form.find("input, select, button, textarea");
+
+            // Serialize the data in the form
+            var serializedData = $form.serialize();
+            request = $.ajax({
+                url: "/newmanapi/public/opt-ins",
+                type: "post",
+                data: serializedData
+            });
+
+            // Callback handler that will be called on success
+            request.done(function(response, textStatus, jqXHR) {
+                console.log(response);
+                document.getElementById('newsletterButton').innerHTML = "Added";
+            });
+        });
+    </script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js" type="text/javascript"></script>
 </div>

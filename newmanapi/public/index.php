@@ -34,6 +34,26 @@ $app->post('/workouts/addworkoutgroup', function (Request $request, Response $re
 
     return $response;
 });
+$app->post('/opt-ins', function (Request $request, Response $response, array $args) {
+    $name = $request->getParam('name');
+    $email = $request->getParam('email');
+
+    $sql = "INSERT INTO opt_ins (`name`,`email`) VALUES (:name,:email)";
+    try {
+        $db = new db();
+        $db = $db->connect();
+        $stmt = $db->prepare($sql);
+        $stmt->bindParam(':name', $name);
+        $stmt->bindParam(':email', $email);
+        $stmt->execute();
+        $db = null;
+        echo '{"notice": {"text": "Added to Newsletter"}, success:"1"}';
+    } catch (PDOException $e) {
+        echo '{"error":{"text": ' . $e->getMessage() . $request->getParam('name') . '}}';
+    }
+
+    return $response;
+});
 $app->get('/workouts/getworkouts', function (Request $request, Response $response, array $args) {
     $sql = "SELECT * FROM workouts";
     try {

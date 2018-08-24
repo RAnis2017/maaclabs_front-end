@@ -283,6 +283,11 @@ $document.ready(function() {
                     items: 3,
                     nav: true,
                     loop: true
+                },
+                1600: {
+                    items: 4,
+                    nav: true,
+                    loop: true
                 }
             }
         });
