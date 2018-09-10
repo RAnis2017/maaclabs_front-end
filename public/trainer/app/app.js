@@ -1,5 +1,26 @@
 var userApp = angular.module('userApp', ['ngRoute', 'wingify.timePicker', 'plotly', 'ngQuill', 'ngSanitize']);
+function loadJSON(callback) {
 
+    var xobj = new XMLHttpRequest();
+        xobj.overrideMimeType("application/json");
+    xobj.open('GET', '../config.json', true); // Replace 'my_data' with the path to your file
+    xobj.onreadystatechange = function () {
+          if (xobj.readyState == 4 && xobj.status == "200") {
+            // Required use of an anonymous callback as .open will NOT return a value but simply returns undefined in asynchronous mode
+            callback(xobj.responseText);
+          }
+    };
+    xobj.send(null);
+ }
+ userApp.run(function($rootScope) {
+      loadJSON(function(response) {
+      // Parse JSON string into object
+        $rootScope.filesVersion = JSON.parse(response).version;
+        $rootScope.apiUrl = JSON.parse(response).apiUrl;
+        console.log($rootScope.filesVersion);
+     });
+
+ })
 userApp.config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider) {
     $locationProvider.hashPrefix('');
 
@@ -60,7 +81,7 @@ userApp.controller('financialsController', ['$window', '$scope', '$routeParams',
         $scope.accounts.splice(index, 1);
     };
 }]);
-userApp.controller('UserAuth', ['$window', '$scope', '$routeParams', '$http', '$sce', function($window, $scope, $routeParams, $http, $sce) {
+userApp.controller('UserAuth', ['$window', '$scope', '$routeParams', '$http', '$sce', '$rootScope', function($window, $scope, $routeParams, $http, $sce, $rootScope) {
     $scope.loggedIn = 0;
     $scope.certificate = {};
     $scope.package = {};
@@ -258,7 +279,7 @@ userApp.controller('UserAuth', ['$window', '$scope', '$routeParams', '$http', '$
     $scope.save = function() {
         $http({
             method: 'POST',
-            url: '/newmanapi/public/users/trainer/update',
+            url: $rootScope.apiUrl+'users/trainer/update',
             data: {
                 "token": localStorage.getItem('access_token'),
                 "id": $scope.user.id,
@@ -300,48 +321,51 @@ userApp.controller('UserAuth', ['$window', '$scope', '$routeParams', '$http', '$
     $scope.user;
     $scope.redirect = '/newman/public/';
     $scope.checkAuth = function() {
-        $http({
-            method: 'POST',
-            url: '/newmanapi/public/users/authenticate',
-            data: {
-                "token": localStorage.getItem('access_token')
-            }
-        }).then(function successCallback(response) {
+        setTimeout(function(){
+          $http({
+              method: 'POST',
+              url: $rootScope.apiUrl+'users/authenticate',
+              data: {
+                  "token": localStorage.getItem('access_token')
+              }
+          }).then(function successCallback(response) {
 
-            if (response.data.hasOwnProperty("user")) {
-                if (response.data.user[0].type == "1") {
-                    console.log(response)
-                    $scope.loggedIn = 1;
-                    $scope.user = response.data.user[0];
-                    if ($scope.user.certification != null) {
-                        $scope.certificates = JSON.parse($scope.user.certification);
-                    }
-                    if ($scope.user.pictures != null) {
-                        $scope.pictures = JSON.parse($scope.user.pictures);
-                    }
-                    if ($scope.user.videos != null) {
-                        $scope.videos = JSON.parse($scope.user.videos);
-                    }
-                    if ($scope.user.transformation != null) {
-                        $scope.transformations = JSON.parse($scope.user.transformation);
-                    }
-                    if ($scope.user.social != null) {
-                        $scope.socials = JSON.parse($scope.user.social);
-                    }
-                    if ($scope.user.package != null) {
-                        $scope.packages = JSON.parse($scope.user.package);
-                    }
-                    if ($scope.user.dob != null) {
-                        $scope.user.dob = new Date($scope.user.dob.split('T')[0]);
-                    }
-                }
-            } else {
-                $window.location.href = $scope.redirect; //You should have http here.
-            }
-        }, function errorCallback(response) {
-            console.log(response)
-            $window.location.href = $scope.redirect; //You should have http here.
-        });
+              if (response.data.hasOwnProperty("user")) {
+                  if (response.data.user[0].type == "1") {
+                      console.log(response)
+                      $scope.loggedIn = 1;
+                      $scope.user = response.data.user[0];
+                      if ($scope.user.certification != null) {
+                          $scope.certificates = JSON.parse($scope.user.certification);
+                      }
+                      if ($scope.user.pictures != null) {
+                          $scope.pictures = JSON.parse($scope.user.pictures);
+                      }
+                      if ($scope.user.videos != null) {
+                          $scope.videos = JSON.parse($scope.user.videos);
+                      }
+                      if ($scope.user.transformation != null) {
+                          $scope.transformations = JSON.parse($scope.user.transformation);
+                      }
+                      if ($scope.user.social != null) {
+                          $scope.socials = JSON.parse($scope.user.social);
+                      }
+                      if ($scope.user.package != null) {
+                          $scope.packages = JSON.parse($scope.user.package);
+                      }
+                      if ($scope.user.dob != null) {
+                          $scope.user.dob = new Date($scope.user.dob.split('T')[0]);
+                      }
+                  }
+              } else {
+                  $window.location.href = $scope.redirect; //You should have http here.
+              }
+          }, function errorCallback(response) {
+              console.log(response)
+              $window.location.href = $scope.redirect; //You should have http here.
+          });
+        },2000)
+
 
     };
     $scope.logout = function() {

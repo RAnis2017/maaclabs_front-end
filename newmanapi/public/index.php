@@ -54,35 +54,55 @@ $app->post('/opt-ins', function (Request $request, Response $response, array $ar
 
     return $response;
 });
-$app->get('/workouts/getworkouts', function (Request $request, Response $response, array $args) {
-    $sql = "SELECT * FROM workouts";
+$app->get('/workouts/getworkouts/{apiToken}', function (Request $request, Response $response, array $args) {
+    $apiToken = $request->getAttribute('apiToken');
     try {
-        $db = new db();
-        $db = $db->connect();
-        $stmt = $db->query($sql);
-        $workouts = $stmt->fetchAll(PDO::FETCH_OBJ);
-        $db = null;
-
-        echo json_encode($workouts);
-    } catch (PDOException $e) {
-        echo '{"error":{"text": ' . $e->getMessage() . '}}';
+    $result = Token::validate($apiToken, 'se123!fe213$c!ReT423*&');
+    } catch (Exception $e) {
+      $result = false;
     }
+    if ($result) {
+      $sql = "SELECT * FROM workouts";
+      try {
+          $db = new db();
+          $db = $db->connect();
+          $stmt = $db->query($sql);
+          $workouts = $stmt->fetchAll(PDO::FETCH_OBJ);
+          $db = null;
 
+          echo json_encode($workouts);
+      } catch (PDOException $e) {
+          echo '{"error":{"text": ' . $e->getMessage() . '}}';
+      }
+    } else {
+      echo '{"error":{"text": "You are not allowed to access this api endpoint"}}';
+    }
     return $response;
 });
-$app->get('/workouts/getworkoutgroups', function (Request $request, Response $response, array $args) {
-    $sql = "SELECT * FROM workouts_group";
+$app->get('/workouts/getworkoutgroups/{apiToken}', function (Request $request, Response $response, array $args) {
+    $apiToken = $request->getAttribute('apiToken');
     try {
-        $db = new db();
-        $db = $db->connect();
-        $stmt = $db->query($sql);
-        $workoutsg = $stmt->fetchAll(PDO::FETCH_OBJ);
-        $db = null;
-
-        echo json_encode($workoutsg);
-    } catch (PDOException $e) {
-        echo '{"error":{"text": ' . $e->getMessage() . '}}';
+    $result = Token::validate($apiToken, 'se123!fe213$c!ReT423*&');
+    } catch (Exception $e) {
+      $result = false;
     }
+    if ($result) {
+      $sql = "SELECT * FROM workouts_group";
+      try {
+          $db = new db();
+          $db = $db->connect();
+          $stmt = $db->query($sql);
+          $workoutsg = $stmt->fetchAll(PDO::FETCH_OBJ);
+          $db = null;
+
+          echo json_encode($workoutsg);
+      } catch (PDOException $e) {
+          echo '{"error":{"text": ' . $e->getMessage() . '}}';
+      }
+    } else {
+      echo '{"error":{"text": "You are not allowed to access this api endpoint"}}';
+    }
+
 
     return $response;
 });
@@ -141,7 +161,7 @@ $app->post('/workouts/addworkout', function (Request $request, Response $respons
     $workoutdays = json_encode($request->getParam('workoutdays'));
     $image = save_base64_image($image, randomKey(20), '../../newman/public/images/workouts/');
     $pdf = save_base64_image($pdf, randomKey(20), '../../newman/public/images/workouts/');
-    
+
     $sql = "INSERT INTO workouts (`name`,`videourl`,`description`,`group_id`,`position`,`fulldescription`,`result`,`type`,`level`,`duration`,`daysperworkout`,`timeperworkout`,`equipment`,`targetgender`,`supplements`,`author`,`pdf`,`image`,`workoutdays`) VALUES (:name,:videourl,:description,:group_id,:position,:fulldescription,:result,:type,:level,:duration,:daysperworkout,:timeperworkout,:equipment,:targetgender,:supplements,:author,:pdf,:image,:workoutdays)";
     try {
         $db = new db();
@@ -230,14 +250,14 @@ $app->post('/recipes/addrecipe', function (Request $request, Response $response,
     $directionspics = json_decode($directions, true);
         for($idx = 0; $idx < count($directionspics); $idx++){
             $objtpictures = (Array)$directionspics[$idx]['image'];
-            
+
             if (strlen($directionspics[$idx]['image'])>26) {
                 $directionspics[$idx]['image'] = save_base64_image($directionspics[$idx]['image'], randomKey(20), '../../newman/public/recipes/');
             }
         }
         $directionspics = json_encode($directionspics);
 
-    $sql = "INSERT INTO recipes (`name`,`short`,`description`,`time`,`carbs`,`proteins`,`fats`,`servings`,`ingredients`,`directions`,`image`) VALUES 
+    $sql = "INSERT INTO recipes (`name`,`short`,`description`,`time`,`carbs`,`proteins`,`fats`,`servings`,`ingredients`,`directions`,`image`) VALUES
     (:name,:short,:description,:time,:carbs,:proteins,:fats,:servings,:ingredients,:directions,:image)";
     try {
         $db = new db();
@@ -322,56 +342,95 @@ $app->post('/users/authenticate', function (Request $request, Response $response
     }
     return $response;
 });
-$app->get('/trainers/getAll', function (Request $request, Response $response, array $args) {
-    
-    $sql = "SELECT * FROM users WHERE type=1";
-    try {
-        $db = new db();
-        $db = $db->connect();
-        $stmt = $db->query($sql);
-        $user = $stmt->fetchAll(PDO::FETCH_OBJ);
-        $db = null;
-        $data = json_encode($user);
-        echo '{"notice": {"text": "Trainers Retrieved"}, "success": "1", "user": ' . $data . '}';
+$app->post('/visitors', function (Request $request, Response $response, array $args) {
 
-    } catch (PDOException $e) {
-        echo '{"error":{"text": ' . $e->getMessage() . '}}';
+    $startDate = time();
+    $date = date('Y-m-d H:i:s', strtotime('+1 day', $startDate));
+    $token = Token::getToken('', 'se123!fe213$c!ReT423*&', $date, 'razaanis');
+    echo '{"notice": {"text": "Api Endpoints Authenticated"}, "success": "1", "apiToken": "' . $token . '"}';
+
+    return $response;
+});
+$app->get('/trainers/getAll/{apiToken}', function (Request $request, Response $response, array $args) {
+    $apiToken = $request->getAttribute('apiToken');
+    try {
+    $result = Token::validate($apiToken, 'se123!fe213$c!ReT423*&');
+    } catch (Exception $e) {
+      $result = false;
+    }
+    if ($result) {
+      $sql = "SELECT * FROM users WHERE type=1";
+      try {
+          $db = new db();
+          $db = $db->connect();
+          $stmt = $db->query($sql);
+          $user = $stmt->fetchAll(PDO::FETCH_OBJ);
+          $db = null;
+          $data = json_encode($user);
+          echo '{"notice": {"text": "Trainers Retrieved"}, "success": "1", "user": ' . $data . '}';
+
+      } catch (PDOException $e) {
+          echo '{"error":{"text": ' . $e->getMessage() . '}}';
+      }
+    } else {
+      echo '{"error":{"text": "You are not allowed to access this api endpoint"}}';
     }
 
     return $response;
 });
-$app->get('/trainers/getAllWhere/{id}', function (Request $request, Response $response, array $args) {
+$app->get('/trainers/getAllWhere/{id}/{apiToken}', function (Request $request, Response $response, array $args) {
     $id = $request->getAttribute('id');
-    $sql = "SELECT * FROM users WHERE type=1 AND id=$id";
+    $apiToken = $request->getAttribute('apiToken');
     try {
-        $db = new db();
-        $db = $db->connect();
-        $stmt = $db->query($sql);
-        $user = $stmt->fetchAll(PDO::FETCH_OBJ);
-        $db = null;
-        $data = json_encode($user);
-        echo '{"notice": {"text": "Trainers Retrieved"}, "success": "1", "user": ' . $data . '}';
+    $result = Token::validate($apiToken, 'se123!fe213$c!ReT423*&');
+    } catch (Exception $e) {
+      $result = false;
+    }
+    if ($result) {
+      $sql = "SELECT * FROM users WHERE type=1 AND id=$id";
+      try {
+          $db = new db();
+          $db = $db->connect();
+          $stmt = $db->query($sql);
+          $user = $stmt->fetchAll(PDO::FETCH_OBJ);
+          $db = null;
+          $data = json_encode($user);
+          echo '{"notice": {"text": "Trainers Retrieved"}, "success": "1", "user": ' . $data . '}';
 
-    } catch (PDOException $e) {
-        echo '{"error":{"text": ' . $e->getMessage() . '}}';
+      } catch (PDOException $e) {
+          echo '{"error":{"text": ' . $e->getMessage() . '}}';
+      }
+    } else {
+      echo '{"error":{"text": "You are not allowed to access this api endpoint"}}';
     }
 
     return $response;
 });
-$app->get('/recipes/getrecipe/{id}', function (Request $request, Response $response, array $args) {
+$app->get('/recipes/getrecipe/{id}/{apiToken}', function (Request $request, Response $response, array $args) {
     $id = $request->getAttribute('id');
-    $sql = "SELECT * FROM recipes WHERE id=$id";
+    $apiToken = $request->getAttribute('apiToken');
     try {
-        $db = new db();
-        $db = $db->connect();
-        $stmt = $db->query($sql);
-        $rec = $stmt->fetchAll(PDO::FETCH_OBJ);
-        $db = null;
-        $data = json_encode($rec);
-        echo '{"notice": {"text": "Recipe Retrieved"}, "success": "1", "recipe": ' . $data . '}';
+    $result = Token::validate($apiToken, 'se123!fe213$c!ReT423*&');
+    } catch (Exception $e) {
+      $result = false;
+    }
+    if ($result) {
 
-    } catch (PDOException $e) {
-        echo '{"error":{"text": ' . $e->getMessage() . '}}';
+      $sql = "SELECT * FROM recipes WHERE id=$id";
+      try {
+          $db = new db();
+          $db = $db->connect();
+          $stmt = $db->query($sql);
+          $rec = $stmt->fetchAll(PDO::FETCH_OBJ);
+          $db = null;
+          $data = json_encode($rec);
+          echo '{"notice": {"text": "Recipe Retrieved"}, "success": "1", "recipe": ' . $data . '}';
+
+      } catch (PDOException $e) {
+          echo '{"error":{"text": ' . $e->getMessage() . '}}';
+      }
+    } else {
+      echo '{"error":{"text": "You are not allowed to access this api endpoint"}}';
     }
 
     return $response;
@@ -436,7 +495,7 @@ $app->post('/users/trainer/update', function (Request $request, Response $respon
                 `transformation` = :transformation,
                 `social` = :social,
                 `package` = :package
-                
+
             WHERE id = $id";
         try {
             $db = new db();
@@ -463,7 +522,7 @@ $app->post('/users/trainer/update', function (Request $request, Response $respon
         } catch (PDOException $e) {
             echo '{"error":{"text": ' . $e->getMessage() . '}}';
         }
-     
+
     } else {
         echo '{"notice": {"text": "User Trainer NotUpdated"}, "success": "0"}';
     }
@@ -478,12 +537,12 @@ $app->post('/users/trainer/adminUpdate', function (Request $request, Response $r
         $price = $request->getParam('price');
         $packagetype = $request->getParam('packagetype');
         $approved = $request->getParam('approved');
-        
+
         $sql = "UPDATE users SET
                 `price` = :price,
                 `packagetype` = :packagetype,
                 `approved` = :approved
-                
+
             WHERE id = $id";
         try {
             $db = new db();
@@ -498,7 +557,7 @@ $app->post('/users/trainer/adminUpdate', function (Request $request, Response $r
         } catch (PDOException $e) {
             echo '{"error":{"text": ' . $e->getMessage() . '}}';
         }
-     
+
     } else {
         echo '{"notice": {"text": "User Trainer NotUpdated"}, "success": "0"}';
     }
@@ -530,53 +589,73 @@ $app->post('/users/login', function (Request $request, Response $response, array
 
     return $response;
 });
-$app->get('/exercises/getexercises', function (Request $request, Response $response, array $args) {
-    $sql = "SELECT * FROM exercises";
+$app->get('/exercises/getexercises/{apiToken}', function (Request $request, Response $response, array $args) {
+    $apiToken = $request->getAttribute('apiToken');
     try {
-        $db = new db();
-        $db = $db->connect();
-        $stmt = $db->query($sql);
-        $exercises = $stmt->fetchAll(PDO::FETCH_OBJ);
-        $db = null;
+    $result = Token::validate($apiToken, 'se123!fe213$c!ReT423*&');
+    } catch (Exception $e) {
+      $result = false;
+    }
+    if ($result) {
 
-        echo json_encode($exercises);
-    } catch (PDOException $e) {
-        echo '{"error":{"text": ' . $e->getMessage() . '}}';
+      $sql = "SELECT * FROM exercises";
+      try {
+          $db = new db();
+          $db = $db->connect();
+          $stmt = $db->query($sql);
+          $exercises = $stmt->fetchAll(PDO::FETCH_OBJ);
+          $db = null;
+
+          echo json_encode($exercises);
+      } catch (PDOException $e) {
+          echo '{"error":{"text": ' . $e->getMessage() . '}}';
+      }
+    } else {
+      echo '{"error":{"text": "You are not allowed to access this api endpoint"}}';
     }
 
     return $response;
 });
 $app->get('/recipes/getrecipes', function (Request $request, Response $response, array $args) {
-    $sql = "SELECT * FROM recipes";
+    $apiToken = $request->getAttribute('apiToken');
     try {
-        $db = new db();
-        $db = $db->connect();
-        $stmt = $db->query($sql);
-        $recipes = $stmt->fetchAll(PDO::FETCH_OBJ);
-        $db = null;
-
-        echo json_encode($recipes);
-    } catch (PDOException $e) {
-        echo '{"error":{"text": ' . $e->getMessage() . '}}';
+    $result = Token::validate($apiToken, 'se123!fe213$c!ReT423*&');
+    } catch (Exception $e) {
+      $result = false;
     }
+    if ($result) {
+      $sql = "SELECT * FROM recipes";
+      try {
+          $db = new db();
+          $db = $db->connect();
+          $stmt = $db->query($sql);
+          $recipes = $stmt->fetchAll(PDO::FETCH_OBJ);
+          $db = null;
 
-    return $response;
-});
-$app->delete('/exercises/deleteexercise/{id}', function (Request $request, Response $response, array $args) {
-    $id = $request->getAttribute('id');
-    $sql = "DELETE FROM exercises
-            WHERE id = $id";
-    try {
-        $db = new db();
-        $db = $db->connect();
-        $stmt = $db->query($sql);
-        $workoutsg = $stmt->fetchAll(PDO::FETCH_OBJ);
-        $db = null;
-
-        echo '{"notice": {"text": "Exercise Deleted"}}';
-    } catch (PDOException $e) {
-        echo '{"error":{"text": ' . $e->getMessage() . '}}';
+          echo json_encode($recipes);
+      } catch (PDOException $e) {
+          echo '{"error":{"text": ' . $e->getMessage() . '}}';
+      }
+    } else {
+      echo '{"error":{"text": "You are not allowed to access this api endpoint"}}';
     }
+      return $response;
+  });
+  $app->delete('/exercises/deleteexercise/{id}', function (Request $request, Response $response, array $args) {
+      $id = $request->getAttribute('id');
+      $sql = "DELETE FROM exercises
+              WHERE id = $id";
+      try {
+          $db = new db();
+          $db = $db->connect();
+          $stmt = $db->query($sql);
+          $workoutsg = $stmt->fetchAll(PDO::FETCH_OBJ);
+          $db = null;
+
+          echo '{"notice": {"text": "Exercise Deleted"}}';
+      } catch (PDOException $e) {
+          echo '{"error":{"text": ' . $e->getMessage() . '}}';
+      }
 
     return $response;
 });
@@ -618,14 +697,14 @@ $app->put('/recipes/updaterecipe', function (Request $request, Response $respons
     $directionspics = json_decode($directions, true);
         for($idx = 0; $idx < count($directionspics); $idx++){
             $objtpictures = (Array)$directionspics[$idx]['image'];
-            
+
             if (strlen($directionspics[$idx]['image'])>26) {
                 $directionspics[$idx]['image'] = save_base64_image($directionspics[$idx]['image'], randomKey(20), '../../newman/public/recipes/');
             }
         }
         $directionspics = json_encode($directionspics);
 
-    $sql = "INSERT INTO recipes (`name`,`short`,`description`,`time`,`carbs`,`proteins`,`fats`,`servings`,`ingredients`,`directions`,`image`) VALUES 
+    $sql = "INSERT INTO recipes (`name`,`short`,`description`,`time`,`carbs`,`proteins`,`fats`,`servings`,`ingredients`,`directions`,`image`) VALUES
     (:name,:short,:description,:time,:carbs,:proteins,:fats,:servings,:ingredients,:directions,:image)";
     $sql = "UPDATE recipes SET
     `name` = :name,
@@ -720,21 +799,32 @@ $app->put('/exercises/updateexercise/{id}', function (Request $request, Response
 
     return $response;
 });
-$app->get('/exercises/getexercise/{id}', function (Request $request, Response $response, array $args) {
+$app->get('/exercises/getexercise/{id}/{apiToken}', function (Request $request, Response $response, array $args) {
     $id = $request->getAttribute('id');
-    $sql = "SELECT * FROM exercises
-            WHERE id = $id";
+    $apiToken = $request->getAttribute('apiToken');
     try {
-        $db = new db();
-        $db = $db->connect();
-        $stmt = $db->query($sql);
-        $exercise = $stmt->fetchAll(PDO::FETCH_OBJ);
-        $db = null;
-
-        echo json_encode($exercise);
-    } catch (PDOException $e) {
-        echo '{"error":{"text": ' . $e->getMessage() . '}}';
+    $result = Token::validate($apiToken, 'se123!fe213$c!ReT423*&');
+    } catch (Exception $e) {
+      $result = false;
     }
+    if ($result) {
+      $sql = "SELECT * FROM exercises
+              WHERE id = $id";
+      try {
+          $db = new db();
+          $db = $db->connect();
+          $stmt = $db->query($sql);
+          $exercise = $stmt->fetchAll(PDO::FETCH_OBJ);
+          $db = null;
+
+          echo json_encode($exercise);
+      } catch (PDOException $e) {
+          echo '{"error":{"text": ' . $e->getMessage() . '}}';
+      }
+    } else {
+      echo '{"error":{"text": "You are not allowed to access this api endpoint"}}';
+    }
+
 
     return $response;
 });
@@ -786,7 +876,7 @@ $app->put('/workouts/updateworkout/{id}', function (Request $request, Response $
                 `image` = :image,
                 `workoutdays` = :workoutdays
             WHERE id = $id";
-    
+
     try {
         $db = new db();
         $db = $db->connect();
@@ -838,20 +928,31 @@ $app->delete('/workouts/deleteworkout/{id}', function (Request $request, Respons
 
     return $response;
 });
-$app->get('/workouts/getworkout/{id}', function (Request $request, Response $response, array $args) {
+$app->get('/workouts/getworkout/{id}/{apiToken}', function (Request $request, Response $response, array $args) {
     $id = $request->getAttribute('id');
-    $sql = "SELECT * FROM workouts
-            WHERE id = $id";
+    $apiToken = $request->getAttribute('apiToken');
     try {
-        $db = new db();
-        $db = $db->connect();
-        $stmt = $db->query($sql);
-        $workout = $stmt->fetchAll(PDO::FETCH_OBJ);
-        $db = null;
+    $result = Token::validate($apiToken, 'se123!fe213$c!ReT423*&');
+    } catch (Exception $e) {
+      $result = false;
+    }
+    if ($result) {
 
-        echo json_encode($workout);
-    } catch (PDOException $e) {
-        echo '{"error":{"text": ' . $e->getMessage() . '}}';
+      $sql = "SELECT * FROM workouts
+              WHERE id = $id";
+      try {
+          $db = new db();
+          $db = $db->connect();
+          $stmt = $db->query($sql);
+          $workout = $stmt->fetchAll(PDO::FETCH_OBJ);
+          $db = null;
+
+          echo json_encode($workout);
+      } catch (PDOException $e) {
+          echo '{"error":{"text": ' . $e->getMessage() . '}}';
+      }
+    } else {
+      echo '{"error":{"text": "You are not allowed to access this api endpoint"}}';
     }
 
     return $response;

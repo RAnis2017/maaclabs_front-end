@@ -1,5 +1,36 @@
 var newmanApp = angular.module('newmanApp', ['auth0.auth0', 'angular-storage', 'angular-jwt', 'ngRoute', 'google-signin', 'ui.router', 'facebook', 'ngSanitize', 'rzModule', 'ezfb']);
 
+function loadJSON(callback) {
+
+    var xobj = new XMLHttpRequest();
+        xobj.overrideMimeType("application/json");
+    xobj.open('GET', 'config.json', true); // Replace 'my_data' with the path to your file
+    xobj.onreadystatechange = function () {
+          if (xobj.readyState == 4 && xobj.status == "200") {
+            // Required use of an anonymous callback as .open will NOT return a value but simply returns undefined in asynchronous mode
+            callback(xobj.responseText);
+          }
+    };
+    xobj.send(null);
+ }
+ newmanApp.run(function($rootScope, $http) {
+      loadJSON(function(response) {
+      // Parse JSON string into object
+        $rootScope.filesVersion = JSON.parse(response).version;
+        $rootScope.apiUrl = JSON.parse(response).apiUrl;
+        $http({
+            method: 'POST',
+            url: $rootScope.apiUrl+'visitors'
+        }).then(function successCallback(response) {
+            console.log(response.data.apiToken);
+            localStorage.setItem('api_access_token', response.data.apiToken);
+
+        }, function errorCallback(response) {
+            console.log(response)
+        });
+     });
+
+ })
 newmanApp.config(['jwtInterceptorProvider', '$httpProvider', 'angularAuth0Provider', '$provide', '$routeProvider', '$stateProvider', '$locationProvider', function(jwtInterceptorProvider, $httpProvider, angularAuth0Provider, $provide, $routeProvider, $stateProvider, $locationProvider) {
     $locationProvider.hashPrefix('');
 
@@ -46,7 +77,10 @@ newmanApp.config(['jwtInterceptorProvider', '$httpProvider', 'angularAuth0Provid
         .when('/calculators', {
             templateUrl: 'views/calculators.view.html'
         })
-        .otherwise('/');
+        .when('/404', {
+            templateUrl: 'views/404.view.html'
+        })
+        .otherwise('/404');
     $stateProvider
         .state('home', {
             url: '/',
@@ -138,9 +172,9 @@ newmanApp.config(function(FacebookProvider) {
         });
     };
 });
-newmanApp.controller('AuthCtrl', ['$scope', "$state", 'GoogleSignin', '$http', '$window', 'Facebook', function($scope, $state,
+newmanApp.controller('AuthCtrl', ['$scope', "$state", 'GoogleSignin', '$http', '$window', 'Facebook', '$rootScope', function($scope, $state,
 
-    GoogleSignin, $http, $window, Facebook) {
+    GoogleSignin, $http, $window, Facebook, $rootScope) {
 
     $scope.loginStatus = 'disconnected';
     $scope.facebookIsReady = false;
@@ -187,7 +221,7 @@ newmanApp.controller('AuthCtrl', ['$scope', "$state", 'GoogleSignin', '$http', '
     $scope.loginmanual = function() {
         $http({
             method: 'POST',
-            url: 'http://localhost:81/newmanapi/public/users/login',
+            url: $rootScope.apiUrl+'users/login',
             data: {
                 "email": $scope.email,
                 "password": $scope.password,
@@ -358,13 +392,13 @@ newmanApp.controller('CoachController', ['$scope', function($scope) {
 
 
 
-newmanApp.controller('workoutsController', ['$scope', '$http', '$window', function($scope, $http, $window) {
+newmanApp.controller('workoutsController', ['$scope', '$http', '$window','$rootScope', function($scope, $http, $window, $rootScope) {
         $scope.workouts = []
         $scope.workoutg = []
         $scope.loadworkouts = function() {
             $http({
                 method: 'GET',
-                url: 'http://localhost:81/newmanapi/public/workouts/getworkouts',
+                url: $rootScope.apiUrl+'workouts/getworkouts/'+localStorage.getItem('api_access_token'),
             }).then(function successCallback(response) {
                 for (i = 0; i < response.data.length; i++) {
                     response.data[i].workoutdays = $.parseJSON(response.data[i].workoutdays);
@@ -376,7 +410,7 @@ newmanApp.controller('workoutsController', ['$scope', '$http', '$window', functi
             });
             $http({
                 method: 'GET',
-                url: 'http://localhost:81/newmanapi/public/workouts/getworkoutgroups',
+                url: $rootScope.apiUrl+'workouts/getworkoutgroups/'+localStorage.getItem('api_access_token'),
             }).then(function successCallback(response) {
                 $scope.workoutg = response.data;
                 console.log(response)
@@ -423,12 +457,12 @@ newmanApp.controller('workoutsController', ['$scope', '$http', '$window', functi
         };
     }]);
 
-newmanApp.controller('recipesController', ['$scope', '$http', function($scope, $http) {
+newmanApp.controller('recipesController', ['$scope', '$http','$rootScope', function($scope, $http ,$rootScope) {
     $scope.recipes = [];
     $scope.loadrecipes = function() {
         $http({
             method: 'GET',
-            url: 'http://localhost:81/newmanapi/public/recipes/getrecipes',
+            url: $rootScope.apiUrl+'recipes/getrecipes/'+localStorage.getItem('api_access_token'),
         }).then(function successCallback(response) {
             for (i = 0; i < response.data.length; i++) {
                 response.data[i].ingredients = $.parseJSON(response.data[i].ingredients);
@@ -516,7 +550,7 @@ newmanApp.controller('calculatorsController', ['$scope', '$http', function($scop
     }
 }]);
 
-newmanApp.controller('trainersController', ['$scope', '$http', function($scope, $http) {
+newmanApp.controller('trainersController', ['$scope', '$http','$rootScope', function($scope, $http,$rootScope) {
     $scope.trainers = []
     $scope.priceSlider1 = 0;
     $scope.priceSlider2 = 7500;
@@ -524,7 +558,7 @@ newmanApp.controller('trainersController', ['$scope', '$http', function($scope, 
     $scope.loadtrainers = function() {
         $http({
             method: 'GET',
-            url: 'http://localhost:81/newmanapi/public/trainers/getAll',
+            url: $rootScope.apiUrl+'trainers/getAll/'+localStorage.getItem('api_access_token'),
         }).then(function successCallback(response) {
 
             $scope.trainers = response.data.user;
@@ -536,14 +570,14 @@ newmanApp.controller('trainersController', ['$scope', '$http', function($scope, 
 
 }]);
 
-newmanApp.controller('exercisesController', ['$state', '$scope', '$routeParams', '$http', '$sce', function($state, $scope, $routeParams, $http, $sce) {
+newmanApp.controller('exercisesController', ['$state', '$scope', '$routeParams', '$http', '$sce','$rootScope', function($state, $scope, $routeParams, $http, $sce,$rootScope) {
     $scope.exercises = []
     $scope.id = $routeParams.id;
 
     $scope.loadexercises = function() {
         $http({
             method: 'GET',
-            url: 'http://localhost:81/newmanapi/public/exercises/getexercises',
+            url: $rootScope.apiUrl+'exercises/getexercises/'+localStorage.getItem('api_access_token'),
         }).then(function successCallback(response) {
 
             $scope.exercises = response.data;
@@ -556,13 +590,13 @@ newmanApp.controller('exercisesController', ['$state', '$scope', '$routeParams',
 
 }]);
 
-newmanApp.controller('Controllersignup', ['$state', '$scope', '$routeParams', '$http', '$sce', '$window', function($state, $scope, $routeParams, $http, $sce, $window) {
+newmanApp.controller('Controllersignup', ['$state', '$scope', '$routeParams', '$http', '$sce', '$window','$rootScope', function($state, $scope, $routeParams, $http, $sce, $window,$rootScope) {
 
     $scope.success = 0;
     $scope.signup = function() {
         $http({
             method: 'POST',
-            url: 'http://localhost:81/newmanapi/public/users/signup',
+            url: $rootScope.apiUrl+'users/signup',
             data: {
                 "name": $scope.name,
                 "email": $scope.email,
@@ -583,7 +617,7 @@ newmanApp.controller('Controllersignup', ['$state', '$scope', '$routeParams', '$
 
 }]);
 
-newmanApp.controller('navbar', ['$state', '$scope', '$routeParams', '$http', '$sce', '$window', function($state, $scope, $routeParams, $http, $sce, $window) {
+newmanApp.controller('navbar', ['$state', '$scope', '$routeParams', '$http', '$sce', '$window','$rootScope', function($state, $scope, $routeParams, $http, $sce, $window,$rootScope) {
 
     $scope.loggedIn = 0;
 
@@ -591,7 +625,7 @@ newmanApp.controller('navbar', ['$state', '$scope', '$routeParams', '$http', '$s
     $scope.checkAuth = function() {
         $http({
             method: 'POST',
-            url: 'http://localhost:81/newmanapi/public/users/authenticate',
+            url: $rootScope.apiUrl+'users/authenticate',
             data: {
                 "token": localStorage.getItem('access_token')
             }
@@ -621,7 +655,7 @@ newmanApp.controller('navbar', ['$state', '$scope', '$routeParams', '$http', '$s
 
 }]);
 
-newmanApp.controller('SingleWorkout', ['$state', '$scope', '$routeParams', '$http', '$sce', function($state, $scope, $routeParams, $http, $sce) {
+newmanApp.controller('SingleWorkout', ['$state', '$scope', '$routeParams', '$http', '$sce','$rootScope', function($state, $scope, $routeParams, $http, $sce,$rootScope) {
 
     // $scope.paramOne = $stateParams.paramOne;
     // console.log($stateParams.workout);
@@ -629,7 +663,7 @@ newmanApp.controller('SingleWorkout', ['$state', '$scope', '$routeParams', '$htt
     $scope.loadworkouts = function() {
         $http({
             method: 'GET',
-            url: 'http://localhost:81/newmanapi/public/workouts/getworkout/' + $scope.id,
+            url: $rootScope.apiUrl+'workouts/getworkout/' + $scope.id +'/'+localStorage.getItem('api_access_token'),
         }).then(function successCallback(response) {
             response.data[0].workoutdays = $.parseJSON(response.data[0].workoutdays);
             $scope.workout = response.data;
@@ -646,7 +680,7 @@ newmanApp.controller('SingleWorkout', ['$state', '$scope', '$routeParams', '$htt
 
 }]);
 
-newmanApp.controller('SingleRecipe', ['$state', '$scope', '$routeParams', '$http', '$sce', function($state, $scope, $routeParams, $http, $sce) {
+newmanApp.controller('SingleRecipe', ['$state', '$scope', '$routeParams', '$http', '$sce','$rootScope', function($state, $scope, $routeParams, $http, $sce,$rootScope) {
 
     // $scope.paramOne = $stateParams.paramOne;
     // console.log($stateParams.workout);
@@ -655,7 +689,7 @@ newmanApp.controller('SingleRecipe', ['$state', '$scope', '$routeParams', '$http
     $scope.loadrecipe = function() {
         $http({
             method: 'GET',
-            url: 'http://localhost:81/newmanapi/public/recipes/getrecipe/' + $scope.id,
+            url: $rootScope.apiUrl+'recipes/getrecipe/' + $scope.id +'/'+localStorage.getItem('api_access_token'),
         }).then(function successCallback(response) {
             console.log(response)
             response.data.recipe[0].ingredients = $.parseJSON(response.data.recipe[0].ingredients);
@@ -675,7 +709,7 @@ newmanApp.controller('SingleRecipe', ['$state', '$scope', '$routeParams', '$http
 }]);
 
 
-newmanApp.controller('SingleTrainer', ['$state', '$scope', '$routeParams', '$http', '$sce', function($state, $scope, $routeParams, $http, $sce) {
+newmanApp.controller('SingleTrainer', ['$state', '$scope', '$routeParams', '$http', '$sce','$rootScope', function($state, $scope, $routeParams, $http, $sce,$rootScope) {
 
     // $scope.paramOne = $stateParams.paramOne;
     // console.log($stateParams.workout);
@@ -690,7 +724,7 @@ newmanApp.controller('SingleTrainer', ['$state', '$scope', '$routeParams', '$htt
     $scope.loadtrainers = function() {
         $http({
             method: 'POST',
-            url: 'http://localhost:81/newmanapi/public/users/authenticate',
+            url: $rootScope.apiUrl+'users/authenticate',
             data: {
                 "token": localStorage.getItem('access_token')
             }
@@ -712,7 +746,7 @@ newmanApp.controller('SingleTrainer', ['$state', '$scope', '$routeParams', '$htt
         });
         $http({
             method: 'GET',
-            url: 'http://localhost:81/newmanapi/public/trainers/getAllWhere/' + $scope.id,
+            url: $rootScope.apiUrl+'trainers/getAllWhere/' + $scope.id +'/'+localStorage.getItem('api_access_token'),
         }).then(function successCallback(response) {
 
 
@@ -743,7 +777,7 @@ newmanApp.controller('SingleTrainer', ['$state', '$scope', '$routeParams', '$htt
     $scope.updateTrainer = function() {
         $http({
             method: 'POST',
-            url: 'http://localhost:81/newmanapi/public/users/trainer/adminUpdate',
+            url: $rootScope.apiUrl+'users/trainer/adminUpdate',
             data: {
                 "token": localStorage.getItem('access_token'),
                 "price": $scope.trainer.price,
@@ -766,7 +800,7 @@ newmanApp.controller('SingleTrainer', ['$state', '$scope', '$routeParams', '$htt
 }]);
 
 
-newmanApp.controller('SingleExercise', ['$state', '$scope', '$routeParams', '$http', '$sce', function($state, $scope, $routeParams, $http, $sce) {
+newmanApp.controller('SingleExercise', ['$state', '$scope', '$routeParams', '$http', '$sce','$rootScope', function($state, $scope, $routeParams, $http, $sce,$rootScope) {
 
     // $scope.paramOne = $stateParams.paramOne;
     // console.log($stateParams.workout);
@@ -774,7 +808,7 @@ newmanApp.controller('SingleExercise', ['$state', '$scope', '$routeParams', '$ht
     $scope.loadexercises = function() {
         $http({
             method: 'GET',
-            url: 'http://localhost:81/newmanapi/public/exercises/getexercise/' + $scope.id,
+            url: $rootScope.apiUrl+'exercises/getexercise/' + $scope.id +'/'+localStorage.getItem('api_access_token'),
         }).then(function successCallback(response) {
             $scope.exercise = response.data;
             $scope.description = $sce.trustAsHtml($scope.exercise.description);

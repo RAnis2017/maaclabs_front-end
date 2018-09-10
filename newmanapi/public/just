@@ -1,0 +1,14 @@
+$apiToken = $request->getAttribute('apiToken');
+try {
+$result = Token::validate($apiToken, 'se123!fe213$c!ReT423*&');
+} catch (Exception $e) {
+  $result = false;
+}
+if ($result) {
+
+
+
+
+} else {
+  echo '{"error":{"text": "You are not allowed to access this api endpoint"}}';
+}

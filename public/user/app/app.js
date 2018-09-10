@@ -1,5 +1,27 @@
 var userApp = angular.module('userApp', ['ngRoute', 'wingify.timePicker', 'plotly']);
+function loadJSON(callback) {
 
+    var xobj = new XMLHttpRequest();
+        xobj.overrideMimeType("application/json");
+    xobj.open('GET', '../config.json', true); // Replace 'my_data' with the path to your file
+    xobj.onreadystatechange = function () {
+          if (xobj.readyState == 4 && xobj.status == "200") {
+            // Required use of an anonymous callback as .open will NOT return a value but simply returns undefined in asynchronous mode
+            callback(xobj.responseText);
+          }
+    };
+    xobj.send(null);
+ }
+ userApp.run(function($rootScope) {
+      loadJSON(function(response) {
+      // Parse JSON string into object
+        $rootScope.filesVersion = JSON.parse(response).version;
+        $rootScope.apiUrl = JSON.parse(response).apiUrl;
+
+        console.log($rootScope.filesVersion);
+     });
+
+ })
 userApp.config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider) {
     $locationProvider.hashPrefix('');
 
@@ -97,34 +119,35 @@ userApp.controller('calculatorsController', ['$scope', '$http', function($scope,
     }
 }]);
 
-userApp.controller('UserAuth', ['$window', '$scope', '$routeParams', '$http', '$sce', function($window, $scope, $routeParams, $http, $sce) {
+userApp.controller('UserAuth', ['$window', '$scope', '$routeParams', '$http', '$sce', '$rootScope', function($window, $scope, $routeParams, $http, $sce, $rootScope) {
     $scope.loggedIn = 0;
 
     $scope.checkAuth = function() {
-        $http({
-            method: 'POST',
-            url: '/newmanapi/public/users/authenticate',
-            data: {
-                "token": localStorage.getItem('access_token')
-            }
-        }).then(function successCallback(response) {
+        setTimeout(function(){
+          $http({
+              method: 'POST',
+              url: $rootScope.apiUrl+'users/authenticate',
+              data: {
+                  "token": localStorage.getItem('access_token')
+              }
+          }).then(function successCallback(response) {
 
 
-            try {
-                if (response.data.user[0].type == 2) {
-                    console.log(response)
-                    $scope.loggedIn = 1;
-                } else {
-                    $window.location.href = '/newman/public/'; //You should have http here.
-                }
-            } catch (err) {
-                $window.location.href = '/newman/public/'; //You should have http here.
-            }
-        }, function errorCallback(response) {
-            console.log(response)
-            $window.location.href = '/newman/public/'; //You should have http here.
+              try {
+                  if (response.data.user[0].type == 2) {
+                      console.log(response)
+                      $scope.loggedIn = 1;
+                  } else {
+                      $window.location.href = '/newman/public/'; //You should have http here.
+                  }
+              } catch (err) {
+                  $window.location.href = '/newman/public/'; //You should have http here.
+              }
+          }, function errorCallback(response) {
+              console.log(response)
+              $window.location.href = '/newman/public/'; //You should have http here.
+          });
         });
-
     };
     $scope.logout = function() {
         // Remove tokens and expiry time from localStorage

@@ -565,12 +565,12 @@ $document.ready(function() {
      * @description Enables Page loader
      */
     if (plugins.pageLoader.length > 0) {
-        $window.on("load", function() {
+        //$window.on("load", function() {
             var loader = setTimeout(function() {
                 plugins.pageLoader.addClass("loaded");
                 $window.trigger("resize");
             }, 1000);
-        });
+        // });
     }
 
     /**
